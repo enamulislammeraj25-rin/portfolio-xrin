@@ -18,22 +18,23 @@ import {
 const PORTFOLIO_DATA = {
   // --- EDITABLE: Personal Profile Info ---
   profile: {
-    name: "Dr. Elena Vance",
-    title: "Professor of Structural Engineering",
-    institution: "Stanford University",
+      name: "Md Enamul Islam Bhuiyan Meraj",
+    title: "Post Graduate Student of Civil & Geotechnical Engineering",
+    institution: "Bangladesh University of Engineering & Technology (BUET)",
     tagline: "Designing resilient infrastructure for a changing climate.",
-    bio: "Elena Vance is a structural engineer and researcher focused on the intersection of seismic resilience, sustainable materials, and smart infrastructure. Her lab, the Resilient Systems Group, pioneers the use of AI-driven structural health monitoring and low-carbon concrete composites to build cities that withstand the test of time.",
-    email: "e.vance@stanford.edu",
-    location: "Stanford, CA",
+    bio: "Civil and geotechnical engineering researcher with focus on liquefaction behavior, seismic soil response, and resilient ground systems. Currently pursuing an M.Sc. in Civil & Geotechnical Engineering at BUET, with research centered on improving the predictability and safety of soil performance under earthquake loading.",
+    email: "enamulislammeraj.25@gmail.com",
+    location: "Dhaka, Bangladesh",
     cvLink: "#",
     // --- EDITABLE: Social Links URLs ---
     social: {
-      email: "mailto:e.vance@stanford.edu",
-      facebook: "https://facebook.com",
-      whatsapp: "https://wa.me/1234567890",
-      instagram: "https://instagram.com",
-      twitter: "https://twitter.com",
-      telegram: "https://t.me/username"
+      email: "mailto:enamulislammeraj.25@gmail.com",
+      facebook: "https://www.facebook.com/enamulislam.meraj25/",
+      whatsapp: "https://wa.me/8801639146076",
+      instagram: "https://www.instagram.com/enamul_islam_meraj/",
+      twitter: "https://x.com/eimerajxrin",
+      telegram: "https://t.me/eimerajxrin"
+     // linkedin: "https://www.linkedin.com/in/md-enamul-islam-bhuiyan-meraj/"
     }
   },
   
@@ -48,44 +49,44 @@ const PORTFOLIO_DATA = {
   // --- EDITABLE: Education History ---
   education: [
     {
-      degree: "Ph.D. in Structural Engineering",
-      institution: "University of California, Berkeley",
-      year: "2012 - 2016",
-      advisor: "Prof. Filip Filippou",
-      thesis: "Nonlinear Dynamics of Base-Isolated Structures"
+      degree: "M. Sc. in Civil & Geotechnical Engineering",
+      institution: "Bangladesh University of Engineering & Technology (BUET)",
+      year: "May, 2025 - Present",
+      advisor: "Prof. Dr. Mehedi Ahmed Ansary",
+      thesis: "N/A"
     },
     {
-      degree: "M.S. in Civil Engineering",
-      institution: "University of Illinois Urbana-Champaign",
-      year: "2010 - 2012",
-      advisor: "Prof. B.F. Spencer Jr.",
-      thesis: "Smart Sensing Frameworks for Suspension Bridges"
+      degree: "B.Sc. in Civil Engineering",
+      institution: "Rajshahi University of Engineering & Technology (RUET)",
+      year: "February, 2019 - April, 2024",
+      advisor: "Prof. Dr. Md. Abdul Alim",
+      thesis: "Behavior of single pile in cohesionless soil on horizontal & sloping ground surface under lateral loading"
     },
     {
-      degree: "Visiting Scholar",
-      institution: "TU Delft (Netherlands)",
-      year: "2011",
-      advisor: "Faculty of Civil Engineering",
-      thesis: "Sustainable Concrete Innovations"
+      degree: "Higher Secondary Certificate (HSC)",
+      institution: "Dhaka College",
+      year: "2016 - 2018"
+      //advisor: "Faculty of Civil Engineering",
+      //thesis: "Sustainable Concrete Innovations"
     },
     {
-      degree: "B.S. in Civil Engineering",
-      institution: "Georgia Institute of Technology",
-      year: "2006 - 2010",
-      advisor: "Dr. Reginald DesRoches",
-      thesis: "Summa Cum Laude"
+      degree: "Secondary School Certificate",
+      institution: "Motijheel Government Boys’ High School",
+      year: "2014 - 2016"//comma removed as last data
+      //advisor: "Dr. Reginald DesRoches",
+      //thesis: "Summa Cum Laude"
     },
     {
-      degree: "Professional Engineer (P.E.) License",
-      institution: "State of California",
-      year: "2017",
-      advisor: "Board for Professional Engineers",
-      thesis: "License #C-89204"
+      degree: "Junior School Certificate (JSC)",
+      institution: "Motijheel Government Boys’ High School",
+      year: "2011 - 2013"//SIMILAR THING ABOUT COMMA
+      //advisor: "Board for Professional Engineers",
+      //thesis: "License #C-89204"
     }
   ],
 
   // --- EDITABLE: Professional Experience ---
-  experience: [
+/*  experience: [
     {
       role: "Associate Professor",
       institution: "Stanford University",
@@ -108,39 +109,40 @@ const PORTFOLIO_DATA = {
       description: "Research on self-centering steel frames and fatigue analysis."
     }
   ],
-
+*/
+  //EDITED THE COMPLETE EXPERIENCE WITH NOTHING
   // --- EDITABLE: Research Topic Keywords ---
   research_interests: [
-    "Seismic Resilience", "Structural Health Monitoring", "Green Concrete", "Urban Fluid Dynamics", "Smart Infrastructure"
+    "Seismic Resilience", "Liquefaction", "Seismic Soil Dynamics", "Foundation Engineering", "Ground Improvement"
   ],
 
   // --- EDITABLE: Citation Graph Data ---
   citation_history: [
-    { year: 2015, citations: 120 },
-    { year: 2016, citations: 250 },
-    { year: 2017, citations: 480 },
-    { year: 2018, citations: 890 },
-    { year: 2019, citations: 1500 },
-    { year: 2020, citations: 2100 },
-    { year: 2021, citations: 2900 },
-    { year: 2022, citations: 3800 },
-    { year: 2023, citations: 4900 },
-    { year: 2024, citations: 6100 },
+    { year: 2019, citations: 0 },
+    { year: 2020, citations: 0 },
+    { year: 2021, citations: 0 },
+    { year: 2022, citations: 0 },
+    { year: 2023, citations: 0 },
+    { year: 2024, citations: 0 },
+    { year: 2025, citations: 0 },
+    { year: 2026, citations: 0 },
+    { year: 2027, citations: 0 },
+    { year: 2028, citations: 0 },
   ],
 
   // --- EDITABLE: Selected Publications ---
   publications: [
     {
       id: 1,
-      title: "Self-Healing Concrete using Bacterial Carbonate Precipitation",
-      authors: "E. Vance, H. Jonkers",
-      journal: "Cement and Concrete Research",
-      year: 2023,
-      citations: 412,
-      type: "Journal",
-      tags: ["Materials", "Sustainability"]
+      title: "Behavior of single pile in cohesionless soil on horizontal & sloping ground surface under lateral loading",
+      authors: "M. E. I. B. Meraj, K. H. Hridoy, M. A. Alim",
+      journal: "International Conference on Architecture and Civil Engineering (ICACE)",
+      year: 2024,
+      citations: 0,
+      type: "Conference",
+      tags: ["Lateral Load", "Soil - Structure Interaction", "Sloping Ground Condition"]
     },
-    {
+   /* {
       id: 2,
       title: "Real-time Bridge Scour Monitoring via Wireless Sensor Networks",
       authors: "J. Smith, E. Vance",
@@ -171,7 +173,7 @@ const PORTFOLIO_DATA = {
       tags: ["AI", "Maintenance"]
     }
   ],
-
+*/
   // --- EDITABLE: Projects & Tools ---
   projects: [
     {
