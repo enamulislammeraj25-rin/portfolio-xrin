@@ -227,7 +227,7 @@ const PORTFOLIO_DATA = {
       files: []
     }*/
   ]
-};
+},
 
 /**
  * HOOKS & UTILS
