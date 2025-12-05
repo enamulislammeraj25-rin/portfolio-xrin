@@ -177,18 +177,18 @@ const PORTFOLIO_DATA = {
   // --- EDITABLE: Projects & Tools ---
   projects: [
     {
-      title: "SmartBridge AI",
-      description: "A machine learning pipeline that predicts structural fatigue in suspension bridges using vibration data.",
-      stack: ["Python", "TensorFlow", "IoT"],
-      link: "#",
-      stars: "1.2k",
-      files: [
+      title: "Investigation on the Existing Water Supply System of Rajshahi City Corporation (RCC)",
+      description: "Carried out an investigation on the existing water supply system of Rajshahi City Corporation (RCC), which involved analysing how efficient is this system and later we discussed how we can utilize these existing water plants and the entire system to enhance the efficiency.",
+      //stack: ["Python", "TensorFlow", "IoT"],
+      //link: "#",
+      //stars: "1.2k",
+      /*files: [
         { name: "architecture_diagram.png", type: "image" },
         { name: "sensor_data.csv", type: "code" },
         { name: "main_model.py", type: "code" }
-      ]
+      ]*/
     },
-    {
+    /*{
       title: "CarbonNegative",
       description: "Development of a bio-char infused concrete mix that sequesters CO2 during the curing process.",
       stack: ["Materials Science", "Chemistry"],
@@ -225,7 +225,7 @@ const PORTFOLIO_DATA = {
       link: "#",
       stars: "320",
       files: []
-    }
+    }*/
   ]
 };
 
