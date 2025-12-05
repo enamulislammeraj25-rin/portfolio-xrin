@@ -86,8 +86,8 @@ const PORTFOLIO_DATA = {
   ],
 
   // --- EDITABLE: Professional Experience ---
-/*  experience: [
-    {
+  experience: [
+    /*{
       role: "Associate Professor",
       institution: "Stanford University",
       department: "Dept. of Civil & Environmental Engineering",
@@ -107,9 +107,9 @@ const PORTFOLIO_DATA = {
       department: "Resilient Steel Structures Lab",
       period: "2016 - 2018",
       description: "Research on self-centering steel frames and fatigue analysis."
-    }
+    }*/
   ],
-*/
+
   //EDITED THE COMPLETE EXPERIENCE WITH NOTHING
   // --- EDITABLE: Research Topic Keywords ---
   research_interests: [
