@@ -8,7 +8,8 @@ import {
   Facebook, Instagram, Twitter, Send, MessageCircle,
   FileImage, FileCode, FolderOpen, Image as ImageIcon,
   CheckCircle2, Linkedin, ExternalLink, ChevronDown,
-  Cpu, Database, Layers, Camera, Video, Settings, Eye, EyeOff
+  Cpu, Database, Layers, Camera, Video, Settings, Eye, EyeOff,
+  BookOpen
 } from 'lucide-react';
 import { 
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area 
@@ -27,9 +28,11 @@ const PORTFOLIO_DATA = {
     bio: "Civil and geotechnical engineering researcher with focus on liquefaction behavior, seismic soil response, and resilient ground systems. Currently pursuing an M.Sc. in Civil & Geotechnical Engineering at BUET, with research centered on improving the predictability and safety of soil performance under earthquake loading.",
     email: "enamulislammeraj.25@gmail.com",
     location: "Dhaka, Bangladesh",
-    cvLink: "#",
+    cvLink: "data:text/plain;charset=utf-8,This%20is%20a%20placeholder%20for%20the%20actual%20CV%20file.%20In%20production%2C%20link%20this%20to%20your%20PDF.",
+    
     // --- EDITABLE: Social Links URLs ---
     social: {
+      scholar: "https://scholar.google.com/citations?user=3FnVQfEAAAAJ&hl=en&authuser=1",
       email: "mailto:enamulislammeraj.25@gmail.com",
       linkedin: "https://www.linkedin.com/in/md-enamul-islam-bhuiyan-meraj/", 
       whatsapp: "https://wa.me/8801639146076",
@@ -87,25 +90,25 @@ const PORTFOLIO_DATA = {
       title: "Microsoft 365 Fundamentals",
       issuer: "Microsoft",
       date: "April, 2025",
-      link: "#"
+      link: "https://www.microsoft.com"
     },
     {
       title: "Construction Management",
       issuer: "Columbia University (Coursera)",
       date: "April 2025",
-      link: "#"
+      link: "https://www.coursera.org"
     },
     {
       title: "Concrete Multi Storey Building - System Design",
       issuer: "L&T EduTech",
       date: "March, 2025",
-      link: "#"
+      link: "https://lntedutech.com"
     },
     {
       title: "Financial Markets",
       issuer: "Yale University (Coursera)",
       date: "February, 2025",
-      link: "#"
+      link: "https://www.coursera.org"
     }
   ],
 
@@ -113,12 +116,19 @@ const PORTFOLIO_DATA = {
   skills: [
     { name: "CSI ETABS & SAFE", level: 90 },
     { name: "PLAXIS 2D/3D", level: 85 },
+    { name: "GeoStudio (GeoSlope)", level: 80 },
     { name: "AutoCAD", level: 85 },
     { name: "ArcGIS Pro", level: 75 },
     { name: "Python", level: 60 },
     { name: "C/C++", level: 60 },
     { name: "Microsoft Office Suite", level: 95 },
     { name: "SketchUP", level: 70 }
+  ],
+  
+  // --- EDITABLE: Standardized Tests ---
+  tests: [
+    { name: "IELTS", score: "7.5 (Example)" },
+    { name: "GRE", score: "320 (Example)" }
   ],
 
   // --- EDITABLE: Professional Experience ---
@@ -192,7 +202,11 @@ const PORTFOLIO_DATA = {
       stack: ["CSI ETABS", "CSI SAFE", "Structural Design"],
       link: "#",
       stars: "Design",
-      files: []
+      files: [
+        { name: "Building_Layout.pdf", type: "pdf" },
+        { name: "Structural_Analysis.xlsx", type: "code" },
+        { name: "Render_Front.jpg", type: "image" }
+      ]
     },
     {
       title: "Group Pile Response Analysis (Ongoing)",
@@ -206,10 +220,24 @@ const PORTFOLIO_DATA = {
 
   // --- EDITABLE: Hobbies (Photos & Videos) ---
   hobbies: [
-    { title: "Site Photography", type: "image", description: "Capturing structural details during field visits." },
-    { title: "Engineering Simulations", type: "video", description: "Visualizing stress distribution in FEA models." },
-    { title: "Travel & Nature", type: "image", description: "Exploring the natural landscapes of Bangladesh." },
-    // Add more items as needed...
+    { 
+        title: "Site Photography", 
+        type: "image", 
+        src: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1000&auto=format&fit=crop",
+        description: "Capturing structural details during field visits." 
+    },
+    { 
+        title: "Engineering Simulations", 
+        type: "video", 
+        src: "", 
+        description: "Visualizing stress distribution in FEA models." 
+    },
+    { 
+        title: "Travel & Nature", 
+        type: "image", 
+        src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=1000&auto=format&fit=crop",
+        description: "Exploring the natural landscapes of Bangladesh." 
+    },
   ]
 };
 
@@ -232,14 +260,22 @@ const useWindowSize = () => {
  * VISUAL COMPONENTS
  */
 
-// 1. Theme-Aware Particle Canvas
+// 1. Theme-Aware Particle Canvas (OPTIMIZED)
 const ParticleCanvas = ({ theme }) => {
   const canvasRef = useRef(null);
   const { width, height } = useWindowSize();
+  const isVisibleRef = useRef(true); // Track visibility without triggering re-renders
   
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    
+    // Performance Optimization: Stop animation when canvas is not in viewport
+    const observer = new IntersectionObserver(([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+    });
+    observer.observe(canvas);
+
     const ctx = canvas.getContext('2d');
     
     canvas.width = width;
@@ -313,6 +349,12 @@ const ParticleCanvas = ({ theme }) => {
     let animationFrameId;
 
     const animate = () => {
+      // Optimization Check: Pause if not visible
+      if (!isVisibleRef.current) {
+          animationFrameId = requestAnimationFrame(animate);
+          return;
+      }
+
       ctx.clearRect(0, 0, width, height);
       
       particles.forEach((p, i) => {
@@ -374,7 +416,10 @@ const ParticleCanvas = ({ theme }) => {
     };
 
     animate();
-    return () => cancelAnimationFrame(animationFrameId);
+    return () => {
+        cancelAnimationFrame(animationFrameId);
+        observer.disconnect();
+    };
   }, [width, height, theme]);
 
   return <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-100" />;
@@ -424,49 +469,49 @@ const ResearchNetwork = ({ theme }) => {
 
     switch (theme) {
         case 'dark':
-            cardClass = 'bg-neutral-900/50 border-neutral-800';
+            cardClass = 'bg-neutral-900/50 border-transparent hover:border-neutral-800'; 
             nodeClass = 'bg-neutral-800 border-teal-900 text-neutral-200';
             centerClass = 'bg-teal-400/10 border-teal-500/50';
             strokeClass = 'stroke-teal-900';
             break;
         case 'light':
-            cardClass = 'bg-white border-neutral-300 shadow-inner';
+            cardClass = 'bg-white border-transparent hover:border-stone-300 shadow-sm'; 
             nodeClass = 'bg-white border-stone-300 text-stone-800';
             centerClass = 'bg-teal-600/10 border-teal-600/30';
             strokeClass = 'stroke-stone-300';
             break;
         case 'midnight':
-            cardClass = 'bg-slate-900/50 border-slate-800';
+            cardClass = 'bg-slate-900/50 border-transparent hover:border-slate-800';
             nodeClass = 'bg-slate-800 border-indigo-500 text-indigo-100';
             centerClass = 'bg-indigo-500/10 border-indigo-500/50';
             strokeClass = 'stroke-indigo-900';
             break;
         case 'spring':
-            cardClass = 'bg-white/60 backdrop-blur-md border-stone-300 shadow-lg';
+            cardClass = 'bg-white/60 backdrop-blur-md border-transparent hover:border-stone-300 shadow-lg';
             nodeClass = 'bg-white border-stone-300 text-stone-800';
             centerClass = 'bg-stone-600/10 border-stone-400/30';
             strokeClass = 'stroke-stone-300';
             break;
         case 'nature':
-            cardClass = 'bg-stone-900/40 backdrop-blur-sm border-stone-700';
+            cardClass = 'bg-stone-900/40 backdrop-blur-sm border-transparent hover:border-stone-700';
             nodeClass = 'bg-stone-800 border-lime-800 text-stone-200';
             centerClass = 'bg-lime-500/10 border-lime-500/30';
             strokeClass = 'stroke-lime-900';
             break;
         case 'musgravite':
-            cardClass = 'bg-purple-900/20 backdrop-blur-sm border-purple-800/30';
+            cardClass = 'bg-purple-900/20 backdrop-blur-sm border-transparent hover:border-purple-800/30';
             nodeClass = 'bg-purple-950/50 border-purple-700 text-purple-100';
             centerClass = 'bg-purple-400/10 border-purple-400/30';
             strokeClass = 'stroke-purple-800/50';
             break;
         case 'ruby':
-            cardClass = 'bg-red-950/20 backdrop-blur-sm border-red-900/30';
+            cardClass = 'bg-red-950/20 backdrop-blur-sm border-transparent hover:border-red-900/30';
             nodeClass = 'bg-red-950/50 border-red-800 text-red-100';
             centerClass = 'bg-red-500/10 border-red-500/30';
             strokeClass = 'stroke-red-900/50';
             break;
         case 'emerald':
-            cardClass = 'bg-emerald-950/20 backdrop-blur-sm border-emerald-900/30';
+            cardClass = 'bg-emerald-950/20 backdrop-blur-sm border-transparent hover:border-emerald-900/30';
             nodeClass = 'bg-emerald-950/50 border-emerald-800 text-emerald-100';
             centerClass = 'bg-emerald-500/10 border-emerald-500/30';
             strokeClass = 'stroke-emerald-900/50';
@@ -595,8 +640,8 @@ export default function App() {
   const desktopNavLinks = [
     { name: "Education", id: "education" },
     { name: "Research", id: "research" },
-    { name: "Projects", id: "projects" },
     { name: "Publications", id: "publications" },
+    { name: "Projects", id: "projects" },
     { name: "Career", id: "career" }
   ];
 
@@ -604,10 +649,10 @@ export default function App() {
     { name: "About", id: "about" },
     { name: "Education", id: "education" },
     { name: "Research", id: "research" },
+    { name: "Publications", id: "publications" },
     { name: "Projects", id: "projects" },
     { name: "Certifications", id: "certifications" },
     { name: "Skills", id: "skills" },
-    { name: "Publications", id: "publications" },
     { name: "Career", id: "career" },
     { name: "Hobbies", id: "hobbies" }, // Hobbies ID for link logic
     { name: "Contact", id: "contact" }
@@ -629,8 +674,6 @@ export default function App() {
       el.scrollIntoView({ behavior: 'smooth' });
       setMenuOpen(false);
       setSearchOpen(false);
-    } else if (id === 'hobbies' && showHobbies) {
-       // Edge case: sometimes element might not be ready? usually React handles this.
     }
   };
 
@@ -681,16 +724,17 @@ export default function App() {
       }
   };
   
+  // Updated to be transparent by default, only border on hover
   const getCardStyle = () => {
       switch (theme) {
-          case 'dark': return 'bg-transparent border-neutral-800 hover:bg-white/5 hover:border-neutral-700';
-          case 'light': return 'bg-transparent border-stone-300 text-stone-900 hover:bg-white hover:border-stone-400 hover:shadow-md';
-          case 'midnight': return 'bg-transparent border-slate-800 text-slate-200 hover:bg-white/5 hover:border-indigo-500/50';
-          case 'spring': return 'bg-transparent border-stone-300 text-stone-900 hover:bg-white/60 hover:border-stone-400 hover:shadow-md';
-          case 'nature': return 'bg-transparent border-stone-700 text-stone-200 hover:bg-stone-800/60 hover:border-lime-800';
-          case 'musgravite': return 'bg-transparent border-purple-800/30 text-purple-50 hover:bg-purple-900/30 hover:border-purple-500/30';
-          case 'ruby': return 'bg-transparent border-rose-900/30 text-rose-50 hover:bg-rose-950/40 hover:border-rose-500/30';
-          case 'emerald': return 'bg-transparent border-emerald-900/30 text-emerald-50 hover:bg-emerald-950/40 hover:border-emerald-500/30';
+          case 'dark': return 'bg-transparent border border-transparent hover:bg-white/5 hover:border-neutral-700';
+          case 'light': return 'bg-transparent border border-transparent text-stone-900 hover:bg-white hover:border-stone-400 hover:shadow-md';
+          case 'midnight': return 'bg-transparent border border-transparent text-slate-200 hover:bg-white/5 hover:border-indigo-500/50';
+          case 'spring': return 'bg-transparent border border-transparent text-stone-900 hover:bg-white/60 hover:border-stone-400 hover:shadow-md';
+          case 'nature': return 'bg-transparent border border-transparent text-stone-200 hover:bg-stone-800/60 hover:border-lime-800';
+          case 'musgravite': return 'bg-transparent border border-transparent text-purple-50 hover:bg-purple-900/30 hover:border-purple-500/30';
+          case 'ruby': return 'bg-transparent border border-transparent text-rose-50 hover:bg-rose-950/40 hover:border-rose-500/30';
+          case 'emerald': return 'bg-transparent border border-transparent text-emerald-50 hover:bg-emerald-950/40 hover:border-emerald-500/30';
           default: return '';
       }
   };
@@ -739,11 +783,12 @@ export default function App() {
   }
 
   const getNavStyle = () => {
-      if (theme === 'dark') return 'bg-neutral-950/90 border-neutral-800 backdrop-blur-3xl';
-      if (theme === 'light') return 'bg-white/90 border-stone-200 backdrop-blur-3xl';
-      if (theme === 'midnight') return 'bg-slate-950/90 border-slate-800 backdrop-blur-3xl';
-      if (theme === 'spring') return 'bg-white/70 backdrop-blur-3xl border-stone-200';
-      return 'backdrop-blur-3xl border-white/10 bg-black/50';
+      // Reduced blur from 3xl to md/lg for better scroll performance
+      if (theme === 'dark') return 'bg-neutral-950/90 border-neutral-800 backdrop-blur-md';
+      if (theme === 'light') return 'bg-white/90 border-stone-200 backdrop-blur-md';
+      if (theme === 'midnight') return 'bg-slate-950/90 border-slate-800 backdrop-blur-md';
+      if (theme === 'spring') return 'bg-white/70 backdrop-blur-md border-stone-200';
+      return 'backdrop-blur-md border-white/10 bg-black/50';
   };
 
   // Updated Nav Hover - Glow Text Effect Only (No background box)
@@ -821,11 +866,19 @@ export default function App() {
   const HobbiesContent = () => (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {PORTFOLIO_DATA.hobbies.map((hobby, idx) => (
-            <div key={idx} className={`relative group overflow-hidden rounded-xl border aspect-square ${getCardStyle()}`}>
+            <div key={idx} className={`relative group overflow-hidden rounded-lg border aspect-square ${getCardStyle()}`}>
+                <img 
+                    src={hobby.src} 
+                    alt={hobby.title} 
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100" 
+                    onError={(e) => {
+                        e.target.style.display = 'none'; // Fallback if image fails
+                    }}
+                />
                 <div className={`absolute inset-0 flex items-center justify-center bg-black/5 z-0`}>
+                    {/* Fallback Icon if image doesn't load/exist */}
                     {hobby.type === 'image' ? <Camera className="w-12 h-12 opacity-20" /> : <Video className="w-12 h-12 opacity-20" />}
                 </div>
-                {/* If you had real images, you'd use <img src={hobby.src} /> here */}
                 
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center text-white">
                     <h4 className="font-bold text-lg mb-2">{hobby.title}</h4>
@@ -856,7 +909,7 @@ export default function App() {
       {/* --- PROJECT MODAL --- */}
       {selectedProject && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedProject(null)}>
-            <div className={`w-full max-w-4xl h-[80vh] rounded-2xl overflow-hidden shadow-2xl flex flex-col animate-in fade-in zoom-in-95
+            <div className={`w-full max-w-4xl h-[80vh] rounded-lg overflow-hidden shadow-2xl flex flex-col animate-in fade-in zoom-in-95
                 ${(theme === 'light' || theme === 'spring') ? 'bg-white text-stone-900' : 'bg-neutral-900 text-white border border-white/10'}`}
                 onClick={e => e.stopPropagation()}
             >
@@ -880,7 +933,7 @@ export default function App() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {selectedProject.files && selectedProject.files.length > 0 ? (
                             selectedProject.files.map((file, i) => (
-                                <div key={i} className={`p-4 rounded-xl border flex flex-col items-center justify-center gap-3 hover:bg-black/5 transition-colors cursor-pointer group
+                                <div key={i} className={`p-4 rounded-lg border flex flex-col items-center justify-center gap-3 hover:bg-black/5 transition-colors cursor-pointer group
                                     ${(theme === 'light' || theme === 'spring') ? 'border-stone-200' : 'border-white/10'}`}>
                                     {file.type === 'image' && <FileImage className={`w-8 h-8 ${getAccentColor()}`} />}
                                     {file.type === 'code' && <FileCode className={`w-8 h-8 ${getAccentColor()}`} />}
@@ -889,7 +942,7 @@ export default function App() {
                                 </div>
                             ))
                         ) : (
-                            <div className="col-span-full py-12 flex flex-col items-center justify-center opacity-50 border-2 border-dashed rounded-xl border-current">
+                            <div className="col-span-full py-12 flex flex-col items-center justify-center opacity-50 border-2 border-dashed rounded-lg border-current">
                                 <FolderOpen className="w-12 h-12 mb-4" />
                                 <p>No public files available for this project.</p>
                             </div>
@@ -912,7 +965,7 @@ export default function App() {
       {/* --- HOBBIES MODAL (SHOWN WHEN HIDDEN FROM SCROLL) --- */}
       {hobbiesModalOpen && (
          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setHobbiesModalOpen(false)}>
-            <div className={`w-full max-w-4xl max-h-[80vh] rounded-2xl overflow-hidden shadow-2xl flex flex-col animate-in fade-in zoom-in-95
+            <div className={`w-full max-w-4xl max-h-[80vh] rounded-lg overflow-hidden shadow-2xl flex flex-col animate-in fade-in zoom-in-95
                 ${(theme === 'light' || theme === 'spring') ? 'bg-white text-stone-900' : 'bg-neutral-900 text-white border border-white/10'}`}
                 onClick={e => e.stopPropagation()}
             >
@@ -943,7 +996,7 @@ export default function App() {
       {/* --- GLOBAL SEARCH MODAL --- */}
       {searchOpen && (
         <div className="fixed inset-0 z-[100] flex items-start justify-center pt-32 bg-black/40 backdrop-blur-md" onClick={() => setSearchOpen(false)}>
-          <div className={`w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden border animate-in fade-in zoom-in-95 duration-200
+          <div className={`w-full max-w-2xl rounded-lg shadow-2xl overflow-hidden border animate-in fade-in zoom-in-95 duration-200
             ${(theme === 'light' || theme === 'spring') ? 'bg-white text-stone-900 border-stone-200' : 'bg-black/80 backdrop-blur-xl border-white/10 text-white'}`}
             onClick={e => e.stopPropagation()}
           >
@@ -1085,8 +1138,8 @@ export default function App() {
         {/* Gradient Overlay based on Theme */}
         <div className={`absolute inset-0 z-1 pointer-events-none bg-gradient-to-b
             ${theme === 'dark' ? 'from-transparent via-neutral-950/20 to-neutral-950' : 
-              (theme === 'light' || theme === 'spring') ? 'from-transparent via-white/50 to-stone-100' :
-              'from-transparent via-black/10 to-transparent'}`} 
+             (theme === 'light' || theme === 'spring') ? 'from-transparent via-white/50 to-stone-100' :
+             'from-transparent via-black/10 to-transparent'}`} 
         />
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
@@ -1113,18 +1166,21 @@ export default function App() {
             >
               View Research
             </button>
-            <button 
+            <a 
+                href={PORTFOLIO_DATA.profile.cvLink}
+                download="Meraj_CV_Placeholder.txt" // Using dummy text file to simulate download
                 className={`px-8 py-3.5 border rounded-lg font-medium transition-colors flex items-center gap-2
                     ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 hover:bg-white' : 
                       'border-white/30 hover:bg-white/10 text-white'}`}
             >
               <Download className="w-4 h-4" /> Download CV
-            </button>
+            </a>
           </div>
 
           {/* Social Icons with Square Rounded Style */}
-          <div className="flex items-center justify-center gap-4 mt-8 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-700">
+          <div className="flex items-center justify-center gap-4 mt-8 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-700 flex-wrap">
             {[
+              { icon: GraduationCap, link: PORTFOLIO_DATA.profile.social.scholar }, // Google Scholar First
               { icon: Mail, link: PORTFOLIO_DATA.profile.social.email },
               { icon: Linkedin, link: PORTFOLIO_DATA.profile.social.linkedin },
               { icon: MessageCircle, link: PORTFOLIO_DATA.profile.social.whatsapp },
@@ -1162,7 +1218,7 @@ export default function App() {
                 </p>
                 <div className="grid grid-cols-2 gap-4 mt-8">
                     {PORTFOLIO_DATA.metrics.map((m, i) => (
-                        <div key={i} className={`border-l-2 pl-4 py-2 pr-2 rounded-r-xl transition-all duration-300 group
+                        <div key={i} className={`border-l-2 pl-4 py-2 pr-2 rounded-r-lg transition-all duration-300 group
                             ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 hover:bg-white' : 'border-white/20 hover:bg-white/5'}`}>
                             <div className={`text-3xl font-bold transition-colors ${getHoverTextColor()}`}>{m.value}</div>
                             <div className="text-sm opacity-60 uppercase tracking-wide">{m.label}</div>
@@ -1171,10 +1227,11 @@ export default function App() {
                 </div>
             </div>
             <div className="relative">
-                <div className={`aspect-square rounded-2xl overflow-hidden shadow-2xl transition-transform duration-500 ease-out
+                <div className={`aspect-square rounded-lg overflow-hidden shadow-2xl transition-transform duration-500 ease-out
                     ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10 backdrop-blur-md'}`}>
                     <div className={`w-full h-full flex items-center justify-center bg-gradient-to-br
                         ${(theme === 'light' || theme === 'spring') ? 'from-stone-200 to-stone-300' : 'from-white/5 to-white/10'}`}>
+                        {/* Placeholder for User Image */}
                         <User className="w-32 h-32 opacity-50" />
                     </div>
                 </div>
@@ -1184,8 +1241,8 @@ export default function App() {
 
       {/* --- EDUCATION SECTION --- */}
       <Section id="education">
-          <div className="flex flex-col md:flex-row gap-12">
-            <div className="md:w-1/3">
+          <div className="flex flex-col gap-8">
+            <div className="w-full">
                 <h2 className="text-3xl font-serif font-bold mb-4 flex items-center gap-3">
                     <GraduationCap className={`w-8 h-8 ${getAccentColor()}`} />
                     Education
@@ -1194,34 +1251,36 @@ export default function App() {
                     A timeline of my academic qualifications and research milestones.
                 </p>
             </div>
-            <div className="md:w-2/3 space-y-0">
+            <div className="w-full">
                 {/* Continuous Vertical Line Container */}
-                <div className={`border-l-2 py-2 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
                     {PORTFOLIO_DATA.education.map((edu, idx) => (
-                        <div key={idx} className={`relative group pl-8 p-4 rounded-r-xl transition-all duration-300 border-transparent
+                        <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                             ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 
                               'hover:bg-white/5'}`}>
                             
-                            {/* Outer Circle (Static) */}
-                            <div className={`absolute -left-[9px] top-6 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                            {/* Outer Circle (Static) - CENTERED */}
+                            <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
                                 ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                                 {/* Inner Dot (Changes Color) */}
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
                             
-                            <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/20'}`}>
-                                {edu.year}
-                            </span>
-                            <h3 className={`text-xl font-bold mt-1 transition-colors ${getHoverTextColor()}`}>{edu.institution}</h3>
-                            <div className="text-lg font-medium opacity-90 mb-1">{edu.degree}</div>
-                            {edu.advisor && (
-                                 <p className="text-sm opacity-70">
-                                    <span className="font-semibold">Advisor/Board:</span> {edu.advisor}
+                            <div> 
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/20'}`}>
+                                    {edu.year}
+                                </span>
+                                <h3 className={`text-xl font-bold mt-1 transition-colors ${getHoverTextColor()}`}>{edu.institution}</h3>
+                                <div className="text-lg font-medium opacity-90 mb-1">{edu.degree}</div>
+                                {edu.advisor && (
+                                     <p className="text-sm opacity-70">
+                                        <span className="font-semibold">Advisor/Board:</span> {edu.advisor}
+                                    </p>
+                                )}
+                                 <p className="text-sm italic opacity-60">
+                                    {edu.thesis}
                                 </p>
-                            )}
-                             <p className="text-sm italic opacity-60">
-                                {edu.thesis}
-                            </p>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -1231,199 +1290,355 @@ export default function App() {
 
       {/* --- RESEARCH SECTION --- */}
       <Section id="research">
-        <div className="mb-12">
-             <h2 className="text-3xl font-serif font-bold mb-6">Research Interests</h2>
-             <p className="opacity-70 max-w-2xl">
-                 Bridging physical infrastructure with digital intelligence.
-             </p>
-        </div>
-        
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-             <ResearchNetwork theme={theme} />
-             <div className="space-y-6">
-                 {PORTFOLIO_DATA.research_interests.map((interest, i) => (
-                     <div key={i} className={`group flex items-center justify-between gap-4 p-4 rounded-xl border transition-all cursor-pointer duration-300
-                        ${getCardStyle()}`}>
-                          <div className="flex items-center gap-4">
-                              <div className={`w-10 h-10 rounded-full flex items-center justify-center
-                                 ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200 text-stone-600' : (theme === 'midnight' ? 'bg-indigo-500/20 text-indigo-300' : 'bg-white/20 text-white')}`}>
-                                 <ArrowUpRight className={`w-5 h-5 group-hover:rotate-45 transition-transform duration-300 ${getHoverTextColor()}`} />
+        <div className="flex flex-col gap-8">
+            <div className="w-full">
+                 <h2 className="text-3xl font-serif font-bold mb-4">Research Interests</h2>
+                 <p className="opacity-70 max-w-2xl">
+                     Bridging physical infrastructure with digital intelligence.
+                 </p>
+            </div>
+            
+            {/* Optional: Keep Network Graph but maybe above or below list? Let's put it above */}
+            <div className="w-full mb-8">
+                 <ResearchNetwork theme={theme} />
+            </div>
+
+            <div className="w-full">
+                 <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                     {PORTFOLIO_DATA.research_interests.map((interest, i) => (
+                         <div key={i} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                            ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                              
+                              {/* Bullet - CENTERED */}
+                              <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                                  ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                  <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                               </div>
-                              <span className={`text-lg font-medium transition-colors duration-300 ${getHoverTextColor()}`}>{interest.topic}</span>
-                          </div>
-                          {/* Inside options blank indicator */}
-                          <ChevronDown className="w-5 h-5 opacity-30" />
-                     </div>
-                 ))}
-             </div>
+
+                              <div className="flex items-center gap-4">
+                                  <span className={`text-lg font-medium transition-colors duration-300 ${getHoverTextColor()}`}>{interest.topic}</span>
+                                  <ArrowUpRight className={`w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${getAccentColor()}`} />
+                              </div>
+                         </div>
+                     ))}
+                 </div>
+            </div>
         </div>
       </Section>
 
-      {/* --- PROJECTS --- */}
-      <Section id="projects">
-        <h2 className="text-3xl font-serif font-bold mb-12">Projects</h2>
-        <div className="grid md:grid-cols-2 gap-8">
-            {PORTFOLIO_DATA.projects.map((proj, i) => (
-                <div key={i} className={`group relative overflow-hidden rounded-2xl border p-8 transition-all duration-300 ${getCardStyle()}`}>
-                    <div className="flex justify-between items-start mb-6">
-                        <div className={`p-3 rounded-lg shadow-sm ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10'}`}>
-                            <Anchor className={`w-6 h-6 ${getAccentColor()}`} />
-                        </div>
-                        <div className="flex gap-2 flex-wrap justify-end">
-                            {proj.stack.map(tech => (
-                                <span key={tech} className={`px-2 py-1 text-[10px] font-mono rounded opacity-70
-                                    ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10'}`}>
-                                    {tech}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                    <h3 className={`text-2xl font-bold mb-3 transition-colors ${getHoverTextColor()}`}>
-                        {proj.title}
-                    </h3>
-                    <p className="opacity-70 mb-6">
-                        {proj.description}
+      {/* --- PUBLICATIONS (MOVED UP) --- */}
+      <Section id="publications">
+        <div className="flex flex-col gap-8">
+            <div className="flex flex-col md:flex-row justify-between items-end">
+                <div>
+                    <h2 className="text-3xl font-serif font-bold mb-4">Selected Publications</h2>
+                    <p className="opacity-70">
+                        Peer-reviewed journals in structural engineering and materials science.
                     </p>
-                    <button 
-                        onClick={(e) => { e.preventDefault(); setSelectedProject(proj); }}
-                        className={`inline-flex items-center text-sm font-bold hover:underline ${getAccentColor()}`}
-                    >
-                        View Project <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+                <div className="flex gap-2 mt-4 md:mt-0">
+                    <button className={`px-4 py-2 text-sm font-medium rounded-lg ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200 text-stone-800' : 'bg-white/10 text-white'}`}>
+                        All Years
                     </button>
                 </div>
-            ))}
-        </div>
-      </Section>
+            </div>
 
-      {/* --- CERTIFICATIONS SECTION --- */}
-      <Section id="certifications">
-        <h2 className="text-3xl font-serif font-bold mb-12">Certifications</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-            {PORTFOLIO_DATA.certifications.map((cert, i) => (
-                <div key={i} className={`flex items-center gap-4 p-6 rounded-xl border transition-all hover:scale-[1.01] ${getCardStyle()}`}>
-                    <div className={`p-4 rounded-full ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10'}`}>
-                        <Award className={`w-6 h-6 ${getAccentColor()}`} />
-                    </div>
-                    <div className="flex-1">
-                        <h4 className="font-bold text-lg leading-tight mb-1">{cert.title}</h4>
-                        <div className="text-sm opacity-60 flex gap-2">
-                            <span>{cert.issuer}</span>
-                            <span>•</span>
-                            <span>{cert.date}</span>
+            {/* Citation Graph - Kept as is */}
+            <div className="mb-8 h-64 w-full">
+                <h3 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-6">Citation Growth</h3>
+                <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={PORTFOLIO_DATA.citation_history}>
+                        <defs>
+                            <linearGradient id="colorCitations" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor={(theme === 'light' || theme === 'spring') ? '#78716c' : '#ffffff'} stopOpacity={0.3}/>
+                                <stop offset="95%" stopColor={(theme === 'light' || theme === 'spring') ? '#78716c' : '#ffffff'} stopOpacity={0}/>
+                            </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={(theme === 'light' || theme === 'spring') ? "#e5e5e5" : "#ffffff30"} />
+                        <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{fill: (theme === 'light' || theme === 'spring') ? '#737373' : '#a3a3a3'}} />
+                        <YAxis axisLine={false} tickLine={false} tick={{fill: (theme === 'light' || theme === 'spring') ? '#737373' : '#a3a3a3'}} />
+                        <Tooltip 
+                            contentStyle={{ 
+                                backgroundColor: (theme === 'light' || theme === 'spring') ? '#fff' : '#171717', 
+                                borderColor: (theme === 'light' || theme === 'spring') ? '#e5e5e5' : '#404040', 
+                                borderRadius: '8px' 
+                            }}
+                        />
+                        <Area type="monotone" dataKey="citations" stroke={(theme === 'light' || theme === 'spring') ? '#78716c' : '#ffffff'} strokeWidth={3} fillOpacity={1} fill="url(#colorCitations)" />
+                    </AreaChart>
+                </ResponsiveContainer>
+            </div>
+
+            {/* Publication List - Converted to Timeline */}
+            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                {PORTFOLIO_DATA.publications.map((pub) => (
+                    <div key={pub.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                        ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                        
+                        {/* Bullet - CENTERED */}
+                        <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                            ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                            <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                        </div>
+
+                        <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+                            <div className="flex-1">
+                                <div className="flex gap-2 items-center mb-2">
+                                    <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded
+                                        ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200 text-stone-800' : 'bg-white/20 text-white'}`}>
+                                        {pub.type}
+                                    </span>
+                                    <span className="text-sm opacity-60">{pub.year}</span>
+                                </div>
+                                <h3 className={`text-lg md:text-xl font-bold mb-2 transition-colors ${getHoverTextColor()}`}>
+                                    {pub.title}
+                                </h3>
+                                <p className="opacity-70 mb-3 italic">
+                                    {pub.authors}
+                                </p>
+                                <div className="flex items-center gap-4 text-sm opacity-60">
+                                    <span className="font-semibold">{pub.journal}</span>
+                                    <span>•</span>
+                                    <span>{pub.citations} Citations</span>
+                                </div>
+                            </div>
+                            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity self-start md:self-center">
+                                <button className={`p-2 rounded-full hover:bg-black/5 hover:${getAccentColor()}`} title="Download PDF">
+                                    <FileText className="w-5 h-5" />
+                                </button>
+                                <button className={`p-2 rounded-full hover:bg-black/5 hover:${getAccentColor()}`} title="Cite">
+                                    <Award className="w-5 h-5" />
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <a href={cert.link} className={`p-2 rounded-full border transition-colors hover:bg-white/10 opacity-60 hover:opacity-100 
-                        ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
-                        <ExternalLink className="w-4 h-4" />
-                    </a>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
       </Section>
 
-      {/* --- SKILLS SECTION (NEW) --- */}
+      {/* --- PROJECTS (MOVED DOWN & CHANGED TO TIMELINE) --- */}
+      <Section id="projects">
+        <div className="flex flex-col gap-8">
+            <h2 className="text-3xl font-serif font-bold">Projects</h2>
+            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                {PORTFOLIO_DATA.projects.map((proj, i) => (
+                    <div key={i} className={`relative group pl-8 py-8 rounded-r-lg transition-all duration-300 border-transparent
+                        ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                        
+                        {/* Bullet - CENTERED */}
+                        <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                            ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                            <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                        </div>
+
+                        <div>
+                            <div className="flex justify-between items-start mb-4">
+                                <div className="flex items-center gap-3">
+                                    <Anchor className={`w-5 h-5 ${getAccentColor()}`} />
+                                    <h3 className={`text-2xl font-bold transition-colors ${getHoverTextColor()}`}>
+                                        {proj.title}
+                                    </h3>
+                                </div>
+                            </div>
+                            <p className="opacity-70 mb-4 max-w-3xl">
+                                {proj.description}
+                            </p>
+                            <div className="flex gap-2 flex-wrap mb-4">
+                                {proj.stack.map(tech => (
+                                    <span key={tech} className={`px-2 py-1 text-[10px] font-mono rounded opacity-70
+                                        ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10'}`}>
+                                        {tech}
+                                    </span>
+                                ))}
+                            </div>
+                            <button 
+                                onClick={(e) => { e.preventDefault(); setSelectedProject(proj); }}
+                                className={`inline-flex items-center text-sm font-bold hover:underline ${getAccentColor()}`}
+                            >
+                                View Project <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+      </Section>
+
+      {/* --- CERTIFICATIONS SECTION (CHANGED TO TIMELINE) --- */}
+      <Section id="certifications">
+        <div className="flex flex-col gap-8">
+            <h2 className="text-3xl font-serif font-bold">Certifications</h2>
+            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                {PORTFOLIO_DATA.certifications.map((cert, i) => (
+                    <div key={i} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                        ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                        
+                        {/* Bullet - CENTERED */}
+                        <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                            ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                            <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                        </div>
+
+                        <div className="flex flex-col md:flex-row md:items-center gap-4 justify-between">
+                            <div className="flex-1">
+                                <h4 className={`font-bold text-lg leading-tight mb-1 transition-colors ${getHoverTextColor()}`}>{cert.title}</h4>
+                                <div className="text-sm opacity-60 flex gap-2">
+                                    <span>{cert.issuer}</span>
+                                    <span>•</span>
+                                    <span>{cert.date}</span>
+                                </div>
+                            </div>
+                            <a href={cert.link} target="_blank" rel="noreferrer" className={`p-2 rounded-full border transition-colors hover:bg-white/10 opacity-60 hover:opacity-100 self-start md:self-center
+                                ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                                <ExternalLink className="w-4 h-4" />
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+      </Section>
+
+      {/* --- SKILLS SECTION (2-COLUMN TIMELINE) --- */}
       <Section id="skills">
-        <h2 className="text-3xl font-serif font-bold mb-12">Technical Expertise</h2>
-        <div className="grid md:grid-cols-2 gap-8">
-            {PORTFOLIO_DATA.skills.map((skill, i) => (
-                <div key={i} className={`group p-6 rounded-xl transition-all duration-300 ${getCardStyle()}`}>
-                    <div className="flex justify-between mb-3">
-                        <span className={`font-bold text-lg transition-colors ${getHoverTextColor()}`}>{skill.name}</span>
-                        <span className="opacity-60 font-mono text-sm">{skill.level}%</span>
-                    </div>
-                    <div className={`w-full h-2 rounded-full overflow-hidden ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10'}`}>
-                        <div 
-                            className={`h-full rounded-full transition-all duration-1000 ease-out ${getProgressBarColor()}`} 
-                            style={{ width: `${skill.level}%` }}
-                        />
-                    </div>
+        <div className="flex flex-col gap-8">
+            <h2 className="text-3xl font-serif font-bold">Technical Expertise</h2>
+            <h3 className="text-xl font-bold opacity-80">Software & Tools</h3>
+            
+            <div className="grid md:grid-cols-2 gap-12">
+                {/* Column 1 */}
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                    {PORTFOLIO_DATA.skills.slice(0, Math.ceil(PORTFOLIO_DATA.skills.length / 2)).map((skill, i) => (
+                        <div key={i} className={`relative group pl-8 pr-6 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                            ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                            
+                            {/* Bullet - CENTERED */}
+                            <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                                ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                            </div>
+
+                            <div>
+                                <div className="flex justify-between mb-2">
+                                    <span className={`font-bold text-lg transition-colors ${getHoverTextColor()}`}>{skill.name}</span>
+                                    <span className="opacity-60 font-mono text-sm">{skill.level}%</span>
+                                </div>
+                                <div className={`w-full h-2 rounded-full overflow-hidden ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10'}`}>
+                                    <div 
+                                        className={`h-full rounded-full transition-all duration-1000 ease-out ${getProgressBarColor()}`} 
+                                        style={{ width: `${skill.level}%` }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-            ))}
+
+                {/* Column 2 */}
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                    {PORTFOLIO_DATA.skills.slice(Math.ceil(PORTFOLIO_DATA.skills.length / 2)).map((skill, i) => (
+                        <div key={i} className={`relative group pl-8 pr-6 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                            ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                            
+                            {/* Bullet - CENTERED */}
+                            <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                                ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                            </div>
+
+                            <div>
+                                <div className="flex justify-between mb-2">
+                                    <span className={`font-bold text-lg transition-colors ${getHoverTextColor()}`}>{skill.name}</span>
+                                    <span className="opacity-60 font-mono text-sm">{skill.level}%</span>
+                                </div>
+                                <div className={`w-full h-2 rounded-full overflow-hidden ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10'}`}>
+                                    <div 
+                                        className={`h-full rounded-full transition-all duration-1000 ease-out ${getProgressBarColor()}`} 
+                                        style={{ width: `${skill.level}%` }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Nested Timeline for Tests - CHANGED TO VERTICAL LIST */}
+            {PORTFOLIO_DATA.tests && (
+                <div>
+                        <h3 className="text-xl font-bold mb-6 opacity-80">Standardized Tests & Languages</h3>
+                        <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                            {PORTFOLIO_DATA.tests.map((test, i) => (
+                                <div key={i} className={`relative group pl-8 py-4 rounded-r-lg transition-all duration-300 border-transparent
+                                    ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                                    
+                                    {/* Bullet - CENTERED */}
+                                    <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                                        ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                        <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                                    </div>
+
+                                    <div>
+                                        <div className={`text-xl font-bold mb-1 transition-colors ${getHoverTextColor()}`}>{test.name}</div>
+                                        <div className="text-sm opacity-60 flex gap-2">
+                                            <span>Score: {test.score}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                </div>
+            )}
         </div>
       </Section>
 
-      {/* --- PUBLICATIONS --- */}
-      <Section id="publications">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12">
-            <div>
-                <h2 className="text-3xl font-serif font-bold mb-4">Selected Publications</h2>
+      {/* --- CAREER / EXPERIENCE (MOVED BEFORE HOBBIES) --- */}
+      <Section id="career">
+          <div className="flex flex-col gap-8">
+            <div className="w-full">
+                <h2 className="text-3xl font-serif font-bold mb-4 flex items-center gap-3">
+                    <Briefcase className={`w-8 h-8 ${getAccentColor()}`} />
+                    Experience
+                </h2>
                 <p className="opacity-70">
-                    Peer-reviewed journals in structural engineering and materials science.
+                    Professional appointments and history.
                 </p>
             </div>
-            <div className="flex gap-2 mt-4 md:mt-0">
-                <button className={`px-4 py-2 text-sm font-medium rounded-md ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200 text-stone-800' : 'bg-white/10 text-white'}`}>
-                    All Years
-                </button>
-            </div>
-        </div>
-
-        {/* Citation Graph */}
-        <div className="mb-16 h-64 w-full">
-            <h3 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-6">Citation Growth</h3>
-            <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={PORTFOLIO_DATA.citation_history}>
-                    <defs>
-                        <linearGradient id="colorCitations" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor={(theme === 'light' || theme === 'spring') ? '#78716c' : '#ffffff'} stopOpacity={0.3}/>
-                            <stop offset="95%" stopColor={(theme === 'light' || theme === 'spring') ? '#78716c' : '#ffffff'} stopOpacity={0}/>
-                        </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={(theme === 'light' || theme === 'spring') ? "#e5e5e5" : "#ffffff30"} />
-                    <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{fill: (theme === 'light' || theme === 'spring') ? '#737373' : '#a3a3a3'}} />
-                    <YAxis axisLine={false} tickLine={false} tick={{fill: (theme === 'light' || theme === 'spring') ? '#737373' : '#a3a3a3'}} />
-                    <Tooltip 
-                        contentStyle={{ 
-                            backgroundColor: (theme === 'light' || theme === 'spring') ? '#fff' : '#171717', 
-                            borderColor: (theme === 'light' || theme === 'spring') ? '#e5e5e5' : '#404040', 
-                            borderRadius: '8px' 
-                        }}
-                    />
-                    <Area type="monotone" dataKey="citations" stroke={(theme === 'light' || theme === 'spring') ? '#78716c' : '#ffffff'} strokeWidth={3} fillOpacity={1} fill="url(#colorCitations)" />
-                </AreaChart>
-            </ResponsiveContainer>
-        </div>
-
-        {/* Publication List */}
-        <div className="space-y-6">
-            {PORTFOLIO_DATA.publications.map((pub) => (
-                <div key={pub.id} className={`group p-6 rounded-xl border transition-all duration-300 ${getCardStyle()}`}>
-                    <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                            <div className="flex gap-2 items-center mb-2">
-                                <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded
-                                    ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200 text-stone-800' : 'bg-white/20 text-white'}`}>
-                                    {pub.type}
+            <div className="w-full">
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                    {PORTFOLIO_DATA.experience.map((exp, idx) => (
+                        <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                            ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 
+                              'hover:bg-white/5'}`}>
+                            
+                            {/* Outer Circle (Static) - CENTERED */}
+                            <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                                ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                {/* Inner Dot (Changes Color) */}
+                                <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                            </div>
+                            
+                            <div>
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/20'}`}>
+                                    {exp.period}
                                 </span>
-                                <span className="text-sm opacity-60">{pub.year}</span>
-                            </div>
-                            <h3 className={`text-lg md:text-xl font-bold mb-2 transition-colors ${getHoverTextColor()}`}>
-                                {pub.title}
-                            </h3>
-                            <p className="opacity-70 mb-3 italic">
-                                {pub.authors}
-                            </p>
-                            <div className="flex items-center gap-4 text-sm opacity-60">
-                                <span className="font-semibold">{pub.journal}</span>
-                                <span>•</span>
-                                <span>{pub.citations} Citations</span>
+                                <h3 className={`text-xl font-bold mt-1 transition-colors duration-300 ${getHoverTextColor()}`}>{exp.role}</h3>
+                                <div className="text-lg font-medium opacity-90 mb-2">
+                                    {exp.institution}
+                                </div>
+                                <p className="opacity-70 leading-relaxed">
+                                    {exp.description}
+                                </p>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button className={`p-2 rounded-full hover:bg-black/5 hover:${getAccentColor()}`} title="Download PDF">
-                                <FileText className="w-5 h-5" />
-                            </button>
-                            <button className={`p-2 rounded-full hover:bg-black/5 hover:${getAccentColor()}`} title="Cite">
-                                <Award className="w-5 h-5" />
-                            </button>
-                        </div>
-                    </div>
+                    ))}
                 </div>
-            ))}
-        </div>
+            </div>
+          </div>
       </Section>
 
-      {/* --- HOBBIES SECTION (SHOWN WHEN VISIBLE) --- */}
+      {/* --- HOBBIES SECTION (MOVED BEFORE CONTACT) --- */}
       {showHobbies && (
         <Section id="hobbies">
              <div className="flex justify-between items-center mb-12">
@@ -1440,49 +1655,6 @@ export default function App() {
              <HobbiesContent />
         </Section>
       )}
-
-      {/* --- CAREER / EXPERIENCE --- */}
-      <Section id="career">
-          <div className="flex flex-col md:flex-row gap-12">
-            <div className="md:w-1/3">
-                <h2 className="text-3xl font-serif font-bold mb-4 flex items-center gap-3">
-                    <Briefcase className={`w-8 h-8 ${getAccentColor()}`} />
-                    Experience
-                </h2>
-                <p className="opacity-70">
-                    Professional appointments and history.
-                </p>
-            </div>
-            <div className="md:w-2/3 space-y-0">
-                <div className={`border-l-2 py-2 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
-                    {PORTFOLIO_DATA.experience.map((exp, idx) => (
-                        <div key={idx} className={`relative group pl-8 p-4 rounded-r-xl transition-all duration-300 border-transparent
-                            ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 
-                              'hover:bg-white/5'}`}>
-                            
-                            {/* Outer Circle (Static) */}
-                            <div className={`absolute -left-[9px] top-6 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
-                                {/* Inner Dot (Changes Color) */}
-                                <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
-                            </div>
-                            
-                            <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/20'}`}>
-                                {exp.period}
-                            </span>
-                            <h3 className={`text-xl font-bold mt-1 transition-colors duration-300 ${getHoverTextColor()}`}>{exp.role}</h3>
-                            <div className="text-lg font-medium opacity-90 mb-2">
-                                {exp.institution}
-                            </div>
-                            <p className="opacity-70 leading-relaxed">
-                                {exp.description}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-          </div>
-      </Section>
 
       {/* --- CONTACT (REDESIGNED - SPLIT CARD) --- */}
       <Section id="contact" className="mb-0 md:mb-12">
