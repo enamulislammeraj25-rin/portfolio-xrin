@@ -286,7 +286,6 @@ export default function App() {
 
   const navSunGlow = 'drop-shadow(0 0 1px #FFF6D4) drop-shadow(0 0 4px rgba(255,233,168,0.55)) drop-shadow(0 0 8px rgba(255,216,96,0.25))';
   const navSunGlowHover = 'drop-shadow(0 0 1px rgba(255,246,212,0.7)) drop-shadow(0 0 4px rgba(255,233,168,0.35))';
-  const navTextOutline = '-0.7px 0 #000, 0.7px 0 #000, 0 -0.7px #000, 0 0.7px #000, -0.7px -0.7px #000, 0.7px 0.7px #000, 0.7px -0.7px #000, -0.7px 0.7px #000';
 
   
   const getGlowStyle = () => {
@@ -584,14 +583,10 @@ export default function App() {
               <button 
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                style={{
-                  WebkitTextStroke: '0.35px #000',
-                  textShadow: navTextOutline,
-                  filter: on ? navSunGlow : undefined,
-                }}
+                style={on ? { filter: navSunGlow } : undefined}
                 onMouseEnter={(e) => { if (!on) e.currentTarget.style.filter = navSunGlowHover; }}
                 onMouseLeave={(e) => { if (!on) e.currentTarget.style.filter = ''; }}
-                className={`relative text-[11px] xl:text-xs h-full flex items-center px-2.5 xl:px-3 font-medium whitespace-nowrap transition-all duration-500
+                className={`relative text-[13px] xl:text-sm h-full flex items-center px-2.5 xl:px-3.5 font-medium whitespace-nowrap transition-all duration-500
                     ${on
                       ? `${getNavActiveColor()} opacity-100`
                       : `opacity-70 ${getNavHoverColor()} ${(theme === 'light' || theme === 'spring') ? 'text-stone-600' : 'text-white'}`}`}
