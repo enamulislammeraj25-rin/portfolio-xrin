@@ -284,8 +284,8 @@ export default function App() {
       return 'text-[#FFFBE6]';
   }
 
-  const navSunGlow = 'drop-shadow(0 0 2px #fff) drop-shadow(0 0 6px #fff) drop-shadow(0 0 14px #FFF6D4) drop-shadow(0 0 28px #FFE9A8) drop-shadow(0 0 56px #FFD878) drop-shadow(0 0 90px #FFD060) drop-shadow(0 0 140px rgba(255,208,80,1)) drop-shadow(0 0 200px rgba(255,196,60,0.85)) drop-shadow(0 0 280px rgba(255,188,50,0.55))';
-  const navSunGlowHover = 'drop-shadow(0 0 2px #fff) drop-shadow(0 0 10px #FFF6D4) drop-shadow(0 0 24px #FFE9A8) drop-shadow(0 0 48px rgba(255,216,96,0.8))';
+  const navSunGlow = 'drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #FFF6D4) drop-shadow(0 0 16px rgba(255,233,168,0.85)) drop-shadow(0 0 26px rgba(255,216,96,0.4))';
+  const navSunGlowHover = 'drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px rgba(255,246,212,0.8)) drop-shadow(0 0 14px rgba(255,233,168,0.45))';
 
   
   const getGlowStyle = () => {
