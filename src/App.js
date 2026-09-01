@@ -280,11 +280,13 @@ export default function App() {
   }
 
   const getNavActiveColor = () => {
-      if (theme === 'light' || theme === 'spring') {
-          return 'text-stone-900 drop-shadow-[0_0_4px_rgba(255,255,255,1)] drop-shadow-[0_0_14px_rgba(255,244,200,1)] drop-shadow-[0_0_32px_rgba(255,228,150,0.7)] drop-shadow-[0_0_52px_rgba(255,220,130,0.35)]';
-      }
-      return 'text-[#FFF6D4] drop-shadow-[0_0_4px_rgba(255,255,255,1)] drop-shadow-[0_0_14px_rgba(255,244,200,1)] drop-shadow-[0_0_32px_rgba(255,228,150,0.75)] drop-shadow-[0_0_54px_rgba(255,220,130,0.4)]';
+      if (theme === 'light' || theme === 'spring') return 'text-stone-900';
+      return 'text-[#FFFBE6]';
   }
+
+  const navSunGlow = 'drop-shadow(0 0 2px #fff) drop-shadow(0 0 6px #fff) drop-shadow(0 0 14px #FFF6D4) drop-shadow(0 0 28px #FFE9A8) drop-shadow(0 0 56px #FFD878) drop-shadow(0 0 90px #FFD060) drop-shadow(0 0 140px rgba(255,208,80,1)) drop-shadow(0 0 200px rgba(255,196,60,0.85)) drop-shadow(0 0 280px rgba(255,188,50,0.55))';
+  const navSunGlowHover = 'drop-shadow(0 0 2px #fff) drop-shadow(0 0 10px #FFF6D4) drop-shadow(0 0 24px #FFE9A8) drop-shadow(0 0 48px rgba(255,216,96,0.8))';
+
   
   const getGlowStyle = () => {
       switch (theme) {
@@ -581,6 +583,9 @@ export default function App() {
               <button 
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
+                style={on ? { filter: navSunGlow } : undefined}
+                onMouseEnter={(e) => { if (!on) e.currentTarget.style.filter = navSunGlowHover; }}
+                onMouseLeave={(e) => { if (!on) e.currentTarget.style.filter = ''; }}
                 className={`relative text-[11px] xl:text-xs h-full flex items-center px-2.5 xl:px-3 font-medium whitespace-nowrap transition-all duration-500
                     ${on
                       ? `${getNavActiveColor()} opacity-100`
