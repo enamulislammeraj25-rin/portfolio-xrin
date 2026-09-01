@@ -151,16 +151,28 @@ export const PORTFOLIO_DATA = {
 
   // --- EDITABLE: Research Topic Keywords ---
   research_interests: [
-    { id: "liq", topic: "Soil liquefaction", short: "Liquefaction", status: "now", x: 22, y: 28, note: "M.Sc. core: Vs-based deterministic and probabilistic assessment for the DMDP area." },
-    { id: "site", topic: "Seismic site characterisation", short: "Site characterisation", status: "now", x: 78, y: 26, note: "Shear-wave velocity profiling and regional seismic soil response." },
-    { id: "dyn", topic: "Seismic soil dynamics", short: "Soil dynamics", status: "now", x: 18, y: 68, note: "Ground motion effects on soil behaviour under earthquake loading." },
-    { id: "found", topic: "Foundation engineering", short: "Foundations", status: "now", x: 82, y: 70, note: "Pile response, sloping ground, and foundation performance." },
-    { id: "fea", topic: "Numerical modelling (PLAXIS / FEA)", short: "FEA / PLAXIS", status: "now", x: 50, y: 18, note: "Finite-element analysis of piles, slopes, and transient flow." },
-    { id: "comp", topic: "Computational geomechanics", short: "Comp. geomechanics", status: "phd", x: 12, y: 48, note: "Intended PhD direction: higher-resolution numerical methods for geomaterials." },
-    { id: "ssi", topic: "Soil–structure interaction", short: "SSI", status: "phd", x: 88, y: 48, note: "Intended PhD direction: coupled foundation–structure response." },
-    { id: "off", topic: "Offshore geotechnics", short: "Offshore", status: "phd", x: 32, y: 86, note: "Possible later track: foundations in marine and coastal settings." },
-    { id: "gi", topic: "Ground improvement", short: "Ground improvement", status: "phd", x: 68, y: 88, note: "HVDM / vacuum consolidation and other improvement methods." },
-    { id: "haz", topic: "Geohazards and resilient infrastructure", short: "Geohazards", status: "phd", x: 50, y: 78, note: "Regional risk, sustainability, and resilient ground systems." }
+    { id: "liq", topic: "Soil liquefaction", short: "Liquefaction", size: 22, drift: 0.07, note: "M.Sc. core: Vs-based deterministic and probabilistic assessment for the DMDP area." },
+    { id: "site", topic: "Seismic site characterisation", short: "Site characterisation", size: 18, drift: 0.09, note: "Shear-wave velocity profiling and regional seismic soil response." },
+    { id: "dyn", topic: "Seismic soil dynamics", short: "Soil dynamics", size: 16, drift: 0.06, note: "Ground-motion effects on soil under earthquake loading." },
+    { id: "found", topic: "Foundation engineering", short: "Foundations", size: 20, drift: 0.08, note: "Pile response, sloping ground, and foundation performance." },
+    { id: "fea", topic: "Numerical modelling (PLAXIS / FEA)", short: "FEA / PLAXIS", size: 17, drift: 0.11, note: "Finite-element analysis of piles, slopes, and transient flow." },
+    { id: "prob", topic: "Probabilistic geotechnical assessment", short: "Probabilistic", size: 15, drift: 0.05, note: "Factor of safety, probability of liquefaction, LPI / LSN mapping." },
+    { id: "ssi", topic: "Soil–structure interaction", short: "SSI", size: 19, drift: 0.1, note: "Coupled foundation–structure response under cyclic and seismic load." },
+    { id: "comp", topic: "Computational geomechanics", short: "Comp. geomechanics", size: 16, drift: 0.07, note: "Constitutive models and higher-resolution numerical methods." },
+    { id: "gi", topic: "Ground improvement / HVDM", short: "Ground improvement", size: 18, drift: 0.09, note: "Vacuum consolidation and HVDM; manuscript submitted." },
+    { id: "off", topic: "Offshore geotechnics", short: "Offshore", size: 21, drift: 0.06, note: "Marine foundations for wind and energy structures." },
+    { id: "nuc", topic: "Nuclear and critical-facility seismic geo", short: "Nuclear / critical sites", size: 17, drift: 0.08, note: "Site characterisation and SSI for nuclear, LNG, and essential facilities." },
+    { id: "energy", topic: "Energy geotechnics", short: "Energy geo", size: 16, drift: 0.12, note: "Foundations and sites for oil, gas, and power infrastructure." },
+    { id: "mine", topic: "Mining geotechnics", short: "Mining geo", size: 15, drift: 0.07, note: "Pit slopes, tailings, and large-strain soil behaviour." },
+    { id: "life", topic: "Lifeline infrastructure seismic geo", short: "Lifelines", size: 14, drift: 0.1, note: "Ports, bridges, hospitals, and data-centre foundations under earthquake load." },
+    { id: "twin", topic: "Geo-monitoring and digital twins", short: "Monitoring", size: 13, drift: 0.13, note: "Field instrumentation tied back to numerical models." },
+    { id: "cyc", topic: "Cyclic soil behaviour", short: "Cyclic soils", size: 15, drift: 0.08, note: "Strength degradation and pore-pressure build-up under repeated loading." },
+    { id: "marine", topic: "Marine and coastal foundations", short: "Marine foundations", size: 16, drift: 0.09, note: "Scour, soft sediments, and waterfront foundation systems." },
+    { id: "dam", topic: "Dam and levee geotechnics", short: "Dams / levees", size: 14, drift: 0.06, note: "Stability, seepage, and seismic performance of water-retaining earthworks." },
+    { id: "port", topic: "Port and waterfront geotechnics", short: "Ports", size: 13, drift: 0.11, note: "Quay walls, piled decks, and soft-ground waterfront works." },
+    { id: "haz", topic: "Regional seismic hazard and geohazards", short: "Geohazards", size: 15, drift: 0.07, note: "Regional liquefaction, landslide, and ground-failure screening." },
+    { id: "soft", topic: "Soft-soil engineering", short: "Soft soils", size: 16, drift: 0.1, note: "Compressible deposits, settlement, and improvement design." },
+    { id: "piles", topic: "Pile groups under lateral load", short: "Pile groups", size: 18, drift: 0.08, note: "Uniform and non-uniform group response; related to published ICACE work." }
   ],
 
   // --- EDITABLE: Citation Graph Data ---
@@ -193,6 +205,33 @@ export const PORTFOLIO_DATA = {
       certificate: "/papers/ICACE2024_participation_certificate.pdf",
       citation: "Meraj, M. E. I. B., Hridoy, K. H., & Alim, M. A. (2024). Behavior of single pile in cohesionless soil on horizontal & sloping ground surface under lateral loading. Proceedings of the 7th International Conference on Advances in Civil Engineering (ICACE 2024), CUET, Bangladesh (Paper ID: 194)."
     },
+  ],
+
+  working_papers: [
+    {
+      id: "wp-liq",
+      status: "In progress",
+      title: "Shear Wave Velocity-Based Deterministic and Probabilistic Liquefaction Assessment of DMDP Area in Bangladesh",
+      venue: "M.Sc. thesis, BUET",
+      year: "2025–",
+      note: "Supervisor: Prof. Dr. Mehedi Ahmed Ansary."
+    },
+    {
+      id: "wp-hvdm",
+      status: "Submitted",
+      title: "Vacuum-Based Soft Soil Improvement: A PRISMA-Guided Systematic Review with Special Emphasis on the High Vacuum Densification Method (HVDM)",
+      venue: "Journal manuscript",
+      year: "2025",
+      note: "Under review."
+    },
+    {
+      id: "wp-lca",
+      status: "In progress",
+      title: "Life Cycle Analysis of a Rural Road with Wrapped-Face Wall Against Conventional Slope-Based Construction",
+      venue: "Working paper",
+      year: "2025–",
+      note: "Comparative LCA of earthworks alternatives."
+    }
   ],
 
   // --- EDITABLE: Projects & Tools ---

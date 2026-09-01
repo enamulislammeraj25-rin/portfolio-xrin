@@ -43,6 +43,7 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [copiedCiteId, setCopiedCiteId] = useState(null);
   const [selectedInterest, setSelectedInterest] = useState(null);
+  const [activeSection, setActiveSection] = useState('about');
 
   // Cycle through 8 themes
   const cycleTheme = () => {
@@ -62,6 +63,15 @@ export default function App() {
         }
         // Auto-close menu on scroll
         if (menuOpen) setMenuOpen(false);
+
+        const ids = ['about','education','research','publications','projects','certifications','skills','career','hobbies','contact'];
+        const y = window.scrollY + 96;
+        let current = ids[0];
+        for (const id of ids) {
+            const el = document.getElementById(id);
+            if (el && el.offsetTop <= y) current = id;
+        }
+        setActiveSection(current);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -102,14 +112,6 @@ export default function App() {
 
     setSearchResults(results);
   }, [searchQuery]);
-
-  const desktopNavLinks = [
-    { name: "Education", id: "education" },
-    { name: "Research", id: "research" },
-    { name: "Publications", id: "publications" },
-    { name: "Projects", id: "projects" },
-    { name: "Career", id: "career" }
-  ];
 
   const allNavLinks = [
     { name: "About", id: "about" },
@@ -539,7 +541,7 @@ export default function App() {
                   <button 
                     key={link.id}
                     onClick={() => scrollToSection(link.id)}
-                    className={`block w-full text-left text-base font-medium opacity-90 hover:opacity-100 ${getMenuLinkHoverStyle()}`}
+                    className={`block w-full text-left text-base font-medium ${getMenuLinkHoverStyle()} ${activeSection === link.id ? 'opacity-100 ' + getAccentColor() : 'opacity-70'}`}
                   >
                     {link.name}
                   </button>
@@ -571,17 +573,21 @@ export default function App() {
             </div>
           </div>
 
-          <div className="hidden md:flex items-center h-full gap-0">
-            {desktopNavLinks.map((link) => (
+          <div className="hidden lg:flex items-center h-full gap-0 overflow-x-auto">
+            {allNavLinks.map((link) => {
+              const on = activeSection === link.id;
+              return (
               <button 
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className={`text-sm h-full flex items-center px-6 font-medium transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] opacity-90 ${getNavHoverColor()} 
-                    ${(theme === 'light' || theme === 'spring') ? 'text-stone-600' : 'text-white'}`}
+                className={`text-[11px] xl:text-xs h-full flex items-center px-2.5 xl:px-3 font-medium whitespace-nowrap border-b-2 transition-all duration-300
+                    ${on
+                      ? `${getAccentColor()} border-current opacity-100`
+                      : `border-transparent opacity-70 ${getNavHoverColor()} ${(theme === 'light' || theme === 'spring') ? 'text-stone-600' : 'text-white'}`}`}
               >
                 {link.name}
               </button>
-            ))}
+            );})}
           </div>
 
           <div className="flex items-center space-x-4">
@@ -784,12 +790,8 @@ export default function App() {
             <div className="w-full">
                  <h2 className="text-3xl font-serif font-bold mb-4">Research Interests</h2>
                  <p className="opacity-70 max-w-2xl">
-                     Current M.Sc. work sits at the centre. Dashed nodes are fields I want to carry into a PhD.
+                     Click a node to bring it forward. The list below follows the same selection.
                  </p>
-                 <div className="flex gap-4 mt-3 text-xs opacity-70">
-                    <span className="inline-flex items-center gap-2"><span className="w-3 h-3 rounded-full border-2 border-current" /> Now</span>
-                    <span className="inline-flex items-center gap-2"><span className="w-3 h-3 rounded-full border-2 border-dashed border-current" /> PhD path</span>
-                 </div>
             </div>
             
             <div className="w-full mb-4">
@@ -801,35 +803,28 @@ export default function App() {
                  />
             </div>
 
-            <div className="w-full">
-                 <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
-                     {PORTFOLIO_DATA.research_interests.map((interest) => (
+            <div className="w-full grid md:grid-cols-2 gap-3">
+                     {[...PORTFOLIO_DATA.research_interests].sort((a, b) => {
+                         if (a.id === selectedInterest) return -1;
+                         if (b.id === selectedInterest) return 1;
+                         return 0;
+                     }).map((interest) => (
                          <button
                             type="button"
                             key={interest.id}
                             id={`interest-${interest.id}`}
                             onClick={() => setSelectedInterest(interest.id === selectedInterest ? null : interest.id)}
-                            className={`relative group w-full text-left pl-8 py-5 rounded-r-lg transition-all duration-300 border-transparent
+                            className={`text-left p-4 rounded-lg transition-all duration-300 border
                             ${selectedInterest === interest.id
-                                ? ((theme === 'light' || theme === 'spring') ? 'bg-white' : 'bg-white/10')
-                                : ((theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5')}`}
+                                ? ((theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-white/10 border-white/20')
+                                : ((theme === 'light' || theme === 'spring') ? 'border-transparent hover:bg-white' : 'border-transparent hover:bg-white/5')}`}
                          >
-                              <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
-                                  ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
-                                  <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
-                              </div>
-                              <div className="flex flex-wrap items-center gap-3">
-                                  <span className={`text-lg font-medium ${getHoverTextColor()}`}>{interest.topic}</span>
-                                  <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border ${interest.status === 'now' ? '' : 'border-dashed'} opacity-70`}>
-                                    {interest.status === 'now' ? 'Now' : 'PhD path'}
-                                  </span>
-                              </div>
+                              <span className={`text-base font-medium ${getHoverTextColor()}`}>{interest.topic}</span>
                               {interest.note && selectedInterest === interest.id && (
-                                <p className="mt-2 text-sm opacity-70 max-w-2xl">{interest.note}</p>
+                                <p className="mt-2 text-sm opacity-70">{interest.note}</p>
                               )}
                          </button>
                      ))}
-                 </div>
             </div>
         </div>
       </Section>
@@ -841,7 +836,7 @@ export default function App() {
                 <div>
                     <h2 className="text-3xl font-serif font-bold mb-4">Selected Publications</h2>
                     <p className="opacity-70">
-                        Peer-reviewed journals in structural engineering and materials science.
+                        Published work and manuscripts in progress.
                     </p>
                 </div>
                 <div className="flex gap-2 mt-4 md:mt-0">
@@ -877,8 +872,25 @@ export default function App() {
                 </ResponsiveContainer>
             </div>
 
+            {PORTFOLIO_DATA.working_papers && PORTFOLIO_DATA.working_papers.length > 0 && (
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-4">In progress</h3>
+                <div className="grid md:grid-cols-2 gap-4 mb-8">
+                  {PORTFOLIO_DATA.working_papers.map((wp) => (
+                    <div key={wp.id} className={`p-5 rounded-lg border ${(theme === 'light' || theme === 'spring') ? 'border-stone-200 bg-white' : 'border-white/10 bg-white/5'}`}>
+                      <div className="text-[10px] uppercase tracking-wider opacity-60 mb-2">{wp.status} · {wp.year}</div>
+                      <h4 className="font-semibold leading-snug mb-2">{wp.title}</h4>
+                      <p className="text-sm opacity-60 italic mb-1">{wp.venue}</p>
+                      {wp.note && <p className="text-sm opacity-70">{wp.note}</p>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Publication List - Converted to Timeline */}
             <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                <h3 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-4 ml-8">Published</h3>
                 {PORTFOLIO_DATA.publications.map((pub) => (
                     <div key={pub.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                         ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
@@ -918,7 +930,10 @@ export default function App() {
                                 )}
                                 {pub.pdf && (
                                   <a href={pub.pdf} download className={`p-2 rounded-full hover:bg-black/5 ${getAccentColor()}`} title="Download paper">
-                                    <FileText className="w-5 h-5" />
+                                    <span className="relative inline-flex w-5 h-6">
+                                      <FileText className="w-5 h-5" />
+                                      <ArrowDown className="w-3 h-3 absolute -bottom-0.5 left-1/2 -translate-x-1/2" />
+                                    </span>
                                   </a>
                                 )}
                                 {pub.certificate && (
