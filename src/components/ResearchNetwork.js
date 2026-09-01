@@ -18,14 +18,22 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
         const measure = () => ({ w: Math.max(320, el.clientWidth), h: Math.max(320, el.clientHeight) });
         let { w, h } = measure();
 
-        // Start piled in the centre so the graph "explodes" like the reference clip
+        const palette = [
+            '#7DD3C7', '#8EC5F0', '#C4B5FD', '#F3B48B',
+            '#86E3CE', '#F6D58A', '#7EB6D9', '#F2A7C3',
+            '#6EE7B7', '#93C5FD', '#F0C987', '#A5B4FC',
+            '#99E6C3', '#F5B19C', '#67E8F9', '#D8B4FE',
+            '#FDE68A', '#5EEAD4', '#BFDBFE', '#F9A8D4',
+            '#A7F3D0', '#FCD34D'
+        ];
         const nodes = interests.map((item, i) => ({
             ...item,
             x: w / 2 + (Math.random() - 0.5) * 16,
             y: h / 2 + (Math.random() - 0.5) * 16,
             vx: 0,
             vy: 0,
-            r: 8 + (item.size || 14) * 0.42,
+            r: 6 + (item.size || 14) * 0.28,
+            color: palette[i % palette.length],
         }));
 
         const links = (PORTFOLIO_DATA.research_links || [])
@@ -52,9 +60,9 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                     let dy = ns[j].y - ns[i].y;
                     let d2 = dx * dx + dy * dy || 0.01;
                     let d = Math.sqrt(d2);
-                    const minD = ns[i].r + ns[j].r + 36;
-                    let force = 900 / d2;
-                    if (d < minD) force += (minD - d) * 0.14;
+                    const minD = ns[i].r + ns[j].r + 64;
+                    let force = 2600 / d2;
+                    if (d < minD) force += (minD - d) * 0.22;
                     const fx = (dx / d) * force;
                     const fy = (dy / d) * force;
                     ns[i].vx -= fx;
@@ -68,8 +76,8 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                 const dx = l.target.x - l.source.x;
                 const dy = l.target.y - l.source.y;
                 const d = Math.sqrt(dx * dx + dy * dy) || 1;
-                const rest = 110;
-                const k = (d - rest) * 0.02;
+                const rest = 168;
+                const k = (d - rest) * 0.014;
                 const fx = (dx / d) * k;
                 const fy = (dy / d) * k;
                 l.source.vx += fx;
@@ -86,8 +94,8 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                     n.vy = 0;
                     return;
                 }
-                n.vx += (W / 2 - n.x) * 0.012;
-                n.vy += (H / 2 - n.y) * 0.012;
+                n.vx += (W / 2 - n.x) * 0.0035;
+                n.vy += (H / 2 - n.y) * 0.0035;
                 if (sel && n.id === sel) {
                     n.vx += (W / 2 - n.x) * 0.05;
                     n.vy += (H * 0.4 - n.y) * 0.05;
@@ -96,7 +104,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                 n.vy *= 0.82;
                 n.x += n.vx;
                 n.y += n.vy;
-                const pad = n.r + 40;
+                const pad = n.r + 52;
                 n.x = Math.max(pad, Math.min(W - pad, n.x));
                 n.y = Math.max(pad, Math.min(H - pad, n.y));
             });
@@ -104,7 +112,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             setFrame({
                 w: W,
                 h: H,
-                nodes: ns.map((n) => ({ id: n.id, x: n.x, y: n.y, r: n.r, short: n.short, topic: n.topic })),
+                nodes: ns.map((n) => ({ id: n.id, x: n.x, y: n.y, r: n.r, short: n.short, topic: n.topic, color: n.color })),
             });
         };
 
@@ -183,7 +191,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             stroke = '#0d9488';
             labelCls = 'text-stone-800';
             ring = '#0f766e';
-            line = 'rgba(13,148,136,0.4)';
+            line = 'rgba(17,24,39,0.38)';
             break;
         case 'midnight':
             cardClass = 'bg-slate-900/50 border-slate-800';
@@ -191,7 +199,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             stroke = '#818cf8';
             labelCls = 'text-indigo-50';
             ring = '#a5b4fc';
-            line = 'rgba(129,140,248,0.4)';
+            line = 'rgba(17,24,39,0.38)';
             break;
         case 'nature':
             cardClass = 'bg-stone-900/40 border-stone-700';
@@ -199,7 +207,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             stroke = '#84cc16';
             labelCls = 'text-stone-100';
             ring = '#a3e635';
-            line = 'rgba(132,204,22,0.4)';
+            line = 'rgba(17,24,39,0.38)';
             break;
         case 'musgravite':
             cardClass = 'bg-purple-950/30 border-purple-800/40';
@@ -207,7 +215,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             stroke = '#c084fc';
             labelCls = 'text-purple-50';
             ring = '#e9d5ff';
-            line = 'rgba(192,132,252,0.4)';
+            line = 'rgba(17,24,39,0.38)';
             break;
         case 'ruby':
             cardClass = 'bg-red-950/20 border-red-900/40';
@@ -215,7 +223,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             stroke = '#f87171';
             labelCls = 'text-red-50';
             ring = '#fca5a5';
-            line = 'rgba(248,113,113,0.4)';
+            line = 'rgba(17,24,39,0.38)';
             break;
         case 'emerald':
             cardClass = 'bg-emerald-950/20 border-emerald-900/40';
@@ -223,7 +231,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             stroke = '#34d399';
             labelCls = 'text-emerald-50';
             ring = '#6ee7b7';
-            line = 'rgba(52,211,153,0.4)';
+            line = 'rgba(17,24,39,0.38)';
             break;
         default:
             cardClass = 'bg-neutral-900/50 border-white/10';
@@ -231,7 +239,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             stroke = '#2dd4bf';
             labelCls = 'text-neutral-100';
             ring = '#5eead4';
-            line = 'rgba(45,212,191,0.38)';
+            line = 'rgba(17,24,39,0.38)';
     }
 
     const active = hoverId || selectedId;
@@ -252,7 +260,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
     return (
         <div
             ref={wrapRef}
-            className={`relative w-full h-[28rem] md:h-[36rem] border rounded-lg overflow-hidden cursor-grab active:cursor-grabbing ${cardClass}`}
+            className={`relative w-full h-[34rem] md:h-[44rem] border rounded-lg overflow-hidden cursor-grab active:cursor-grabbing ${cardClass}`}
             onMouseDown={onDown}
             onMouseMove={onMove}
             onMouseUp={onUp}
@@ -269,8 +277,8 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                         y1={l.s.y}
                         x2={l.t.x}
                         y2={l.t.y}
-                        stroke={l.hot ? ring : line}
-                        strokeWidth={l.hot ? 2.4 : 1.1}
+                        stroke={l.hot ? '#0f766e' : line}
+                        strokeWidth={l.hot ? 2.2 : 1}
                     />
                 ))}
                 {frame.nodes.map((n) => (
@@ -279,9 +287,9 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                         cx={n.x}
                         cy={n.y}
                         r={active === n.id ? n.r + 4 : n.r}
-                        fill={fill}
-                        stroke={active === n.id || linked.has(n.id) ? ring : stroke}
-                        strokeWidth={active === n.id ? 3 : 2}
+                        fill={n.color || fill}
+                        stroke="#111827"
+                        strokeWidth={active === n.id ? 3.2 : 2.4}
                     />
                 ))}
             </svg>
@@ -291,7 +299,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                     className={`absolute pointer-events-none -translate-x-1/2 text-center ${labelCls}`}
                     style={{ left: n.x, top: n.y + n.r + 4, width: 120 }}
                 >
-                    <span className="text-[10px] md:text-[11px] font-semibold leading-tight">{n.short}</span>
+                    <span className="text-[10px] md:text-[11px] font-semibold leading-tight" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.45)' }}>{n.short}</span>
                 </div>
             ))}
         </div>
