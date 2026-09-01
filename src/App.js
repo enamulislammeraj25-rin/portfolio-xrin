@@ -316,6 +316,7 @@ export default function App() {
 
   const navSunGlow = 'drop-shadow(0 0 1px #FFF6D4) drop-shadow(0 0 4px rgba(255,233,168,0.55)) drop-shadow(0 0 8px rgba(255,216,96,0.25))';
   const navSunGlowHover = 'drop-shadow(0 0 1px rgba(255,246,212,0.7)) drop-shadow(0 0 4px rgba(255,233,168,0.35))';
+  const headingSunGlow = 'drop-shadow(0 0 1px #FFF6D4) drop-shadow(0 0 3px rgba(255,233,168,0.4)) drop-shadow(0 0 6px rgba(255,216,96,0.18))';
 
   
   const getGlowStyle = () => {
@@ -910,7 +911,7 @@ export default function App() {
 
             {PORTFOLIO_DATA.working_papers && PORTFOLIO_DATA.working_papers.length > 0 && (
               <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-4 ml-8">In progress</h3>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(theme === 'light' || theme === 'spring') ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>In progress</h3>
                 {PORTFOLIO_DATA.working_papers.map((wp) => (
                   <div key={wp.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                       ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
@@ -937,7 +938,7 @@ export default function App() {
 
             {/* Publication List - Converted to Timeline */}
             <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-4 ml-8">Published</h3>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(theme === 'light' || theme === 'spring') ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>Published</h3>
                 {PORTFOLIO_DATA.publications.map((pub) => (
                     <div key={pub.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                         ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
