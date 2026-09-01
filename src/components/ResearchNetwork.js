@@ -104,6 +104,35 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                 }
                 n.x += n.vx;
                 n.y += n.vy;
+            });
+
+            for (let i = 0; i < ns.length; i++) {
+                for (let j = i + 1; j < ns.length; j++) {
+                    const a = ns[i];
+                    const b = ns[j];
+                    let dx = b.x - a.x;
+                    let dy = b.y - a.y;
+                    let d = Math.hypot(dx, dy) || 0.01;
+                    const minD = a.r + b.r + 36;
+                    if (d >= minD) continue;
+                    const overlap = (minD - d) / 2;
+                    const ux = dx / d;
+                    const uy = dy / d;
+                    if (!a.fixed) { a.x -= ux * overlap; a.y -= uy * overlap; }
+                    if (!b.fixed) { b.x += ux * overlap; b.y += uy * overlap; }
+                    if (!a.fixed && !b.fixed) {
+                        const tvx = a.vx;
+                        const tvy = a.vy;
+                        a.vx = b.vx * 0.85;
+                        a.vy = b.vy * 0.85;
+                        b.vx = tvx * 0.85;
+                        b.vy = tvy * 0.85;
+                    }
+                }
+            }
+
+            ns.forEach((n) => {
+                if (n.fixed) return;
                 const pad = n.r + 48;
                 if (n.x < pad) { n.x = pad; n.vx = Math.abs(n.vx); }
                 if (n.x > W - pad) { n.x = W - pad; n.vx = -Math.abs(n.vx); }
