@@ -273,31 +273,18 @@ export default function App() {
 
   // Updated Nav Hover - Glow Text Effect Only (No background box)
   const getNavHoverColor = () => {
-      switch (theme) {
-          case 'dark': return 'hover:text-teal-300 hover:drop-shadow-[0_0_12px_rgba(94,234,212,0.95)]';
-          case 'light': return 'hover:text-teal-700 hover:drop-shadow-[0_0_10px_rgba(13,148,136,0.45)]';
-          case 'midnight': return 'hover:text-violet-300 hover:drop-shadow-[0_0_12px_rgba(196,181,253,0.9)]';
-          case 'spring': return 'hover:text-pink-500 hover:drop-shadow-[0_0_12px_rgba(249,168,212,0.85)]';
-          case 'nature': return 'hover:text-lime-300 hover:drop-shadow-[0_0_12px_rgba(190,242,100,0.85)]';
-          case 'musgravite': return 'hover:text-purple-200 hover:drop-shadow-[0_0_12px_rgba(216,180,254,0.9)]';
-          case 'ruby': return 'hover:text-rose-300 hover:drop-shadow-[0_0_12px_rgba(253,164,175,0.9)]';
-          case 'emerald': return 'hover:text-emerald-300 hover:drop-shadow-[0_0_12px_rgba(110,231,183,0.9)]';
-          default: return 'hover:text-teal-300 hover:drop-shadow-[0_0_12px_rgba(94,234,212,0.95)]';
+      const glow = 'hover:drop-shadow-[0_0_4px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,255,255,0.95)] hover:drop-shadow-[0_0_28px_rgba(255,255,255,0.7)]';
+      if (theme === 'light' || theme === 'spring') {
+          return `hover:text-stone-900 hover:drop-shadow-[0_0_6px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_16px_rgba(255,248,230,0.95)] hover:drop-shadow-[0_0_30px_rgba(255,237,213,0.75)]`;
       }
+      return `hover:text-white ${glow}`;
   }
 
   const getNavActiveColor = () => {
-      switch (theme) {
-          case 'dark': return 'text-teal-300 drop-shadow-[0_0_14px_rgba(94,234,212,1)]';
-          case 'light': return 'text-teal-700 drop-shadow-[0_0_10px_rgba(45,212,191,0.55)]';
-          case 'midnight': return 'text-violet-300 drop-shadow-[0_0_14px_rgba(196,181,253,1)]';
-          case 'spring': return 'text-pink-500 drop-shadow-[0_0_14px_rgba(249,168,212,0.95)]';
-          case 'nature': return 'text-lime-300 drop-shadow-[0_0_14px_rgba(190,242,100,0.95)]';
-          case 'musgravite': return 'text-purple-200 drop-shadow-[0_0_14px_rgba(216,180,254,1)]';
-          case 'ruby': return 'text-rose-300 drop-shadow-[0_0_14px_rgba(253,164,175,1)]';
-          case 'emerald': return 'text-emerald-300 drop-shadow-[0_0_14px_rgba(110,231,183,1)]';
-          default: return 'text-teal-300 drop-shadow-[0_0_14px_rgba(94,234,212,1)]';
+      if (theme === 'light' || theme === 'spring') {
+          return 'text-stone-900 drop-shadow-[0_0_5px_rgba(255,255,255,1)] drop-shadow-[0_0_16px_rgba(255,248,230,1)] drop-shadow-[0_0_34px_rgba(255,237,213,0.85)]';
       }
+      return 'text-white drop-shadow-[0_0_5px_rgba(255,255,255,1)] drop-shadow-[0_0_16px_rgba(255,255,255,1)] drop-shadow-[0_0_36px_rgba(255,255,255,0.85)] drop-shadow-[0_0_56px_rgba(255,255,255,0.45)]';
   }
   
   const getGlowStyle = () => {
