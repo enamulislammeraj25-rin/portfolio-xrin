@@ -151,11 +151,16 @@ export const PORTFOLIO_DATA = {
 
   // --- EDITABLE: Research Topic Keywords ---
   research_interests: [
-    { topic: "Seismic Resilience", subtopics: [] },
-    { topic: "Liquefaction", subtopics: [] },
-    { topic: "Seismic Soil Dynamics", subtopics: [] },
-    { topic: "Foundation Engineering", subtopics: [] },
-    { topic: "FEA Analysis", subtopics: [] }
+    { id: "liq", topic: "Soil liquefaction", short: "Liquefaction", status: "now", x: 22, y: 28, note: "M.Sc. core: Vs-based deterministic and probabilistic assessment for the DMDP area." },
+    { id: "site", topic: "Seismic site characterisation", short: "Site characterisation", status: "now", x: 78, y: 26, note: "Shear-wave velocity profiling and regional seismic soil response." },
+    { id: "dyn", topic: "Seismic soil dynamics", short: "Soil dynamics", status: "now", x: 18, y: 68, note: "Ground motion effects on soil behaviour under earthquake loading." },
+    { id: "found", topic: "Foundation engineering", short: "Foundations", status: "now", x: 82, y: 70, note: "Pile response, sloping ground, and foundation performance." },
+    { id: "fea", topic: "Numerical modelling (PLAXIS / FEA)", short: "FEA / PLAXIS", status: "now", x: 50, y: 18, note: "Finite-element analysis of piles, slopes, and transient flow." },
+    { id: "comp", topic: "Computational geomechanics", short: "Comp. geomechanics", status: "phd", x: 12, y: 48, note: "Intended PhD direction: higher-resolution numerical methods for geomaterials." },
+    { id: "ssi", topic: "Soil–structure interaction", short: "SSI", status: "phd", x: 88, y: 48, note: "Intended PhD direction: coupled foundation–structure response." },
+    { id: "off", topic: "Offshore geotechnics", short: "Offshore", status: "phd", x: 32, y: 86, note: "Possible later track: foundations in marine and coastal settings." },
+    { id: "gi", topic: "Ground improvement", short: "Ground improvement", status: "phd", x: 68, y: 88, note: "HVDM / vacuum consolidation and other improvement methods." },
+    { id: "haz", topic: "Geohazards and resilient infrastructure", short: "Geohazards", status: "phd", x: 50, y: 78, note: "Regional risk, sustainability, and resilient ground systems." }
   ],
 
   // --- EDITABLE: Citation Graph Data ---

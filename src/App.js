@@ -4,7 +4,7 @@ import {
   User, Briefcase, GraduationCap, 
   Award, Mail, Download, Search, 
   Menu, X, ChevronRight, Globe, Users, FileText,
-  MapPin, ArrowUpRight, Anchor, ArrowDown, ArrowUp,
+  MapPin, Anchor, ArrowDown, ArrowUp,
   Facebook, Instagram, Twitter, Send, MessageCircle,
   FileImage, FileCode, FolderOpen,
   CheckCircle2, Linkedin, ExternalLink,
@@ -42,6 +42,7 @@ export default function App() {
   // --- PROJECT MODAL STATE ---
   const [selectedProject, setSelectedProject] = useState(null);
   const [copiedCiteId, setCopiedCiteId] = useState(null);
+  const [selectedInterest, setSelectedInterest] = useState(null);
 
   // Cycle through 8 themes
   const cycleTheme = () => {
@@ -783,32 +784,50 @@ export default function App() {
             <div className="w-full">
                  <h2 className="text-3xl font-serif font-bold mb-4">Research Interests</h2>
                  <p className="opacity-70 max-w-2xl">
-                     Bridging physical infrastructure with digital intelligence.
+                     Current M.Sc. work sits at the centre. Dashed nodes are fields I want to carry into a PhD.
                  </p>
+                 <div className="flex gap-4 mt-3 text-xs opacity-70">
+                    <span className="inline-flex items-center gap-2"><span className="w-3 h-3 rounded-full border-2 border-current" /> Now</span>
+                    <span className="inline-flex items-center gap-2"><span className="w-3 h-3 rounded-full border-2 border-dashed border-current" /> PhD path</span>
+                 </div>
             </div>
             
-            {/* Optional: Keep Network Graph but maybe above or below list? Let's put it above */}
-            <div className="w-full mb-8">
-                 <ResearchNetwork theme={theme} />
+            <div className="w-full mb-4">
+                 <ResearchNetwork
+                    theme={theme}
+                    interests={PORTFOLIO_DATA.research_interests}
+                    selectedId={selectedInterest}
+                    onSelect={(id) => setSelectedInterest(id)}
+                 />
             </div>
 
             <div className="w-full">
                  <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
-                     {PORTFOLIO_DATA.research_interests.map((interest, i) => (
-                         <div key={i} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                            ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
-                              
-                              {/* Bullet - CENTERED */}
-                              <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                     {PORTFOLIO_DATA.research_interests.map((interest) => (
+                         <button
+                            type="button"
+                            key={interest.id}
+                            id={`interest-${interest.id}`}
+                            onClick={() => setSelectedInterest(interest.id === selectedInterest ? null : interest.id)}
+                            className={`relative group w-full text-left pl-8 py-5 rounded-r-lg transition-all duration-300 border-transparent
+                            ${selectedInterest === interest.id
+                                ? ((theme === 'light' || theme === 'spring') ? 'bg-white' : 'bg-white/10')
+                                : ((theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5')}`}
+                         >
+                              <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
                                   ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
-                                  <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                                  <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
                               </div>
-
-                              <div className="flex items-center gap-4">
-                                  <span className={`text-lg font-medium transition-colors duration-300 ${getHoverTextColor()}`}>{interest.topic}</span>
-                                  <ArrowUpRight className={`w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${getAccentColor()}`} />
+                              <div className="flex flex-wrap items-center gap-3">
+                                  <span className={`text-lg font-medium ${getHoverTextColor()}`}>{interest.topic}</span>
+                                  <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border ${interest.status === 'now' ? '' : 'border-dashed'} opacity-70`}>
+                                    {interest.status === 'now' ? 'Now' : 'PhD path'}
+                                  </span>
                               </div>
-                         </div>
+                              {interest.note && selectedInterest === interest.id && (
+                                <p className="mt-2 text-sm opacity-70 max-w-2xl">{interest.note}</p>
+                              )}
+                         </button>
                      ))}
                  </div>
             </div>
