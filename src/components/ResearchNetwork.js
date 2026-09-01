@@ -63,8 +63,8 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                 y: hy,
                 hx,
                 hy,
-                vx: 0,
-                vy: 0,
+                vx: (Math.random() - 0.5) * 0.22,
+                vy: (Math.random() - 0.5) * 0.22,
                 r: 7 + (item.size || 14) * 0.22,
                 color: PALETTE[i % PALETTE.length],
                 phase: ang,
@@ -102,28 +102,13 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                     n.vy = 0;
                     return;
                 }
-                if (drag && drag.id === n.id) {
-                    n.x = drag.x;
-                    n.y = drag.y;
-                    n.vx = 0;
-                    n.vy = 0;
-                    return;
-                }
-                const ox = Math.cos(t * 0.003 * n.spin + n.phase) * 10;
-                const oy = Math.sin(t * 0.0026 * n.spin + n.phase) * 10;
-                n.vx += (n.hx + ox - n.x) * 0.02;
-                n.vy += (n.hy + oy - n.y) * 0.02;
-                if (sel && n.id === sel) {
-                    n.vx += (W / 2 - n.x) * 0.03;
-                    n.vy += (H * 0.36 - n.y) * 0.03;
-                }
-                n.vx *= 0.9;
-                n.vy *= 0.9;
                 n.x += n.vx;
                 n.y += n.vy;
                 const pad = n.r + 48;
-                n.x = Math.max(pad, Math.min(W - pad, n.x));
-                n.y = Math.max(pad, Math.min(H - pad, n.y));
+                if (n.x < pad) { n.x = pad; n.vx = Math.abs(n.vx); }
+                if (n.x > W - pad) { n.x = W - pad; n.vx = -Math.abs(n.vx); }
+                if (n.y < pad) { n.y = pad; n.vy = Math.abs(n.vy); }
+                if (n.y > H - pad) { n.y = H - pad; n.vy = -Math.abs(n.vy); }
             });
 
             // keep home positions updated if canvas resized
@@ -175,25 +160,20 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
         });
         return best;
     };
-    const onDown = (e) => {
+    const onClick = (e) => {
         const p = clientPoint(e);
         const n = nearest(p.x, p.y);
-        if (!n || n.fixed) return;
-        dragRef.current = { id: n.id, x: p.x, y: p.y };
-        if (onSelect) onSelect(n.id);
-        e.preventDefault();
-    };
-    const onMove = (e) => {
-        if (!dragRef.current) {
-            const p = clientPoint(e);
-            const n = nearest(p.x, p.y);
-            setHoverId(n ? n.id : null);
+        if (!n || n.fixed) {
+            if (onSelect) onSelect(null);
             return;
         }
-        const p = clientPoint(e);
-        dragRef.current = { ...dragRef.current, x: p.x, y: p.y };
+        if (onSelect) onSelect(selectedRef.current === n.id ? null : n.id);
     };
-    const onUp = () => { dragRef.current = null; };
+    const onMove = (e) => {
+        const p = clientPoint(e);
+        const n = nearest(p.x, p.y);
+        setHoverId(n ? n.id : null);
+    };
 
     const isLight = theme === 'light' || theme === 'spring';
     const cardClass = isLight ? 'bg-white/70 border-stone-200' : 'bg-neutral-900/50 border-white/10';
@@ -212,14 +192,10 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
     return (
         <div
             ref={wrapRef}
-            className={`relative w-full h-[36rem] md:h-[46rem] border rounded-lg overflow-hidden cursor-grab active:cursor-grabbing ${cardClass}`}
-            onMouseDown={onDown}
+            className={`relative w-full h-[36rem] md:h-[46rem] border rounded-lg overflow-hidden cursor-pointer ${cardClass}`}
+            onClick={onClick}
             onMouseMove={onMove}
-            onMouseUp={onUp}
-            onMouseLeave={onUp}
-            onTouchStart={onDown}
-            onTouchMove={onMove}
-            onTouchEnd={onUp}
+            onMouseLeave={() => setHoverId(null)}
         >
             <svg className="absolute inset-0 w-full h-full pointer-events-none">
                 {drawnLinks.map((l) => (
@@ -249,7 +225,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                     style={{ left: n.x, top: n.fixed ? n.y + n.r + 6 : n.y + n.r + 4, width: n.fixed ? 150 : 128 }}
                 >
                     <span
-                        className={`font-semibold leading-tight ${n.fixed ? 'text-[11px] md:text-xs' : 'text-[10px] md:text-[11px]'}`}
+                        className={`font-semibold leading-tight transition-all duration-300 ${n.fixed ? 'text-[11px] md:text-xs' : (selectedId === n.id ? 'text-sm md:text-base' : 'text-[10px] md:text-[11px]')}`}
                         style={{ textShadow: '0 1px 2px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.45)' }}
                     >
                         {n.short}
