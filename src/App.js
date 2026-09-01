@@ -1312,7 +1312,7 @@ export default function App() {
                                 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`}>
                                 <option className="text-black">Research Collaboration</option>
                                 <option className="text-black">Speaking Inquiry</option>
-                                <option className="text-black">Manuscript / paper</option>
+                                <option className="text-black">Manuscript or paper</option>
                                 <option className="text-black">Other</option>
                             </select>
                             <ChevronRight className="absolute right-3 top-3.5 w-4 h-4 opacity-50 rotate-90 pointer-events-none" />
