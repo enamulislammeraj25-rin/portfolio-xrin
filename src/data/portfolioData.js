@@ -175,6 +175,21 @@ export const PORTFOLIO_DATA = {
     { id: "piles", topic: "Pile groups under lateral load", short: "Pile groups", size: 18, drift: 0.08, note: "Uniform and non-uniform group response; related to published ICACE work." }
   ],
 
+  research_links: [
+    ["liq","site"],["liq","dyn"],["liq","prob"],["liq","cyc"],["liq","haz"],
+    ["site","dyn"],["site","nuc"],["site","haz"],
+    ["dyn","cyc"],["dyn","life"],
+    ["found","ssi"],["found","piles"],["found","fea"],
+    ["ssi","nuc"],["ssi","life"],["ssi","piles"],["ssi","cyc"],
+    ["fea","comp"],["fea","twin"],["fea","dam"],["fea","piles"],
+    ["comp","twin"],
+    ["gi","soft"],["gi","dam"],["soft","port"],
+    ["off","marine"],["off","energy"],["off","port"],
+    ["marine","port"],["energy","nuc"],["energy","off"],
+    ["mine","soft"],["life","port"],["life","nuc"],
+    ["prob","haz"],["prob","liq"]
+  ],
+
   // --- EDITABLE: Citation Graph Data ---
   citation_history: [
     { year: 2019, citations: 0 },

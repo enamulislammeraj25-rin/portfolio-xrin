@@ -790,7 +790,7 @@ export default function App() {
             <div className="w-full">
                  <h2 className="text-3xl font-serif font-bold mb-4">Research Interests</h2>
                  <p className="opacity-70 max-w-2xl">
-                     Click a node to bring it forward. The list below follows the same selection.
+                     Force-directed map of connected research fields. Click a node to pull it forward; linked fields stay attached.
                  </p>
             </div>
             
