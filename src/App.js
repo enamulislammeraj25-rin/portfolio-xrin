@@ -43,6 +43,7 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [copiedCiteId, setCopiedCiteId] = useState(null);
   const [selectedInterest, setSelectedInterest] = useState(null);
+  const [listFocusId, setListFocusId] = useState(null);
   const [activeSection, setActiveSection] = useState('about');
 
   // Cycle through 8 themes
@@ -273,15 +274,29 @@ export default function App() {
   // Updated Nav Hover - Glow Text Effect Only (No background box)
   const getNavHoverColor = () => {
       switch (theme) {
-          case 'dark': return 'hover:text-teal-400 hover:drop-shadow-[0_0_8px_rgba(45,212,191,0.8)]';
-          case 'light': return 'hover:text-stone-900 hover:drop-shadow-[0_0_8px_rgba(87,83,78,0.5)]'; 
-          case 'midnight': return 'hover:text-indigo-400 hover:drop-shadow-[0_0_8px_rgba(129,140,248,0.8)]';
-          case 'spring': return 'hover:text-pink-600 hover:drop-shadow-[0_0_8px_rgba(244,114,182,0.8)]';
-          case 'nature': return 'hover:text-lime-400 hover:drop-shadow-[0_0_8px_rgba(163,230,53,0.8)]';
-          case 'musgravite': return 'hover:text-purple-300 hover:drop-shadow-[0_0_8px_rgba(216,180,254,0.8)]';
-          case 'ruby': return 'hover:text-rose-300 hover:drop-shadow-[0_0_8px_rgba(251,113,133,0.8)]';
-          case 'emerald': return 'hover:text-emerald-300 hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]';
-          default: return 'hover:text-teal-400 hover:drop-shadow-[0_0_8px_rgba(45,212,191,0.8)]';
+          case 'dark': return 'hover:text-teal-300 hover:drop-shadow-[0_0_12px_rgba(94,234,212,0.95)]';
+          case 'light': return 'hover:text-teal-700 hover:drop-shadow-[0_0_10px_rgba(13,148,136,0.45)]';
+          case 'midnight': return 'hover:text-violet-300 hover:drop-shadow-[0_0_12px_rgba(196,181,253,0.9)]';
+          case 'spring': return 'hover:text-pink-500 hover:drop-shadow-[0_0_12px_rgba(249,168,212,0.85)]';
+          case 'nature': return 'hover:text-lime-300 hover:drop-shadow-[0_0_12px_rgba(190,242,100,0.85)]';
+          case 'musgravite': return 'hover:text-purple-200 hover:drop-shadow-[0_0_12px_rgba(216,180,254,0.9)]';
+          case 'ruby': return 'hover:text-rose-300 hover:drop-shadow-[0_0_12px_rgba(253,164,175,0.9)]';
+          case 'emerald': return 'hover:text-emerald-300 hover:drop-shadow-[0_0_12px_rgba(110,231,183,0.9)]';
+          default: return 'hover:text-teal-300 hover:drop-shadow-[0_0_12px_rgba(94,234,212,0.95)]';
+      }
+  }
+
+  const getNavActiveColor = () => {
+      switch (theme) {
+          case 'dark': return 'text-teal-300 drop-shadow-[0_0_14px_rgba(94,234,212,1)]';
+          case 'light': return 'text-teal-700 drop-shadow-[0_0_10px_rgba(45,212,191,0.55)]';
+          case 'midnight': return 'text-violet-300 drop-shadow-[0_0_14px_rgba(196,181,253,1)]';
+          case 'spring': return 'text-pink-500 drop-shadow-[0_0_14px_rgba(249,168,212,0.95)]';
+          case 'nature': return 'text-lime-300 drop-shadow-[0_0_14px_rgba(190,242,100,0.95)]';
+          case 'musgravite': return 'text-purple-200 drop-shadow-[0_0_14px_rgba(216,180,254,1)]';
+          case 'ruby': return 'text-rose-300 drop-shadow-[0_0_14px_rgba(253,164,175,1)]';
+          case 'emerald': return 'text-emerald-300 drop-shadow-[0_0_14px_rgba(110,231,183,1)]';
+          default: return 'text-teal-300 drop-shadow-[0_0_14px_rgba(94,234,212,1)]';
       }
   }
   
@@ -541,7 +556,7 @@ export default function App() {
                   <button 
                     key={link.id}
                     onClick={() => scrollToSection(link.id)}
-                    className={`block w-full text-left text-base font-medium ${getMenuLinkHoverStyle()} ${activeSection === link.id ? 'opacity-100 ' + getAccentColor() : 'opacity-70'}`}
+                    className={`block w-full text-left text-base font-medium ${getMenuLinkHoverStyle()} ${activeSection === link.id ? 'opacity-100 ' + getNavActiveColor() : 'opacity-70'}`}
                   >
                     {link.name}
                   </button>
@@ -580,10 +595,10 @@ export default function App() {
               <button 
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className={`text-[11px] xl:text-xs h-full flex items-center px-2.5 xl:px-3 font-medium whitespace-nowrap border-b-2 transition-all duration-300
+                className={`relative text-[11px] xl:text-xs h-full flex items-center px-2.5 xl:px-3 font-medium whitespace-nowrap transition-all duration-500
                     ${on
-                      ? `${getAccentColor()} border-current opacity-100`
-                      : `border-transparent opacity-70 ${getNavHoverColor()} ${(theme === 'light' || theme === 'spring') ? 'text-stone-600' : 'text-white'}`}`}
+                      ? `${getNavActiveColor()} opacity-100`
+                      : `opacity-70 ${getNavHoverColor()} ${(theme === 'light' || theme === 'spring') ? 'text-stone-600' : 'text-white'}`}`}
               >
                 {link.name}
               </button>
@@ -799,14 +814,14 @@ export default function App() {
                     theme={theme}
                     interests={PORTFOLIO_DATA.research_interests}
                     selectedId={selectedInterest}
-                    onSelect={(id) => setSelectedInterest(id)}
+                    onSelect={(id) => { setSelectedInterest(id); setListFocusId(id); }}
                  />
             </div>
 
             <div className="w-full grid md:grid-cols-2 gap-3">
                      {[...PORTFOLIO_DATA.research_interests].sort((a, b) => {
-                         if (a.id === selectedInterest) return -1;
-                         if (b.id === selectedInterest) return 1;
+                         if (a.id === listFocusId) return -1;
+                         if (b.id === listFocusId) return 1;
                          return 0;
                      }).map((interest) => (
                          <button
