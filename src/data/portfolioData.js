@@ -245,30 +245,30 @@ export const PORTFOLIO_DATA = {
     },
   ],
 
-  working_papers: [
+  current_research: [
     {
       id: "wp-liq",
-      status: "In progress",
       title: "Shear Wave Velocity-Based Deterministic and Probabilistic Liquefaction Assessment of DMDP Area in Bangladesh",
       venue: "M.Sc. thesis, BUET",
       year: "2025–",
       note: "Supervisor: Prof. Dr. Mehedi Ahmed Ansary."
     },
     {
-      id: "wp-hvdm",
-      status: "Submitted",
-      title: "Vacuum-Based Soft Soil Improvement: A PRISMA-Guided Systematic Review with Special Emphasis on the High Vacuum Densification Method (HVDM)",
-      venue: "Journal manuscript",
-      year: "2025",
-      note: "Under review."
-    },
-    {
       id: "wp-lca",
-      status: "In progress",
       title: "Life Cycle Analysis of a Rural Road with Wrapped-Face Wall Against Conventional Slope-Based Construction",
       venue: "Working paper",
       year: "2025–",
       note: "Comparative LCA of earthworks alternatives."
+    }
+  ],
+
+  under_review: [
+    {
+      id: "wp-hvdm",
+      title: "Vacuum-Based Soft Soil Improvement: A PRISMA-Guided Systematic Review with Special Emphasis on the High Vacuum Densification Method (HVDM)",
+      venue: "Journal manuscript",
+      year: "2025",
+      note: "Submitted; under review."
     }
   ],
 
