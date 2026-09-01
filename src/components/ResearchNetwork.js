@@ -5,7 +5,9 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
     const wrapRef = useRef(null);
     const simRef = useRef(null);
     const selectedRef = useRef(selectedId);
+    const dragRef = useRef(null);
     const [frame, setFrame] = useState({ w: 0, h: 0, nodes: [] });
+    const [hoverId, setHoverId] = useState(null);
 
     selectedRef.current = selectedId;
 
@@ -13,20 +15,18 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
         const el = wrapRef.current;
         if (!el || !interests.length) return;
 
-        const measure = () => ({ w: el.clientWidth || 800, h: el.clientHeight || 480 });
+        const measure = () => ({ w: Math.max(320, el.clientWidth), h: Math.max(320, el.clientHeight) });
         let { w, h } = measure();
 
-        const nodes = interests.map((item, i) => {
-            const ang = (i / interests.length) * Math.PI * 2;
-            return {
-                ...item,
-                x: w / 2 + Math.cos(ang) * Math.min(w, h) * 0.28,
-                y: h / 2 + Math.sin(ang) * Math.min(w, h) * 0.28,
-                vx: 0,
-                vy: 0,
-                r: 7 + (item.size || 14) * 0.45,
-            };
-        });
+        // Start piled in the centre so the graph "explodes" like the reference clip
+        const nodes = interests.map((item, i) => ({
+            ...item,
+            x: w / 2 + (Math.random() - 0.5) * 16,
+            y: h / 2 + (Math.random() - 0.5) * 16,
+            vx: 0,
+            vy: 0,
+            r: 8 + (item.size || 14) * 0.42,
+        }));
 
         const links = (PORTFOLIO_DATA.research_links || [])
             .map(([a, b]) => ({
@@ -44,16 +44,17 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             const W = sim.w;
             const H = sim.h;
             const sel = selectedRef.current;
+            const drag = dragRef.current;
 
             for (let i = 0; i < ns.length; i++) {
                 for (let j = i + 1; j < ns.length; j++) {
                     let dx = ns[j].x - ns[i].x;
                     let dy = ns[j].y - ns[i].y;
-                    let d2 = dx * dx + dy * dy || 1;
+                    let d2 = dx * dx + dy * dy || 0.01;
                     let d = Math.sqrt(d2);
-                    const minD = ns[i].r + ns[j].r + 28;
-                    let force = 420 / d2;
-                    if (d < minD) force += (minD - d) * 0.08;
+                    const minD = ns[i].r + ns[j].r + 36;
+                    let force = 900 / d2;
+                    if (d < minD) force += (minD - d) * 0.14;
                     const fx = (dx / d) * force;
                     const fy = (dy / d) * force;
                     ns[i].vx -= fx;
@@ -67,8 +68,8 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                 const dx = l.target.x - l.source.x;
                 const dy = l.target.y - l.source.y;
                 const d = Math.sqrt(dx * dx + dy * dy) || 1;
-                const rest = 92;
-                const k = (d - rest) * 0.012;
+                const rest = 110;
+                const k = (d - rest) * 0.02;
                 const fx = (dx / d) * k;
                 const fy = (dy / d) * k;
                 l.source.vx += fx;
@@ -78,17 +79,24 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             });
 
             ns.forEach((n) => {
-                n.vx += (W / 2 - n.x) * 0.008;
-                n.vy += (H / 2 - n.y) * 0.008;
-                if (sel && n.id === sel) {
-                    n.vx += (W / 2 - n.x) * 0.06;
-                    n.vy += (H * 0.38 - n.y) * 0.06;
+                if (drag && drag.id === n.id) {
+                    n.x = drag.x;
+                    n.y = drag.y;
+                    n.vx = 0;
+                    n.vy = 0;
+                    return;
                 }
-                n.vx *= 0.86;
-                n.vy *= 0.86;
+                n.vx += (W / 2 - n.x) * 0.012;
+                n.vy += (H / 2 - n.y) * 0.012;
+                if (sel && n.id === sel) {
+                    n.vx += (W / 2 - n.x) * 0.05;
+                    n.vy += (H * 0.4 - n.y) * 0.05;
+                }
+                n.vx *= 0.82;
+                n.vy *= 0.82;
                 n.x += n.vx;
                 n.y += n.vy;
-                const pad = n.r + 36;
+                const pad = n.r + 40;
                 n.x = Math.max(pad, Math.min(W - pad, n.x));
                 n.y = Math.max(pad, Math.min(H - pad, n.y));
             });
@@ -123,6 +131,49 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
         };
     }, [interests]);
 
+    const clientPoint = (e) => {
+        const box = wrapRef.current.getBoundingClientRect();
+        const src = e.touches ? e.touches[0] : e;
+        return { x: src.clientX - box.left, y: src.clientY - box.top };
+    };
+
+    const nearest = (x, y) => {
+        let best = null;
+        let bestD = 28;
+        frame.nodes.forEach((n) => {
+            const d = Math.hypot(n.x - x, n.y - y);
+            if (d < Math.max(bestD, n.r + 10)) {
+                bestD = d;
+                best = n;
+            }
+        });
+        return best;
+    };
+
+    const onDown = (e) => {
+        const p = clientPoint(e);
+        const n = nearest(p.x, p.y);
+        if (!n) return;
+        dragRef.current = { id: n.id, x: p.x, y: p.y };
+        if (onSelect) onSelect(n.id);
+        e.preventDefault();
+    };
+
+    const onMove = (e) => {
+        if (!dragRef.current) {
+            const p = clientPoint(e);
+            const n = nearest(p.x, p.y);
+            setHoverId(n ? n.id : null);
+            return;
+        }
+        const p = clientPoint(e);
+        dragRef.current = { ...dragRef.current, x: p.x, y: p.y };
+    };
+
+    const onUp = () => {
+        dragRef.current = null;
+    };
+
     let cardClass, fill, stroke, labelCls, ring, line;
     switch (theme) {
         case 'light':
@@ -131,119 +182,117 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             fill = '#ffffff';
             stroke = '#0d9488';
             labelCls = 'text-stone-800';
-            ring = '#0d9488';
-            line = 'rgba(13,148,136,0.35)';
+            ring = '#0f766e';
+            line = 'rgba(13,148,136,0.4)';
             break;
         case 'midnight':
             cardClass = 'bg-slate-900/50 border-slate-800';
             fill = '#1e293b';
             stroke = '#818cf8';
             labelCls = 'text-indigo-50';
-            ring = '#818cf8';
-            line = 'rgba(129,140,248,0.35)';
+            ring = '#a5b4fc';
+            line = 'rgba(129,140,248,0.4)';
             break;
         case 'nature':
             cardClass = 'bg-stone-900/40 border-stone-700';
             fill = '#292524';
             stroke = '#84cc16';
             labelCls = 'text-stone-100';
-            ring = '#84cc16';
-            line = 'rgba(132,204,22,0.35)';
+            ring = '#a3e635';
+            line = 'rgba(132,204,22,0.4)';
             break;
         case 'musgravite':
             cardClass = 'bg-purple-950/30 border-purple-800/40';
             fill = '#3b0764';
             stroke = '#c084fc';
             labelCls = 'text-purple-50';
-            ring = '#c084fc';
-            line = 'rgba(192,132,252,0.35)';
+            ring = '#e9d5ff';
+            line = 'rgba(192,132,252,0.4)';
             break;
         case 'ruby':
             cardClass = 'bg-red-950/20 border-red-900/40';
             fill = '#450a0a';
             stroke = '#f87171';
             labelCls = 'text-red-50';
-            ring = '#f87171';
-            line = 'rgba(248,113,113,0.35)';
+            ring = '#fca5a5';
+            line = 'rgba(248,113,113,0.4)';
             break;
         case 'emerald':
             cardClass = 'bg-emerald-950/20 border-emerald-900/40';
             fill = '#022c22';
             stroke = '#34d399';
             labelCls = 'text-emerald-50';
-            ring = '#34d399';
-            line = 'rgba(52,211,153,0.35)';
+            ring = '#6ee7b7';
+            line = 'rgba(52,211,153,0.4)';
             break;
         default:
             cardClass = 'bg-neutral-900/50 border-white/10';
             fill = '#262626';
             stroke = '#2dd4bf';
             labelCls = 'text-neutral-100';
-            ring = '#2dd4bf';
-            line = 'rgba(45,212,191,0.32)';
+            ring = '#5eead4';
+            line = 'rgba(45,212,191,0.38)';
     }
 
-    const links = (PORTFOLIO_DATA.research_links || [])
+    const active = hoverId || selectedId;
+    const linked = new Set();
+    (PORTFOLIO_DATA.research_links || []).forEach(([a, b]) => {
+        if (a === active) linked.add(b);
+        if (b === active) linked.add(a);
+    });
+
+    const drawnLinks = (PORTFOLIO_DATA.research_links || [])
         .map(([a, b]) => {
             const s = frame.nodes.find((n) => n.id === a);
             const t = frame.nodes.find((n) => n.id === b);
-            return s && t ? { s, t } : null;
+            return s && t ? { s, t, hot: active && (a === active || b === active) } : null;
         })
         .filter(Boolean);
 
     return (
-        <div ref={wrapRef} className={`relative w-full h-[28rem] md:h-[36rem] border rounded-lg overflow-hidden ${cardClass}`}>
+        <div
+            ref={wrapRef}
+            className={`relative w-full h-[28rem] md:h-[36rem] border rounded-lg overflow-hidden cursor-grab active:cursor-grabbing ${cardClass}`}
+            onMouseDown={onDown}
+            onMouseMove={onMove}
+            onMouseUp={onUp}
+            onMouseLeave={onUp}
+            onTouchStart={onDown}
+            onTouchMove={onMove}
+            onTouchEnd={onUp}
+        >
             <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                {links.map((l, i) => (
+                {drawnLinks.map((l, i) => (
                     <line
                         key={i}
                         x1={l.s.x}
                         y1={l.s.y}
                         x2={l.t.x}
                         y2={l.t.y}
-                        stroke={line}
-                        strokeWidth={selectedId && (l.s.id === selectedId || l.t.id === selectedId) ? 2 : 1}
+                        stroke={l.hot ? ring : line}
+                        strokeWidth={l.hot ? 2.4 : 1.1}
                     />
                 ))}
                 {frame.nodes.map((n) => (
                     <circle
-                        key={n.id + '-c'}
+                        key={n.id}
                         cx={n.x}
                         cy={n.y}
-                        r={selectedId === n.id ? n.r + 3 : n.r}
+                        r={active === n.id ? n.r + 4 : n.r}
                         fill={fill}
-                        stroke={selectedId === n.id ? ring : stroke}
-                        strokeWidth={selectedId === n.id ? 3 : 2}
+                        stroke={active === n.id || linked.has(n.id) ? ring : stroke}
+                        strokeWidth={active === n.id ? 3 : 2}
                     />
                 ))}
             </svg>
-
             {frame.nodes.map((n) => (
-                <button
-                    type="button"
-                    key={n.id}
-                    onClick={() => onSelect && onSelect(selectedId === n.id ? null : n.id)}
-                    className="absolute z-10 -translate-x-1/2 text-center"
-                    style={{ left: n.x, top: n.y + n.r + 2, width: 108 }}
-                    title={n.topic}
+                <div
+                    key={n.id + '-lab'}
+                    className={`absolute pointer-events-none -translate-x-1/2 text-center ${labelCls}`}
+                    style={{ left: n.x, top: n.y + n.r + 4, width: 120 }}
                 >
-                    <span className={`block text-[10px] md:text-[11px] font-semibold leading-tight ${labelCls}`}>
-                        {n.short}
-                    </span>
-                </button>
-            ))}
-
-            {/* invisible hit targets on the circles */}
-            {frame.nodes.map((n) => (
-                <button
-                    type="button"
-                    key={n.id + '-hit'}
-                    aria-label={n.topic}
-                    onClick={() => onSelect && onSelect(selectedId === n.id ? null : n.id)}
-                    className="absolute z-20 rounded-full -translate-x-1/2 -translate-y-1/2"
-                    style={{ left: n.x, top: n.y, width: n.r * 2 + 8, height: n.r * 2 + 8 }}
-                    title={n.topic}
-                />
+                    <span className="text-[10px] md:text-[11px] font-semibold leading-tight">{n.short}</span>
+                </div>
             ))}
         </div>
     );
