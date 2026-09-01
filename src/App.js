@@ -48,9 +48,9 @@ export default function App() {
   const [listFocusId, setListFocusId] = useState(null);
   const [activeSection, setActiveSection] = useState('about');
 
-  // Cycle through 8 themes
+  // Cycle through 9 themes
   const cycleTheme = () => {
-    const themes = ['dark', 'light', 'midnight', 'spring', 'nature', 'musgravite', 'ruby', 'emerald'];
+    const themes = ['dark', 'light', 'midnight', 'spring', 'nature', 'musgravite', 'ruby', 'emerald', 'rain'];
     const currentIndex = themes.indexOf(theme);
     const nextIndex = (currentIndex + 1) % themes.length;
     setTheme(themes[nextIndex]);
@@ -210,7 +210,8 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'bg-neutral-950 text-white';
           case 'light': return 'bg-stone-100 text-stone-900'; 
-          case 'midnight': return 'bg-slate-950 text-slate-100'; 
+          case 'midnight': return 'bg-slate-950 text-slate-100';
+          case 'rain': return 'bg-gradient-to-b from-[#071318] via-[#16343c] to-[#7ea8b4] text-slate-100';
           case 'spring': return 'bg-gradient-to-br from-rose-100 via-pink-100 to-teal-50 text-stone-900';
           case 'nature': return 'bg-gradient-to-br from-green-950 via-stone-900 to-emerald-950 text-stone-100';
           case 'musgravite': return 'bg-gradient-to-br from-stone-800 via-slate-700 to-purple-900 text-stone-100';
@@ -224,7 +225,8 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'text-teal-600';
           case 'light': return 'text-stone-700';
-          case 'midnight': return 'text-sky-300';
+          case 'midnight': return 'text-indigo-400';
+          case 'rain': return 'text-sky-200';
           case 'spring': return 'text-stone-700';
           case 'nature': return 'text-lime-400';
           case 'musgravite': return 'text-purple-300';
@@ -239,7 +241,8 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'bg-transparent border border-transparent hover:bg-white/5 hover:border-neutral-700';
           case 'light': return 'bg-transparent border border-transparent text-stone-900 hover:bg-white hover:border-stone-400 hover:shadow-md';
-          case 'midnight': return 'bg-white/5 border border-white/10 text-slate-100 hover:bg-white/10 hover:border-sky-300/30 backdrop-blur-md';
+          case 'midnight': return 'bg-transparent border border-transparent text-slate-200 hover:bg-white/5 hover:border-indigo-500/50';
+          case 'rain': return 'bg-white/10 border border-white/20 text-slate-100 hover:bg-white/15 hover:border-white/30 backdrop-blur-xl';
           case 'spring': return 'bg-transparent border border-transparent text-stone-900 hover:bg-white/60 hover:border-stone-400 hover:shadow-md';
           case 'nature': return 'bg-transparent border border-transparent text-stone-200 hover:bg-stone-800/60 hover:border-lime-800';
           case 'musgravite': return 'bg-transparent border border-transparent text-purple-50 hover:bg-purple-900/30 hover:border-purple-500/30';
@@ -253,7 +256,8 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'group-hover:text-teal-400 transition-colors duration-300';
           case 'light': return 'group-hover:text-stone-600 transition-colors duration-300';
-          case 'midnight': return 'group-hover:text-sky-200 transition-colors duration-300';
+          case 'midnight': return 'group-hover:text-indigo-300 transition-colors duration-300';
+          case 'rain': return 'group-hover:text-sky-100 transition-colors duration-300';
           case 'spring': return 'group-hover:text-stone-600 transition-colors duration-300';
           case 'nature': return 'group-hover:text-lime-300 transition-colors duration-300';
           case 'musgravite': return 'group-hover:text-purple-200 transition-colors duration-300';
@@ -267,7 +271,8 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'group-hover:bg-teal-500 transition-colors duration-300';
           case 'light': return 'group-hover:bg-stone-500 transition-colors duration-300';
-          case 'midnight': return 'group-hover:bg-sky-400 transition-colors duration-300';
+          case 'midnight': return 'group-hover:bg-indigo-500 transition-colors duration-300';
+          case 'rain': return 'group-hover:bg-sky-300 transition-colors duration-300';
           case 'spring': return 'group-hover:bg-stone-500 transition-colors duration-300';
           case 'nature': return 'group-hover:bg-lime-500 transition-colors duration-300';
           case 'musgravite': return 'group-hover:bg-purple-400 transition-colors duration-300';
@@ -282,7 +287,8 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'bg-teal-500';
           case 'light': return 'bg-stone-500';
-          case 'midnight': return 'bg-sky-400';
+          case 'midnight': return 'bg-indigo-500';
+          case 'rain': return 'bg-sky-300';
           case 'spring': return 'bg-pink-400';
           case 'nature': return 'bg-lime-500';
           case 'musgravite': return 'bg-purple-400';
@@ -296,7 +302,8 @@ export default function App() {
       // Reduced blur from 3xl to md/lg for better scroll performance
       if (theme === 'dark') return 'bg-neutral-950/90 border-neutral-800 backdrop-blur-md';
       if (theme === 'light') return 'bg-white/90 border-stone-200 backdrop-blur-md';
-      if (theme === 'midnight') return 'bg-slate-950/55 border-white/10 backdrop-blur-xl';
+      if (theme === 'midnight') return 'bg-slate-950/90 border-slate-800 backdrop-blur-md';
+      if (theme === 'rain') return 'bg-[#0b1c22]/45 border-white/15 backdrop-blur-2xl';
       if (theme === 'spring') return 'bg-white/70 backdrop-blur-md border-stone-200';
       return 'backdrop-blur-md border-white/10 bg-black/50';
   };
@@ -323,7 +330,8 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'hover:drop-shadow-[0_0_8px_rgba(45,212,191,0.8)] text-teal-500/80 hover:text-teal-400 border-white/10 bg-white/5'; 
           case 'light': return 'hover:drop-shadow-[0_0_8px_rgba(87,83,78,0.6)] text-stone-500 hover:text-stone-800 border-stone-300 bg-stone-100'; 
-          case 'midnight': return 'hover:drop-shadow-[0_0_8px_rgba(186,230,253,0.8)] text-sky-300/80 hover:text-sky-200 border-white/15 bg-white/10'; 
+          case 'midnight': return 'hover:drop-shadow-[0_0_8px_rgba(129,140,248,0.8)] text-indigo-400/80 hover:text-indigo-300 border-indigo-900 bg-indigo-950/30';
+          case 'rain': return 'hover:drop-shadow-[0_0_8px_rgba(186,230,253,0.7)] text-sky-200/80 hover:text-sky-100 border-white/20 bg-white/10';
           case 'spring': return 'hover:drop-shadow-[0_0_8px_rgba(244,114,182,0.8)] text-pink-500/80 hover:text-pink-600 border-pink-200 bg-white/40'; 
           case 'nature': return 'hover:drop-shadow-[0_0_8px_rgba(163,230,53,0.8)] text-lime-500/80 hover:text-lime-400 border-lime-900/30 bg-lime-950/20'; 
           case 'musgravite': return 'hover:drop-shadow-[0_0_8px_rgba(216,180,254,0.8)] text-purple-400/80 hover:text-purple-300 border-purple-900/30 bg-purple-950/20'; 
@@ -339,7 +347,8 @@ export default function App() {
       switch (theme) {
           case 'dark': return `hover:text-teal-400 hover:drop-shadow-[0_0_5px_rgba(45,212,191,0.8)] hover:bg-white/5 rounded-none px-6 py-3 ${transitionClass}`;
           case 'light': return `hover:text-stone-900 hover:drop-shadow-[0_0_5px_rgba(87,83,78,0.5)] hover:bg-stone-200/50 rounded-none px-6 py-3 ${transitionClass}`; 
-          case 'midnight': return `hover:text-sky-200 hover:drop-shadow-[0_0_5px_rgba(186,230,253,0.7)] hover:bg-white/10 rounded-none px-6 py-3 ${transitionClass}`;
+          case 'midnight': return `hover:text-indigo-400 hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.8)] hover:bg-indigo-900/30 rounded-none px-6 py-3 ${transitionClass}`;
+          case 'rain': return `hover:text-sky-100 hover:drop-shadow-[0_0_5px_rgba(186,230,253,0.7)] hover:bg-white/10 rounded-none px-6 py-3 ${transitionClass}`;
           case 'spring': return `hover:text-pink-600 hover:drop-shadow-[0_0_5px_rgba(244,114,182,0.8)] hover:bg-white/60 rounded-none px-6 py-3 ${transitionClass}`;
           case 'nature': return `hover:text-lime-400 hover:drop-shadow-[0_0_5px_rgba(163,230,53,0.8)] hover:bg-lime-900/20 rounded-none px-6 py-3 ${transitionClass}`;
           case 'musgravite': return `hover:text-purple-300 hover:drop-shadow-[0_0_5px_rgba(216,180,254,0.8)] hover:bg-purple-900/20 rounded-none px-6 py-3 ${transitionClass}`;
@@ -354,7 +363,8 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'bg-neutral-950/60 backdrop-blur-2xl border-r border-neutral-800';
           case 'light': return 'bg-white/60 backdrop-blur-2xl border-r border-stone-200';
-          case 'midnight': return 'bg-slate-950/45 backdrop-blur-2xl border-r border-white/10';
+          case 'midnight': return 'bg-slate-950/60 backdrop-blur-2xl border-r border-slate-800';
+          case 'rain': return 'bg-[#0b1c22]/50 backdrop-blur-2xl border-r border-white/15';
           case 'spring': return 'bg-white/50 backdrop-blur-2xl border-r border-stone-200';
           case 'nature': return 'bg-stone-900/60 backdrop-blur-2xl border-r border-stone-700';
           case 'musgravite': return 'bg-stone-900/60 backdrop-blur-2xl border-r border-purple-900/30';
@@ -369,6 +379,7 @@ export default function App() {
           case 'dark': return <Moon className="w-5 h-5" />;
           case 'light': return <Sun className="w-5 h-5" />;
           case 'midnight': return <CloudLightning className="w-5 h-5" />;
+          case 'rain': return <CloudLightning className="w-5 h-5" />;
           case 'spring': return <Flower2 className="w-5 h-5" />;
           case 'nature': return <Leaf className="w-5 h-5" />;
           default: return <Gem className="w-5 h-5" />;
@@ -1264,7 +1275,8 @@ export default function App() {
               <div className={`p-10 md:w-2/5 flex flex-col justify-between text-white
                   ${theme === 'dark' ? 'bg-teal-900' : 
                     theme === 'light' ? 'bg-stone-800' : 
-                    theme === 'midnight' ? 'bg-slate-800/80 backdrop-blur-md' :
+                    theme === 'midnight' ? 'bg-indigo-900' :
+                    theme === 'rain' ? 'bg-[#16343c]/80' :
                     theme === 'spring' ? 'bg-stone-700' :
                     theme === 'nature' ? 'bg-lime-900' :
                     theme === 'musgravite' ? 'bg-purple-900' :
@@ -1355,7 +1367,8 @@ export default function App() {
                         className={`w-full font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 text-white flex items-center justify-center gap-2
                           ${theme === 'dark' ? 'bg-teal-600 hover:bg-teal-700' : 
                             theme === 'light' ? 'bg-stone-800 hover:bg-black' : 
-                            theme === 'midnight' ? 'bg-sky-700 hover:bg-sky-800' :
+                            theme === 'midnight' ? 'bg-indigo-700 hover:bg-indigo-800' :
+                            theme === 'rain' ? 'bg-sky-800 hover:bg-sky-900' :
                             theme === 'spring' ? 'bg-stone-700 hover:bg-stone-800' :
                             theme === 'nature' ? 'bg-lime-700 hover:bg-lime-800' :
                             theme === 'musgravite' ? 'bg-purple-700 hover:bg-purple-800' :

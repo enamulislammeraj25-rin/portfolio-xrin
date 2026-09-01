@@ -39,10 +39,15 @@ export const ParticleCanvas = ({ theme }) => {
         type = 'truss';
         break;
       case 'midnight':
-        particleColor = 'rgba(186, 230, 253, 0.45)';
-        lineColor = 'rgba(186, 230, 253, 0.08)';
-        type = 'rain';
-        particleCount = width < 768 ? 70 : 140;
+        particleColor = 'rgba(139, 92, 246, 0.4)';
+        lineColor = 'rgba(139, 92, 246, 0.1)';
+        type = 'stars';
+        break;
+      case 'rain':
+        particleColor = 'rgba(226, 246, 255, 0.55)';
+        lineColor = 'rgba(148, 197, 210, 0.18)';
+        type = 'glassdrops';
+        particleCount = width < 768 ? 90 : 160;
         break;
       case 'spring':
         particleColor = 'rgba(244, 114, 182, 0.6)'; // Pink Petals
@@ -80,13 +85,14 @@ export const ParticleCanvas = ({ theme }) => {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: type === 'rain' ? (Math.random() - 0.5) * 0.35 : (Math.random() - 0.5) * 0.15,
-        vy: type === 'rain' ? (Math.random() * 6 + 5)
+        vx: 0,
+        vy: type === 'glassdrops' ? (Math.random() < 0.08 ? Math.random() * 0.45 + 0.12 : 0)
             : (type === 'bubbles' || type === 'spores') ? -(Math.random() * 0.5 + 0.1)
             : (type === 'petals' ? (Math.random() * 0.5 + 0.2) : (Math.random() - 0.5) * 0.15),
-        size: type === 'rain' ? (Math.random() * 10 + 8)
+        size: type === 'glassdrops' ? (Math.random() ** 2) * 7 + 1.2
             : (type === 'bubbles') ? Math.random() * 4 + 1 : (Math.random() * 2 + 1.5),
-        sway: Math.random() * 0.02 // specific for petals
+        kind: type === 'glassdrops' ? (Math.random() < 0.03 ? 'run' : 'bead') : 'dot',
+        sway: Math.random() * 0.02
       });
     }
 
@@ -106,9 +112,11 @@ export const ParticleCanvas = ({ theme }) => {
         if (type === 'petals') {
             p.x += Math.sin(p.y * 0.01) + p.vx;
             p.y += p.vy;
-        } else if (type === 'rain') {
-            p.x += p.vx + 0.35;
-            p.y += p.vy;
+        } else if (type === 'glassdrops') {
+            if (p.kind === 'run') {
+              p.y += p.vy;
+              p.x += Math.sin(p.y * 0.02) * 0.15;
+            }
         } else {
             p.x += p.vx;
             p.y += p.vy;
@@ -121,13 +129,28 @@ export const ParticleCanvas = ({ theme }) => {
         if (p.y > height + 20) p.y = -20;
 
         // Drawing Logic
-        if (type === 'rain') {
+        if (type === 'glassdrops') {
+             const r = p.size;
+             const grd = ctx.createRadialGradient(p.x - r * 0.3, p.y - r * 0.35, 0.2, p.x, p.y, r);
+             grd.addColorStop(0, 'rgba(255,255,255,0.85)');
+             grd.addColorStop(0.35, 'rgba(210,236,245,0.35)');
+             grd.addColorStop(1, 'rgba(80,130,150,0.18)');
              ctx.beginPath();
-             ctx.strokeStyle = particleColor;
-             ctx.lineWidth = 1;
-             ctx.moveTo(p.x, p.y);
-             ctx.lineTo(p.x - 1.2, p.y + p.size);
-             ctx.stroke();
+             ctx.ellipse(p.x, p.y, r * 0.85, r, 0, 0, Math.PI * 2);
+             ctx.fillStyle = grd;
+             ctx.fill();
+             ctx.beginPath();
+             ctx.ellipse(p.x - r * 0.28, p.y - r * 0.32, r * 0.22, r * 0.16, -0.5, 0, Math.PI * 2);
+             ctx.fillStyle = 'rgba(255,255,255,0.7)';
+             ctx.fill();
+             if (p.kind === 'run') {
+               ctx.beginPath();
+               ctx.strokeStyle = 'rgba(180,220,230,0.35)';
+               ctx.lineWidth = Math.max(1, r * 0.25);
+               ctx.moveTo(p.x, p.y);
+               ctx.lineTo(p.x, p.y + r * 6);
+               ctx.stroke();
+             }
         } else if (type === 'spores' || type === 'stars') {
              ctx.beginPath();
              ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
