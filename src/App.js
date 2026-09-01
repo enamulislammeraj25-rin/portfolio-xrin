@@ -284,8 +284,9 @@ export default function App() {
       return 'text-[#FFFBE6]';
   }
 
-  const navSunGlow = 'drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #FFF6D4) drop-shadow(0 0 16px rgba(255,233,168,0.85)) drop-shadow(0 0 26px rgba(255,216,96,0.4))';
-  const navSunGlowHover = 'drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px rgba(255,246,212,0.8)) drop-shadow(0 0 14px rgba(255,233,168,0.45))';
+  const navSunGlow = 'drop-shadow(0 0 1px #FFF6D4) drop-shadow(0 0 4px rgba(255,233,168,0.55)) drop-shadow(0 0 8px rgba(255,216,96,0.25))';
+  const navSunGlowHover = 'drop-shadow(0 0 1px rgba(255,246,212,0.7)) drop-shadow(0 0 4px rgba(255,233,168,0.35))';
+  const navTextOutline = '-0.7px 0 #000, 0.7px 0 #000, 0 -0.7px #000, 0 0.7px #000, -0.7px -0.7px #000, 0.7px 0.7px #000, 0.7px -0.7px #000, -0.7px 0.7px #000';
 
   
   const getGlowStyle = () => {
@@ -583,7 +584,11 @@ export default function App() {
               <button 
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                style={on ? { filter: navSunGlow } : undefined}
+                style={{
+                  WebkitTextStroke: '0.35px #000',
+                  textShadow: navTextOutline,
+                  filter: on ? navSunGlow : undefined,
+                }}
                 onMouseEnter={(e) => { if (!on) e.currentTarget.style.filter = navSunGlowHover; }}
                 onMouseLeave={(e) => { if (!on) e.currentTarget.style.filter = ''; }}
                 className={`relative text-[11px] xl:text-xs h-full flex items-center px-2.5 xl:px-3 font-medium whitespace-nowrap transition-all duration-500
