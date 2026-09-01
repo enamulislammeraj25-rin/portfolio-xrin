@@ -273,18 +273,17 @@ export default function App() {
 
   // Updated Nav Hover - Glow Text Effect Only (No background box)
   const getNavHoverColor = () => {
-      const glow = 'hover:drop-shadow-[0_0_4px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,255,255,0.95)] hover:drop-shadow-[0_0_28px_rgba(255,255,255,0.7)]';
       if (theme === 'light' || theme === 'spring') {
-          return `hover:text-stone-900 hover:drop-shadow-[0_0_6px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_16px_rgba(255,248,230,0.95)] hover:drop-shadow-[0_0_30px_rgba(255,237,213,0.75)]`;
+          return 'hover:text-stone-900 hover:drop-shadow-[0_0_5px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,244,200,0.95)] hover:drop-shadow-[0_0_28px_rgba(255,228,150,0.55)]';
       }
-      return `hover:text-white ${glow}`;
+      return 'hover:text-[#FFF6D4] hover:drop-shadow-[0_0_5px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,244,200,0.95)] hover:drop-shadow-[0_0_30px_rgba(255,228,150,0.55)]';
   }
 
   const getNavActiveColor = () => {
       if (theme === 'light' || theme === 'spring') {
-          return 'text-stone-900 drop-shadow-[0_0_5px_rgba(255,255,255,1)] drop-shadow-[0_0_16px_rgba(255,248,230,1)] drop-shadow-[0_0_34px_rgba(255,237,213,0.85)]';
+          return 'text-stone-900 drop-shadow-[0_0_4px_rgba(255,255,255,1)] drop-shadow-[0_0_14px_rgba(255,244,200,1)] drop-shadow-[0_0_32px_rgba(255,228,150,0.7)] drop-shadow-[0_0_52px_rgba(255,220,130,0.35)]';
       }
-      return 'text-white drop-shadow-[0_0_5px_rgba(255,255,255,1)] drop-shadow-[0_0_16px_rgba(255,255,255,1)] drop-shadow-[0_0_36px_rgba(255,255,255,0.85)] drop-shadow-[0_0_56px_rgba(255,255,255,0.45)]';
+      return 'text-[#FFF6D4] drop-shadow-[0_0_4px_rgba(255,255,255,1)] drop-shadow-[0_0_14px_rgba(255,244,200,1)] drop-shadow-[0_0_32px_rgba(255,228,150,0.75)] drop-shadow-[0_0_54px_rgba(255,220,130,0.4)]';
   }
   
   const getGlowStyle = () => {
