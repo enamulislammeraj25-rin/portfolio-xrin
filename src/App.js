@@ -9,552 +9,16 @@ import {
   FileImage, FileCode, FolderOpen, Image as ImageIcon,
   CheckCircle2, Linkedin, ExternalLink, ChevronDown,
   Cpu, Database, Layers, Camera, Video, Settings, Eye, EyeOff,
-  BookOpen
+  BookOpen, Fingerprint
 } from 'lucide-react';
 import { 
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area 
 } from 'recharts';
 
-/**
- * DATA & CONTENT ARCHITECTURE
- */
-const PORTFOLIO_DATA = {
-  // --- EDITABLE: Personal Profile Info ---
-  profile: {
-    name: "Md Enamul Islam Bhuiyan Meraj",
-    title: "Post Graduate Student of Civil & Geotechnical Engineering",
-    institution: "Bangladesh University of Engineering & Technology (BUET)",
-    tagline: "Ensuring structural integrity through advanced ground characterization and resilient foundation design.",
-    bio: "Civil and geotechnical engineering researcher with focus on liquefaction behavior, seismic soil response, and resilient ground systems. Currently pursuing an M.Sc. in Civil & Geotechnical Engineering at BUET, with research centered on improving the predictability and safety of soil performance under earthquake loading.",
-    email: "enamulislammeraj.25@gmail.com",
-    location: "Dhaka, Bangladesh",
-    cvLink: "data:text/plain;charset=utf-8,This%20is%20a%20placeholder%20for%20the%20actual%20CV%20file.%20In%20production%2C%20link%20this%20to%20your%20PDF.",
-    
-    // --- EDITABLE: Social Links URLs ---
-    social: {
-      scholar: "https://scholar.google.com/citations?user=3FnVQfEAAAAJ&hl=en&authuser=1",
-      email: "mailto:enamulislammeraj.25@gmail.com",
-      linkedin: "https://www.linkedin.com/in/md-enamul-islam-bhuiyan-meraj/", 
-      whatsapp: "https://wa.me/8801639146076",
-      facebook: "https://www.facebook.com/enamulislam.meraj25/",
-      instagram: "https://www.instagram.com/enamul_islam_meraj/",
-      twitter: "https://x.com/eimerajxrin",
-      telegram: "https://t.me/eimerajxrin"
-    }
-  },
-  
-  // --- EDITABLE: Key Performance Metrics ---
-  metrics: [
-    { label: "Citations", value: "0" },
-    { label: "h-index", value: "0" },
-    { label: "Projects", value: "3" },
-    { label: "Years Active", value: "5" }
-  ],
-
-  // --- EDITABLE: Education History ---
-  education: [
-    {
-      degree: "M. Sc. in Civil & Geotechnical Engineering",
-      institution: "Bangladesh University of Engineering & Technology (BUET)",
-      year: "May, 2025 - Present",
-      advisor: "Prof. Dr. Mehedi Ahmed Ansary",
-      thesis: "N/A"
-    },
-    {
-      degree: "B.Sc. in Civil Engineering",
-      institution: "Rajshahi University of Engineering & Technology (RUET)",
-      year: "February, 2019 - April, 2024",
-      advisor: "Prof. Dr. Md. Abdul Alim",
-      thesis: "Thesis: Behavior of single pile in cohesionless soil on horizontal & sloping ground surface under lateral loading"
-    },
-    {
-      degree: "Higher Secondary Certificate (HSC)",
-      institution: "Dhaka College",
-      year: "2016 - 2018"
-    },
-    {
-      degree: "Secondary School Certificate",
-      institution: "Motijheel Government Boys’ High School",
-      year: "2014 - 2016"
-    },
-    {
-      degree: "Junior School Certificate (JSC)",
-      institution: "Motijheel Government Boys’ High School",
-      year: "2011 - 2013"
-    }
-  ],
-
-  // --- EDITABLE: Certifications ---
-  certifications: [
-    {
-      title: "Microsoft 365 Fundamentals",
-      issuer: "Microsoft",
-      date: "April, 2025",
-      link: "https://www.microsoft.com"
-    },
-    {
-      title: "Construction Management",
-      issuer: "Columbia University (Coursera)",
-      date: "April 2025",
-      link: "https://www.coursera.org"
-    },
-    {
-      title: "Concrete Multi Storey Building - System Design",
-      issuer: "L&T EduTech",
-      date: "March, 2025",
-      link: "https://lntedutech.com"
-    },
-    {
-      title: "Financial Markets",
-      issuer: "Yale University (Coursera)",
-      date: "February, 2025",
-      link: "https://www.coursera.org"
-    }
-  ],
-
-  // --- EDITABLE: Skills & Expertise ---
-  skills: [
-    { name: "CSI ETABS & SAFE", level: 90 },
-    { name: "PLAXIS 2D/3D", level: 85 },
-    { name: "GeoStudio (GeoSlope)", level: 80 },
-    { name: "AutoCAD", level: 85 },
-    { name: "ArcGIS Pro", level: 75 },
-    { name: "Python", level: 60 },
-    { name: "C/C++", level: 60 },
-    { name: "Microsoft Office Suite", level: 95 },
-    { name: "SketchUP", level: 70 }
-  ],
-  
-  // --- EDITABLE: Standardized Tests ---
-  tests: [
-    { name: "IELTS", score: "7.5 (Example)" },
-    { name: "GRE", score: "320 (Example)" }
-  ],
-
-  // --- EDITABLE: Professional Experience ---
-  experience: [
-    {
-      role: "Structural Engineer",
-      institution: "Al Wakia Construction",
-      department: "Engineering Dept.",
-      period: "January, 2025 - February, 2025",
-      description: "Engaged in structural analysis and construction management tasks."
-    },
-    {
-      role: "Academic Mentor & Tutor",
-      institution: "Private Tutoring",
-      department: "Education",
-      period: "Undergraduate Years",
-      description: "Provided academic mentorship and tutoring in mathematics, physics, and ICT to several school and college students during undergraduate studies, fostering their academic growth."
-    }
-  ],
-
-  // --- EDITABLE: Research Topic Keywords ---
-  research_interests: [
-    { topic: "Seismic Resilience", subtopics: [] },
-    { topic: "Liquefaction", subtopics: [] },
-    { topic: "Seismic Soil Dynamics", subtopics: [] },
-    { topic: "Foundation Engineering", subtopics: [] },
-    { topic: "FEA Analysis", subtopics: [] }
-  ],
-
-  // --- EDITABLE: Citation Graph Data ---
-  citation_history: [
-    { year: 2019, citations: 0 },
-    { year: 2020, citations: 0 },
-    { year: 2021, citations: 0 },
-    { year: 2022, citations: 0 },
-    { year: 2023, citations: 0 },
-    { year: 2024, citations: 0 },
-    { year: 2025, citations: 0 },
-    { year: 2026, citations: 0 },
-    { year: 2027, citations: 0 },
-    { year: 2028, citations: 0 },
-  ],
-
-  // --- EDITABLE: Selected Publications ---
-  publications: [
-    {
-      id: 1,
-      title: "Behavior of single pile in cohesionless soil on horizontal & sloping ground surface under lateral loading",
-      authors: "M. E. I. B. Meraj, K. H. Hridoy, M. A. Alim",
-      journal: "International Conference on Architecture and Civil Engineering (ICACE)",
-      year: 2024,
-      citations: 0,
-      type: "Conference",
-      tags: ["Lateral Load", "Soil - Structure Interaction", "Sloping Ground"]
-    },
-  ],
-
-  // --- EDITABLE: Projects & Tools ---
-  projects: [
-    {
-      title: "Water Supply System Investigation (RCC)",
-      description: "Carried out an investigation on the existing water supply system of Rajshahi City Corporation (RCC), analysing efficiency and proposing utilization strategies for existing water plants.",
-      stack: ["Efficiency Analysis", "Urban Planning", "Water Supply"],
-      link: "#",
-      stars: "N/A",
-      files: []
-    },
-    {
-      title: "15 Storied Building Design",
-      description: "Complete structural design and analysis of a 15-storied residential building ensuring safety and code compliance using CSI ETABS & CSI SAFE.",
-      stack: ["CSI ETABS", "CSI SAFE", "Structural Design"],
-      link: "#",
-      stars: "Design",
-      files: [
-        { name: "Building_Layout.pdf", type: "pdf" },
-        { name: "Structural_Analysis.xlsx", type: "code" },
-        { name: "Render_Front.jpg", type: "image" }
-      ]
-    },
-    {
-      title: "Group Pile Response Analysis (Ongoing)",
-      description: "Conducting Finite Element Analysis (FEA) to assess settlement patterns and reinforcement efficacy in uniform/non-uniform pile group layouts.",
-      stack: ["FEA", "PLAXIS 2D/3D", "Research"],
-      link: "#",
-      stars: "Research",
-      files: []
-    }
-  ],
-
-  // --- EDITABLE: Hobbies (Photos & Videos) ---
-  hobbies: [
-    { 
-        title: "Site Photography", 
-        type: "image", 
-        src: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1000&auto=format&fit=crop",
-        description: "Capturing structural details during field visits." 
-    },
-    { 
-        title: "Engineering Simulations", 
-        type: "video", 
-        src: "", 
-        description: "Visualizing stress distribution in FEA models." 
-    },
-    { 
-        title: "Travel & Nature", 
-        type: "image", 
-        src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=1000&auto=format&fit=crop",
-        description: "Exploring the natural landscapes of Bangladesh." 
-    },
-  ]
-};
-
-/**
- * HOOKS & UTILS
- */
-
-const useWindowSize = () => {
-  const [size, setSize] = useState({ width: 0, height: 0 });
-  useEffect(() => {
-    const handleResize = () => setSize({ width: window.innerWidth, height: window.innerHeight });
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  return size;
-};
-
-/**
- * VISUAL COMPONENTS
- */
-
-// 1. Theme-Aware Particle Canvas (OPTIMIZED)
-const ParticleCanvas = ({ theme }) => {
-  const canvasRef = useRef(null);
-  const { width, height } = useWindowSize();
-  const isVisibleRef = useRef(true); // Track visibility without triggering re-renders
-  
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    
-    // Performance Optimization: Stop animation when canvas is not in viewport
-    const observer = new IntersectionObserver(([entry]) => {
-        isVisibleRef.current = entry.isIntersecting;
-    });
-    observer.observe(canvas);
-
-    const ctx = canvas.getContext('2d');
-    
-    canvas.width = width;
-    canvas.height = height;
-
-    // --- CONFIGURATION BASED ON THEME ---
-    let particleCount = width < 768 ? 40 : 80;
-    let particleColor, lineColor;
-    let type = 'truss'; // 'truss', 'bubbles', 'spores', 'petals', 'stars'
-
-    switch (theme) {
-      case 'dark':
-        particleColor = 'rgba(45, 212, 191, 0.4)'; // Teal
-        lineColor = 'rgba(45, 212, 191, 0.1)';
-        type = 'truss';
-        break;
-      case 'light':
-        particleColor = 'rgba(87, 83, 78, 0.3)'; // Stone Grey
-        lineColor = 'rgba(87, 83, 78, 0.1)';
-        type = 'truss';
-        break;
-      case 'midnight': // New Theme
-        particleColor = 'rgba(139, 92, 246, 0.4)'; // Violet
-        lineColor = 'rgba(139, 92, 246, 0.1)';
-        type = 'stars';
-        break;
-      case 'spring':
-        particleColor = 'rgba(244, 114, 182, 0.6)'; // Pink Petals
-        lineColor = 'rgba(255, 255, 255, 0)';
-        type = 'petals';
-        particleCount = 60;
-        break;
-      case 'nature':
-        particleColor = 'rgba(234, 179, 8, 0.4)'; 
-        lineColor = 'rgba(255, 255, 255, 0)'; 
-        type = 'spores';
-        break;
-      case 'musgravite':
-        particleColor = 'rgba(216, 180, 254, 0.3)';
-        lineColor = 'rgba(216, 180, 254, 0.05)';
-        type = 'truss';
-        break;
-      case 'ruby':
-        particleColor = 'rgba(251, 113, 133, 0.4)';
-        lineColor = 'rgba(251, 113, 133, 0.1)';
-        type = 'truss';
-        break;
-      case 'emerald':
-        particleColor = 'rgba(52, 211, 153, 0.4)';
-        lineColor = 'rgba(52, 211, 153, 0.1)';
-        type = 'truss';
-        break;
-      default:
-        particleColor = 'rgba(255, 255, 255, 0.2)';
-        lineColor = 'rgba(255, 255, 255, 0.05)';
-    }
-
-    const particles = [];
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.15,
-        vy: (type === 'bubbles' || type === 'spores') ? -(Math.random() * 0.5 + 0.1) : 
-            (type === 'petals' ? (Math.random() * 0.5 + 0.2) : (Math.random() - 0.5) * 0.15),
-        size: (type === 'bubbles') ? Math.random() * 4 + 1 : (Math.random() * 2 + 1.5),
-        sway: Math.random() * 0.02 // specific for petals
-      });
-    }
-
-    let animationFrameId;
-
-    const animate = () => {
-      // Optimization Check: Pause if not visible
-      if (!isVisibleRef.current) {
-          animationFrameId = requestAnimationFrame(animate);
-          return;
-      }
-
-      ctx.clearRect(0, 0, width, height);
-      
-      particles.forEach((p, i) => {
-        // Movement Logic
-        if (type === 'petals') {
-            p.x += Math.sin(p.y * 0.01) + p.vx; // Sway logic
-            p.y += p.vy;
-        } else {
-            p.x += p.vx;
-            p.y += p.vy;
-        }
-
-        // Wrap around
-        if (p.x < -20) p.x = width + 20;
-        if (p.x > width + 20) p.x = -20;
-        if (p.y < -20) p.y = height + 20;
-        if (p.y > height + 20) p.y = -20;
-
-        // Drawing Logic
-        if (type === 'spores' || type === 'stars') {
-             ctx.beginPath();
-             ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-             ctx.fillStyle = particleColor;
-             ctx.fill();
-        } else if (type === 'petals') {
-             ctx.beginPath();
-             ctx.ellipse(p.x, p.y, p.size, p.size * 0.6, p.sway * 10, 0, Math.PI * 2);
-             ctx.fillStyle = particleColor;
-             ctx.fill();
-        } else {
-             // TRUSS SYSTEMS
-             ctx.beginPath();
-             ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-             ctx.fillStyle = particleColor;
-             ctx.fill();
-
-             // Draw Lines only for Trusses
-             if (type === 'truss') {
-                 for (let j = i + 1; j < particles.length; j++) {
-                   const p2 = particles[j];
-                   const dx = p.x - p2.x;
-                   const dy = p.y - p2.y;
-                   const dist = Math.sqrt(dx*dx + dy*dy);
-
-                   if (dist < 180) {
-                     ctx.beginPath();
-                     ctx.strokeStyle = lineColor;
-                     ctx.lineWidth = 1;
-                     ctx.moveTo(p.x, p.y);
-                     ctx.lineTo(p2.x, p2.y);
-                     ctx.stroke();
-                   }
-                 }
-             }
-        }
-      });
-
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    animate();
-    return () => {
-        cancelAnimationFrame(animationFrameId);
-        observer.disconnect();
-    };
-  }, [width, height, theme]);
-
-  return <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-100" />;
-};
-
-// 2. Section Wrapper
-const Section = ({ children, id, className = "" }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.05 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => {
-      if (ref.current) observer.unobserve(ref.current);
-    };
-  }, []);
-
-  return (
-    <section 
-      id={id}
-      ref={ref}
-      className={`py-20 md:py-28 px-6 md:px-12 max-w-7xl mx-auto transition-all duration-1000 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}
-    >
-      {children}
-    </section>
-  );
-};
-
-// 3. Research Network
-const ResearchNetwork = ({ theme }) => {
-    const nodes = [
-        { label: "Seismic", x: 50, y: 50, size: 20 },
-        { label: "Materials", x: 20, y: 30, size: 24 },
-        { label: "AI Monitor", x: 80, y: 30, size: 16 },
-        { label: "Urban Flows", x: 30, y: 70, size: 18 },
-        { label: "Resilience", x: 70, y: 80, size: 14 },
-    ];
-
-    // Style logic
-    let cardClass, nodeClass, centerClass, strokeClass;
-
-    switch (theme) {
-        case 'dark':
-            cardClass = 'bg-neutral-900/50 border-transparent hover:border-neutral-800'; 
-            nodeClass = 'bg-neutral-800 border-teal-900 text-neutral-200';
-            centerClass = 'bg-teal-400/10 border-teal-500/50';
-            strokeClass = 'stroke-teal-900';
-            break;
-        case 'light':
-            cardClass = 'bg-white border-transparent hover:border-stone-300 shadow-sm'; 
-            nodeClass = 'bg-white border-stone-300 text-stone-800';
-            centerClass = 'bg-teal-600/10 border-teal-600/30';
-            strokeClass = 'stroke-stone-300';
-            break;
-        case 'midnight':
-            cardClass = 'bg-slate-900/50 border-transparent hover:border-slate-800';
-            nodeClass = 'bg-slate-800 border-indigo-500 text-indigo-100';
-            centerClass = 'bg-indigo-500/10 border-indigo-500/50';
-            strokeClass = 'stroke-indigo-900';
-            break;
-        case 'spring':
-            cardClass = 'bg-white/60 backdrop-blur-md border-transparent hover:border-stone-300 shadow-lg';
-            nodeClass = 'bg-white border-stone-300 text-stone-800';
-            centerClass = 'bg-stone-600/10 border-stone-400/30';
-            strokeClass = 'stroke-stone-300';
-            break;
-        case 'nature':
-            cardClass = 'bg-stone-900/40 backdrop-blur-sm border-transparent hover:border-stone-700';
-            nodeClass = 'bg-stone-800 border-lime-800 text-stone-200';
-            centerClass = 'bg-lime-500/10 border-lime-500/30';
-            strokeClass = 'stroke-lime-900';
-            break;
-        case 'musgravite':
-            cardClass = 'bg-purple-900/20 backdrop-blur-sm border-transparent hover:border-purple-800/30';
-            nodeClass = 'bg-purple-950/50 border-purple-700 text-purple-100';
-            centerClass = 'bg-purple-400/10 border-purple-400/30';
-            strokeClass = 'stroke-purple-800/50';
-            break;
-        case 'ruby':
-            cardClass = 'bg-red-950/20 backdrop-blur-sm border-transparent hover:border-red-900/30';
-            nodeClass = 'bg-red-950/50 border-red-800 text-red-100';
-            centerClass = 'bg-red-500/10 border-red-500/30';
-            strokeClass = 'stroke-red-900/50';
-            break;
-        case 'emerald':
-            cardClass = 'bg-emerald-950/20 backdrop-blur-sm border-transparent hover:border-emerald-900/30';
-            nodeClass = 'bg-emerald-950/50 border-emerald-800 text-emerald-100';
-            centerClass = 'bg-emerald-500/10 border-emerald-500/30';
-            strokeClass = 'stroke-emerald-900/50';
-            break;
-        default:
-            cardClass = '';
-            nodeClass = '';
-    }
-
-    return (
-        <div className={`relative w-full h-64 md:h-96 border rounded-lg overflow-hidden backdrop-blur-sm transition-all duration-700 ${cardClass}`}>
-            <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                <line x1="50%" y1="50%" x2="20%" y2="30%" className={strokeClass} strokeWidth="1" />
-                <line x1="50%" y1="50%" x2="80%" y2="30%" className={strokeClass} strokeWidth="1" />
-                <line x1="50%" y1="50%" x2="30%" y2="70%" className={strokeClass} strokeWidth="1" />
-                <line x1="50%" y1="50%" x2="70%" y2="80%" className={strokeClass} strokeWidth="1" />
-                <line x1="20%" y1="30%" x2="30%" y2="70%" className={strokeClass} strokeWidth="1" />
-            </svg>
-            
-            {nodes.map((node, i) => (
-                <div 
-                    key={i}
-                    className={`absolute flex items-center justify-center rounded-full shadow-sm text-[10px] font-bold transition-transform cursor-pointer z-10 border-2 ${nodeClass}`}
-                    style={{
-                        left: `${node.x}%`,
-                        top: `${node.y}%`,
-                        width: `${node.size * 3}px`,
-                        height: `${node.size * 3}px`,
-                        transform: 'translate(-50%, -50%)'
-                    }}
-                >
-                    <span className="opacity-0 hover:opacity-100 transition-opacity absolute -top-6 whitespace-nowrap px-2 py-1 rounded text-xs bg-black text-white">
-                        {node.label}
-                    </span>
-                </div>
-            ))}
-            
-             <div 
-                className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border-2 flex items-center justify-center animate-pulse z-0 ${centerClass}`}
-             />
-        </div>
-    )
-}
+import { PORTFOLIO_DATA } from './data/portfolioData';
+import { ParticleCanvas } from './components/ParticleCanvas';
+import { Section } from './components/Section';
+import { ResearchNetwork } from './components/ResearchNetwork';
 
 /**
  * MAIN APP COMPONENT
@@ -577,6 +41,7 @@ export default function App() {
 
   // --- PROJECT MODAL STATE ---
   const [selectedProject, setSelectedProject] = useState(null);
+  const [copiedCiteId, setCopiedCiteId] = useState(null);
 
   // Cycle through 8 themes
   const cycleTheme = () => {
@@ -682,6 +147,17 @@ export default function App() {
         scrollToSection('contact');
     } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleCite = async (pub) => {
+    const text = pub.citation || `${pub.authors} (${pub.year}). ${pub.title}. ${pub.journal}.`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedCiteId(pub.id);
+      setTimeout(() => setCopiedCiteId(null), 2000);
+    } catch (err) {
+      window.prompt('Copy citation:', text);
     }
   };
 
@@ -1168,7 +644,7 @@ export default function App() {
             </button>
             <a 
                 href={PORTFOLIO_DATA.profile.cvLink}
-                download="Meraj_CV_Placeholder.txt" // Using dummy text file to simulate download
+                download="Enamul_Islam_Meraj_WebsiteCV.pdf"
                 className={`px-8 py-3.5 border rounded-lg font-medium transition-colors flex items-center gap-2
                     ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 hover:bg-white' : 
                       'border-white/30 hover:bg-white/10 text-white'}`}
@@ -1178,19 +654,32 @@ export default function App() {
           </div>
 
           {/* Social Icons with Square Rounded Style */}
-          <div className="flex items-center justify-center gap-4 mt-8 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-700 flex-wrap">
+          <div className="flex items-center justify-center gap-4 mt-8 mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-700 flex-wrap">
             {[
-              { icon: GraduationCap, link: PORTFOLIO_DATA.profile.social.scholar }, // Google Scholar First
-              { icon: Mail, link: PORTFOLIO_DATA.profile.social.email },
-              { icon: Linkedin, link: PORTFOLIO_DATA.profile.social.linkedin },
-              { icon: MessageCircle, link: PORTFOLIO_DATA.profile.social.whatsapp },
-              { icon: Facebook, link: PORTFOLIO_DATA.profile.social.facebook },
-              { icon: Instagram, link: PORTFOLIO_DATA.profile.social.instagram },
-              { icon: Twitter, link: PORTFOLIO_DATA.profile.social.twitter },
-              { icon: Send, link: PORTFOLIO_DATA.profile.social.telegram },
-            ].map((social, idx) => (
-                <a key={idx} href={social.link} target="_blank" rel="noreferrer" className={`w-12 h-12 flex items-center justify-center rounded-lg border transition-all duration-300 hover:scale-110 ${getGlowStyle()}`}>
+              { icon: GraduationCap, link: PORTFOLIO_DATA.profile.social.scholar, label: "Google Scholar" },
+              PORTFOLIO_DATA.profile.social.researchgate && { icon: BookOpen, link: PORTFOLIO_DATA.profile.social.researchgate, label: "ResearchGate" },
+              PORTFOLIO_DATA.profile.social.orcid && { icon: Fingerprint, link: PORTFOLIO_DATA.profile.social.orcid, label: "ORCID" },
+              { icon: Mail, link: PORTFOLIO_DATA.profile.social.email, label: "Email" },
+              { icon: Linkedin, link: PORTFOLIO_DATA.profile.social.linkedin, label: "LinkedIn" },
+              { icon: MessageCircle, link: PORTFOLIO_DATA.profile.social.whatsapp, label: "WhatsApp" },
+              { icon: Facebook, link: PORTFOLIO_DATA.profile.social.facebook, label: "Facebook" },
+              { icon: Instagram, link: PORTFOLIO_DATA.profile.social.instagram, label: "Instagram" },
+              { icon: Twitter, link: PORTFOLIO_DATA.profile.social.twitter, label: "X" },
+              { icon: Send, link: PORTFOLIO_DATA.profile.social.telegram, label: "Telegram" },
+            ].filter(Boolean).map((social, idx) => (
+                <a
+                  key={idx}
+                  href={social.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.label}
+                  className={`relative group w-12 h-12 flex items-center justify-center rounded-lg border transition-all duration-300 hover:scale-110 ${getGlowStyle()}`}
+                >
                     <social.icon className="w-5 h-5" />
+                    <span className={`pointer-events-none absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 rounded text-[10px] font-semibold tracking-wide opacity-0 group-hover:opacity-100 transition-opacity z-20
+                      ${(theme === 'light' || theme === 'spring') ? 'bg-stone-800 text-white' : 'bg-white text-neutral-900'}`}>
+                      {social.label}
+                    </span>
                 </a>
             ))}
           </div>
@@ -1213,7 +702,7 @@ export default function App() {
                 <h3 className="text-3xl md:text-4xl font-serif font-bold mb-6">
                     Analyzing ground behavior to build safer, resilient infrastructure.
                 </h3>
-                <p className="text-lg opacity-80 leading-relaxed mb-6">
+                <p className="text-lg opacity-80 leading-relaxed mb-6 whitespace-pre-line">
                     {PORTFOLIO_DATA.profile.bio}
                 </p>
                 <div className="grid grid-cols-2 gap-4 mt-8">
@@ -1402,12 +891,29 @@ export default function App() {
                                     <span>{pub.citations} Citations</span>
                                 </div>
                             </div>
-                            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity self-start md:self-center">
-                                <button className={`p-2 rounded-full hover:bg-black/5 hover:${getAccentColor()}`} title="Download PDF">
+                            <div className="flex gap-2 self-start md:self-center">
+                                {pub.url && (
+                                  <a href={pub.url} target="_blank" rel="noreferrer" className={`p-2 rounded-full hover:bg-black/5 ${getAccentColor()}`} title="ResearchGate">
+                                    <ExternalLink className="w-5 h-5" />
+                                  </a>
+                                )}
+                                {pub.pdf && (
+                                  <a href={pub.pdf} download className={`p-2 rounded-full hover:bg-black/5 ${getAccentColor()}`} title="Download paper">
                                     <FileText className="w-5 h-5" />
-                                </button>
-                                <button className={`p-2 rounded-full hover:bg-black/5 hover:${getAccentColor()}`} title="Cite">
+                                  </a>
+                                )}
+                                {pub.certificate && (
+                                  <a href={pub.certificate} download className={`p-2 rounded-full hover:bg-black/5 ${getAccentColor()}`} title="Participation certificate">
                                     <Award className="w-5 h-5" />
+                                  </a>
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => handleCite(pub)}
+                                  className={`p-2 rounded-full hover:bg-black/5 ${getAccentColor()}`}
+                                  title="Copy citation"
+                                >
+                                    {copiedCiteId === pub.id ? <CheckCircle2 className="w-5 h-5" /> : <BookOpen className="w-5 h-5" />}
                                 </button>
                             </div>
                         </div>
