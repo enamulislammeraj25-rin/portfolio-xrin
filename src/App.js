@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Sun, Moon, CloudLightning, Leaf, Gem, Hexagon, Flower2,
+  Sun, Moon, CloudLightning, Leaf, Gem, Flower2,
   User, Briefcase, GraduationCap, 
-  Code, Award, Mail, Download, Search, 
+  Award, Mail, Download, Search, 
   Menu, X, ChevronRight, Globe, Users, FileText,
   MapPin, ArrowUpRight, Anchor, ArrowDown, ArrowUp,
   Facebook, Instagram, Twitter, Send, MessageCircle,
-  FileImage, FileCode, FolderOpen, Image as ImageIcon,
-  CheckCircle2, Linkedin, ExternalLink, ChevronDown,
-  Cpu, Database, Layers, Camera, Video, Settings, Eye, EyeOff,
+  FileImage, FileCode, FolderOpen,
+  CheckCircle2, Linkedin, ExternalLink,
+  Camera, Video, Settings, Eye, EyeOff,
   BookOpen, Fingerprint
 } from 'lucide-react';
 import { 
