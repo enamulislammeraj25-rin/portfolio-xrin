@@ -38,10 +38,11 @@ export const ParticleCanvas = ({ theme }) => {
         lineColor = 'rgba(87, 83, 78, 0.1)';
         type = 'truss';
         break;
-      case 'midnight': // New Theme
-        particleColor = 'rgba(139, 92, 246, 0.4)'; // Violet
-        lineColor = 'rgba(139, 92, 246, 0.1)';
-        type = 'stars';
+      case 'midnight':
+        particleColor = 'rgba(186, 230, 253, 0.45)';
+        lineColor = 'rgba(186, 230, 253, 0.08)';
+        type = 'rain';
+        particleCount = width < 768 ? 70 : 140;
         break;
       case 'spring':
         particleColor = 'rgba(244, 114, 182, 0.6)'; // Pink Petals
@@ -79,10 +80,12 @@ export const ParticleCanvas = ({ theme }) => {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.15,
-        vy: (type === 'bubbles' || type === 'spores') ? -(Math.random() * 0.5 + 0.1) : 
-            (type === 'petals' ? (Math.random() * 0.5 + 0.2) : (Math.random() - 0.5) * 0.15),
-        size: (type === 'bubbles') ? Math.random() * 4 + 1 : (Math.random() * 2 + 1.5),
+        vx: type === 'rain' ? (Math.random() - 0.5) * 0.35 : (Math.random() - 0.5) * 0.15,
+        vy: type === 'rain' ? (Math.random() * 6 + 5)
+            : (type === 'bubbles' || type === 'spores') ? -(Math.random() * 0.5 + 0.1)
+            : (type === 'petals' ? (Math.random() * 0.5 + 0.2) : (Math.random() - 0.5) * 0.15),
+        size: type === 'rain' ? (Math.random() * 10 + 8)
+            : (type === 'bubbles') ? Math.random() * 4 + 1 : (Math.random() * 2 + 1.5),
         sway: Math.random() * 0.02 // specific for petals
       });
     }
@@ -101,7 +104,10 @@ export const ParticleCanvas = ({ theme }) => {
       particles.forEach((p, i) => {
         // Movement Logic
         if (type === 'petals') {
-            p.x += Math.sin(p.y * 0.01) + p.vx; // Sway logic
+            p.x += Math.sin(p.y * 0.01) + p.vx;
+            p.y += p.vy;
+        } else if (type === 'rain') {
+            p.x += p.vx + 0.35;
             p.y += p.vy;
         } else {
             p.x += p.vx;
@@ -115,7 +121,14 @@ export const ParticleCanvas = ({ theme }) => {
         if (p.y > height + 20) p.y = -20;
 
         // Drawing Logic
-        if (type === 'spores' || type === 'stars') {
+        if (type === 'rain') {
+             ctx.beginPath();
+             ctx.strokeStyle = particleColor;
+             ctx.lineWidth = 1;
+             ctx.moveTo(p.x, p.y);
+             ctx.lineTo(p.x - 1.2, p.y + p.size);
+             ctx.stroke();
+        } else if (type === 'spores' || type === 'stars') {
              ctx.beginPath();
              ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
              ctx.fillStyle = particleColor;
