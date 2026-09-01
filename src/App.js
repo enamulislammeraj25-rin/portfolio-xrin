@@ -790,7 +790,7 @@ export default function App() {
             <div className="w-full">
                  <h2 className="text-3xl font-serif font-bold mb-4">Research Interests</h2>
                  <p className="opacity-70 max-w-2xl">
-                     Force-directed map of connected research fields. Click a node to pull it forward; linked fields stay attached.
+                     Centre is geotechnical engineering and does not move. Thick lines are the closest subfields; thin lines are weaker related fields.
                  </p>
             </div>
             

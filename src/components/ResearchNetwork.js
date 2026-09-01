@@ -1,6 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
+const PALETTE = [
+    '#7DD3C7', '#8EC5F0', '#C4B5FD', '#F3B48B',
+    '#86E3CE', '#F6D58A', '#7EB6D9', '#F2A7C3',
+    '#6EE7B7', '#93C5FD', '#F0C987', '#A5B4FC',
+    '#99E6C3', '#F5B19C', '#67E8F9', '#D8B4FE',
+    '#FDE68A', '#5EEAD4', '#BFDBFE', '#F9A8D4',
+    '#A7F3D0', '#FCD34D'
+];
+
+function strengthToCenter(id, links) {
+    const direct = links.find((l) => (l.from === 'core' && l.to === id) || (l.to === 'core' && l.from === id));
+    if (direct) return direct.strength;
+    const via = links.filter((l) => l.from === id || l.to === id);
+    return via.length ? Math.max(...via.map((l) => l.strength)) - 0.5 : 1;
+}
+
 export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect }) => {
     const wrapRef = useRef(null);
     const simRef = useRef(null);
@@ -8,7 +24,6 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
     const dragRef = useRef(null);
     const [frame, setFrame] = useState({ w: 0, h: 0, nodes: [] });
     const [hoverId, setHoverId] = useState(null);
-
     selectedRef.current = selectedId;
 
     useEffect(() => {
@@ -16,84 +31,77 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
         if (!el || !interests.length) return;
 
         const measure = () => ({ w: Math.max(320, el.clientWidth), h: Math.max(320, el.clientHeight) });
-        let { w, h } = measure();
+        const { w, h } = measure();
+        const links = PORTFOLIO_DATA.research_links || [];
 
-        const palette = [
-            '#7DD3C7', '#8EC5F0', '#C4B5FD', '#F3B48B',
-            '#86E3CE', '#F6D58A', '#7EB6D9', '#F2A7C3',
-            '#6EE7B7', '#93C5FD', '#F0C987', '#A5B4FC',
-            '#99E6C3', '#F5B19C', '#67E8F9', '#D8B4FE',
-            '#FDE68A', '#5EEAD4', '#BFDBFE', '#F9A8D4',
-            '#A7F3D0', '#FCD34D'
-        ];
-        const nodes = interests.map((item, i) => ({
-            ...item,
-            x: w / 2 + (Math.random() - 0.5) * 16,
-            y: h / 2 + (Math.random() - 0.5) * 16,
+        const ranked = [...interests].sort((a, b) => strengthToCenter(b.id, links) - strengthToCenter(a.id, links));
+        const core = {
+            id: 'core',
+            short: 'Geotechnical engineering',
+            topic: 'Geotechnical engineering',
+            x: w / 2,
+            y: h / 2,
+            hx: w / 2,
+            hy: h / 2,
             vx: 0,
             vy: 0,
-            r: 6 + (item.size || 14) * 0.28,
-            color: palette[i % palette.length],
-            phase: Math.random() * Math.PI * 2,
-            spin: 0.12 + Math.random() * 0.1,
-        }));
+            r: 22,
+            color: '#5EEAD4',
+            fixed: true,
+        };
 
-        const links = (PORTFOLIO_DATA.research_links || [])
-            .map(([a, b]) => ({
-                source: nodes.find((n) => n.id === a),
-                target: nodes.find((n) => n.id === b),
+        const nodes = [core, ...ranked.map((item, i) => {
+            const s = strengthToCenter(item.id, links);
+            const ring = s >= 3 ? 0.30 : s >= 2 ? 0.46 : 0.64;
+            const ang = (i / ranked.length) * Math.PI * 2 - Math.PI / 2;
+            const R = Math.min(w, h) * ring;
+            const hx = w / 2 + Math.cos(ang) * R * (w / Math.min(w, h));
+            const hy = h / 2 + Math.sin(ang) * R * (h / Math.min(w, h) * 0.92);
+            return {
+                ...item,
+                x: hx,
+                y: hy,
+                hx,
+                hy,
+                vx: 0,
+                vy: 0,
+                r: 7 + (item.size || 14) * 0.22,
+                color: PALETTE[i % PALETTE.length],
+                phase: ang,
+                spin: 0.08 + (i % 5) * 0.02,
+                fixed: false,
+            };
+        })];
+
+        const resolved = links
+            .map((l) => ({
+                ...l,
+                source: nodes.find((n) => n.id === l.from),
+                target: nodes.find((n) => n.id === l.to),
             }))
             .filter((l) => l.source && l.target);
 
-        simRef.current = { nodes, links, w, h, t: 0 };
+        simRef.current = { nodes, links: resolved, w, h, t: 0 };
 
         const tick = () => {
             const sim = simRef.current;
             if (!sim) return;
-            const { nodes: ns, links: ls } = sim;
+            const { nodes: ns } = sim;
             const W = sim.w;
             const H = sim.h;
             const sel = selectedRef.current;
             const drag = dragRef.current;
-            sim.t = (sim.t || 0) + 1;
-            const age = sim.t;
-            const layout = Math.max(0, 1 - age / 180);
+            sim.t += 1;
+            const t = sim.t;
 
-            for (let i = 0; i < ns.length; i++) {
-                for (let j = i + 1; j < ns.length; j++) {
-                    let dx = ns[j].x - ns[i].x;
-                    let dy = ns[j].y - ns[i].y;
-                    let d2 = dx * dx + dy * dy || 0.01;
-                    let d = Math.sqrt(d2);
-                    const minD = ns[i].r + ns[j].r + 70;
-                    let force = 0;
-                    if (d < minD) force += (minD - d) * (0.08 + 0.2 * layout);
-                    if (layout > 0.02) force += (1400 * layout) / d2;
-                    if (!force) continue;
-                    const fx = (dx / d) * force;
-                    const fy = (dy / d) * force;
-                    ns[i].vx -= fx;
-                    ns[i].vy -= fy;
-                    ns[j].vx += fx;
-                    ns[j].vy += fy;
+            ns.forEach((n) => {
+                if (n.fixed) {
+                    n.x = W / 2;
+                    n.y = H / 2;
+                    n.vx = 0;
+                    n.vy = 0;
+                    return;
                 }
-            }
-
-            ls.forEach((l) => {
-                const dx = l.target.x - l.source.x;
-                const dy = l.target.y - l.source.y;
-                const d = Math.sqrt(dx * dx + dy * dy) || 1;
-                const rest = 175;
-                const k = (d - rest) * (0.004 + 0.012 * layout);
-                const fx = (dx / d) * k;
-                const fy = (dy / d) * k;
-                l.source.vx += fx;
-                l.source.vy += fy;
-                l.target.vx -= fx;
-                l.target.vy -= fy;
-            });
-
-            ns.forEach((n, i) => {
                 if (drag && drag.id === n.id) {
                     n.x = drag.x;
                     n.y = drag.y;
@@ -101,47 +109,51 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                     n.vy = 0;
                     return;
                 }
-                const wander = 0.18;
-                n.vx += Math.cos(age * 0.004 * n.spin + n.phase) * wander;
-                n.vy += Math.sin(age * 0.0034 * n.spin + n.phase + 1.2) * wander;
+                const ox = Math.cos(t * 0.003 * n.spin + n.phase) * 10;
+                const oy = Math.sin(t * 0.0026 * n.spin + n.phase) * 10;
+                n.vx += (n.hx + ox - n.x) * 0.02;
+                n.vy += (n.hy + oy - n.y) * 0.02;
                 if (sel && n.id === sel) {
-                    n.vx += (W / 2 - n.x) * 0.02;
-                    n.vy += (H * 0.4 - n.y) * 0.02;
+                    n.vx += (W / 2 - n.x) * 0.03;
+                    n.vy += (H * 0.36 - n.y) * 0.03;
                 }
-                n.vx *= 0.94;
-                n.vy *= 0.94;
+                n.vx *= 0.9;
+                n.vy *= 0.9;
                 n.x += n.vx;
                 n.y += n.vy;
-                const pad = n.r + 52;
-                if (n.x < pad) { n.x = pad; n.vx = Math.abs(n.vx); }
-                if (n.x > W - pad) { n.x = W - pad; n.vx = -Math.abs(n.vx); }
-                if (n.y < pad) { n.y = pad; n.vy = Math.abs(n.vy); }
-                if (n.y > H - pad) { n.y = H - pad; n.vy = -Math.abs(n.vy); }
+                const pad = n.r + 48;
+                n.x = Math.max(pad, Math.min(W - pad, n.x));
+                n.y = Math.max(pad, Math.min(H - pad, n.y));
+            });
+
+            // keep home positions updated if canvas resized
+            ns.forEach((n) => {
+                if (n.fixed) {
+                    n.hx = W / 2;
+                    n.hy = H / 2;
+                }
             });
 
             setFrame({
                 w: W,
                 h: H,
-                nodes: ns.map((n) => ({ id: n.id, x: n.x, y: n.y, r: n.r, short: n.short, topic: n.topic, color: n.color })),
+                nodes: ns.map((n) => ({
+                    id: n.id, x: n.x, y: n.y, r: n.r, short: n.short, topic: n.topic, color: n.color, fixed: n.fixed,
+                })),
             });
         };
 
         let raf;
-        const loop = () => {
-            tick();
-            raf = requestAnimationFrame(loop);
-        };
+        const loop = () => { tick(); raf = requestAnimationFrame(loop); };
         raf = requestAnimationFrame(loop);
 
         const onResize = () => {
             const m = measure();
-            if (simRef.current) {
-                simRef.current.w = m.w;
-                simRef.current.h = m.h;
-            }
+            if (!simRef.current) return;
+            simRef.current.w = m.w;
+            simRef.current.h = m.h;
         };
         window.addEventListener('resize', onResize);
-
         return () => {
             cancelAnimationFrame(raf);
             window.removeEventListener('resize', onResize);
@@ -154,29 +166,23 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
         const src = e.touches ? e.touches[0] : e;
         return { x: src.clientX - box.left, y: src.clientY - box.top };
     };
-
     const nearest = (x, y) => {
         let best = null;
-        let bestD = 28;
+        let bestD = 26;
         frame.nodes.forEach((n) => {
             const d = Math.hypot(n.x - x, n.y - y);
-            if (d < Math.max(bestD, n.r + 10)) {
-                bestD = d;
-                best = n;
-            }
+            if (d < Math.max(bestD, n.r + 12)) { bestD = d; best = n; }
         });
         return best;
     };
-
     const onDown = (e) => {
         const p = clientPoint(e);
         const n = nearest(p.x, p.y);
-        if (!n) return;
+        if (!n || n.fixed) return;
         dragRef.current = { id: n.id, x: p.x, y: p.y };
         if (onSelect) onSelect(n.id);
         e.preventDefault();
     };
-
     const onMove = (e) => {
         if (!dragRef.current) {
             const p = clientPoint(e);
@@ -187,90 +193,26 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
         const p = clientPoint(e);
         dragRef.current = { ...dragRef.current, x: p.x, y: p.y };
     };
+    const onUp = () => { dragRef.current = null; };
 
-    const onUp = () => {
-        dragRef.current = null;
-    };
-
-    let cardClass, fill, stroke, labelCls, ring, line;
-    switch (theme) {
-        case 'light':
-        case 'spring':
-            cardClass = 'bg-white/70 border-stone-200';
-            fill = '#ffffff';
-            stroke = '#0d9488';
-            labelCls = 'text-stone-800';
-            ring = '#0f766e';
-            line = 'rgba(17,24,39,0.38)';
-            break;
-        case 'midnight':
-            cardClass = 'bg-slate-900/50 border-slate-800';
-            fill = '#1e293b';
-            stroke = '#818cf8';
-            labelCls = 'text-indigo-50';
-            ring = '#a5b4fc';
-            line = 'rgba(17,24,39,0.38)';
-            break;
-        case 'nature':
-            cardClass = 'bg-stone-900/40 border-stone-700';
-            fill = '#292524';
-            stroke = '#84cc16';
-            labelCls = 'text-stone-100';
-            ring = '#a3e635';
-            line = 'rgba(17,24,39,0.38)';
-            break;
-        case 'musgravite':
-            cardClass = 'bg-purple-950/30 border-purple-800/40';
-            fill = '#3b0764';
-            stroke = '#c084fc';
-            labelCls = 'text-purple-50';
-            ring = '#e9d5ff';
-            line = 'rgba(17,24,39,0.38)';
-            break;
-        case 'ruby':
-            cardClass = 'bg-red-950/20 border-red-900/40';
-            fill = '#450a0a';
-            stroke = '#f87171';
-            labelCls = 'text-red-50';
-            ring = '#fca5a5';
-            line = 'rgba(17,24,39,0.38)';
-            break;
-        case 'emerald':
-            cardClass = 'bg-emerald-950/20 border-emerald-900/40';
-            fill = '#022c22';
-            stroke = '#34d399';
-            labelCls = 'text-emerald-50';
-            ring = '#6ee7b7';
-            line = 'rgba(17,24,39,0.38)';
-            break;
-        default:
-            cardClass = 'bg-neutral-900/50 border-white/10';
-            fill = '#262626';
-            stroke = '#2dd4bf';
-            labelCls = 'text-neutral-100';
-            ring = '#5eead4';
-            line = 'rgba(17,24,39,0.38)';
-    }
+    const isLight = theme === 'light' || theme === 'spring';
+    const cardClass = isLight ? 'bg-white/70 border-stone-200' : 'bg-neutral-900/50 border-white/10';
+    const labelCls = isLight ? 'text-stone-800' : 'text-neutral-100';
 
     const active = hoverId || selectedId;
-    const linked = new Set();
-    (PORTFOLIO_DATA.research_links || []).forEach(([a, b]) => {
-        if (a === active) linked.add(b);
-        if (b === active) linked.add(a);
-    });
-
-    const drawnLinks = (PORTFOLIO_DATA.research_links || [])
-        .map(([a, b]) => {
-            const s = frame.nodes.find((n) => n.id === a);
-            const t = frame.nodes.find((n) => n.id === b);
-            return s && t ? { s, t, hot: active && (a === active || b === active) } : null;
-        })
-        .filter(Boolean);
+    const rawLinks = PORTFOLIO_DATA.research_links || [];
+    const drawnLinks = rawLinks.map((l, i) => {
+        const s = frame.nodes.find((n) => n.id === l.from);
+        const t = frame.nodes.find((n) => n.id === l.to);
+        if (!s || !t) return null;
+        const hot = active && (l.from === active || l.to === active || l.from === 'core' && active);
+        return { i, s, t, strength: l.strength || 1, hot: !!(active && (l.from === active || l.to === active)) };
+    }).filter(Boolean);
 
     return (
         <div
             ref={wrapRef}
-            className={`relative w-full h-[34rem] md:h-[44rem] border rounded-lg overflow-hidden cursor-grab active:cursor-grabbing ${cardClass}`}
+            className={`relative w-full h-[36rem] md:h-[46rem] border rounded-lg overflow-hidden cursor-grab active:cursor-grabbing ${cardClass}`}
             onMouseDown={onDown}
             onMouseMove={onMove}
             onMouseUp={onUp}
@@ -280,26 +222,23 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             onTouchEnd={onUp}
         >
             <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                {drawnLinks.map((l, i) => (
+                {drawnLinks.map((l) => (
                     <line
-                        key={i}
-                        x1={l.s.x}
-                        y1={l.s.y}
-                        x2={l.t.x}
-                        y2={l.t.y}
-                        stroke={l.hot ? '#0f766e' : line}
-                        strokeWidth={l.hot ? 2.2 : 1}
+                        key={l.i}
+                        x1={l.s.x} y1={l.s.y} x2={l.t.x} y2={l.t.y}
+                        stroke={l.hot ? '#0f766e' : 'rgba(17,24,39,0.42)'}
+                        strokeWidth={l.strength === 3 ? 3.2 : l.strength === 2 ? 1.8 : 0.9}
+                        strokeOpacity={l.hot ? 0.95 : 0.7}
                     />
                 ))}
                 {frame.nodes.map((n) => (
                     <circle
                         key={n.id}
-                        cx={n.x}
-                        cy={n.y}
-                        r={active === n.id ? n.r + 4 : n.r}
-                        fill={n.color || fill}
+                        cx={n.x} cy={n.y}
+                        r={n.fixed ? n.r : (active === n.id ? n.r + 3 : n.r)}
+                        fill={n.color}
                         stroke="#111827"
-                        strokeWidth={active === n.id ? 3.2 : 2.4}
+                        strokeWidth={n.fixed ? 3.4 : active === n.id ? 3 : 2.3}
                     />
                 ))}
             </svg>
@@ -307,9 +246,14 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                 <div
                     key={n.id + '-lab'}
                     className={`absolute pointer-events-none -translate-x-1/2 text-center ${labelCls}`}
-                    style={{ left: n.x, top: n.y + n.r + 4, width: 120 }}
+                    style={{ left: n.x, top: n.fixed ? n.y + n.r + 6 : n.y + n.r + 4, width: n.fixed ? 150 : 128 }}
                 >
-                    <span className="text-[10px] md:text-[11px] font-semibold leading-tight" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.45)' }}>{n.short}</span>
+                    <span
+                        className={`font-semibold leading-tight ${n.fixed ? 'text-[11px] md:text-xs' : 'text-[10px] md:text-[11px]'}`}
+                        style={{ textShadow: '0 1px 2px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.45)' }}
+                    >
+                        {n.short}
+                    </span>
                 </div>
             ))}
         </div>
