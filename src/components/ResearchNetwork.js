@@ -34,6 +34,8 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             vy: 0,
             r: 6 + (item.size || 14) * 0.28,
             color: palette[i % palette.length],
+            phase: Math.random() * Math.PI * 2,
+            spin: 0.12 + Math.random() * 0.1,
         }));
 
         const links = (PORTFOLIO_DATA.research_links || [])
@@ -43,7 +45,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             }))
             .filter((l) => l.source && l.target);
 
-        simRef.current = { nodes, links, w, h };
+        simRef.current = { nodes, links, w, h, t: 0 };
 
         const tick = () => {
             const sim = simRef.current;
@@ -53,6 +55,9 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
             const H = sim.h;
             const sel = selectedRef.current;
             const drag = dragRef.current;
+            sim.t = (sim.t || 0) + 1;
+            const age = sim.t;
+            const layout = Math.max(0, 1 - age / 180);
 
             for (let i = 0; i < ns.length; i++) {
                 for (let j = i + 1; j < ns.length; j++) {
@@ -60,9 +65,11 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                     let dy = ns[j].y - ns[i].y;
                     let d2 = dx * dx + dy * dy || 0.01;
                     let d = Math.sqrt(d2);
-                    const minD = ns[i].r + ns[j].r + 64;
-                    let force = 2600 / d2;
-                    if (d < minD) force += (minD - d) * 0.22;
+                    const minD = ns[i].r + ns[j].r + 70;
+                    let force = 0;
+                    if (d < minD) force += (minD - d) * (0.08 + 0.2 * layout);
+                    if (layout > 0.02) force += (1400 * layout) / d2;
+                    if (!force) continue;
                     const fx = (dx / d) * force;
                     const fy = (dy / d) * force;
                     ns[i].vx -= fx;
@@ -76,8 +83,8 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                 const dx = l.target.x - l.source.x;
                 const dy = l.target.y - l.source.y;
                 const d = Math.sqrt(dx * dx + dy * dy) || 1;
-                const rest = 168;
-                const k = (d - rest) * 0.014;
+                const rest = 175;
+                const k = (d - rest) * (0.004 + 0.012 * layout);
                 const fx = (dx / d) * k;
                 const fy = (dy / d) * k;
                 l.source.vx += fx;
@@ -86,7 +93,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                 l.target.vy -= fy;
             });
 
-            ns.forEach((n) => {
+            ns.forEach((n, i) => {
                 if (drag && drag.id === n.id) {
                     n.x = drag.x;
                     n.y = drag.y;
@@ -94,19 +101,22 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                     n.vy = 0;
                     return;
                 }
-                n.vx += (W / 2 - n.x) * 0.0035;
-                n.vy += (H / 2 - n.y) * 0.0035;
+                const wander = 0.18;
+                n.vx += Math.cos(age * 0.004 * n.spin + n.phase) * wander;
+                n.vy += Math.sin(age * 0.0034 * n.spin + n.phase + 1.2) * wander;
                 if (sel && n.id === sel) {
-                    n.vx += (W / 2 - n.x) * 0.05;
-                    n.vy += (H * 0.4 - n.y) * 0.05;
+                    n.vx += (W / 2 - n.x) * 0.02;
+                    n.vy += (H * 0.4 - n.y) * 0.02;
                 }
-                n.vx *= 0.82;
-                n.vy *= 0.82;
+                n.vx *= 0.94;
+                n.vy *= 0.94;
                 n.x += n.vx;
                 n.y += n.vy;
                 const pad = n.r + 52;
-                n.x = Math.max(pad, Math.min(W - pad, n.x));
-                n.y = Math.max(pad, Math.min(H - pad, n.y));
+                if (n.x < pad) { n.x = pad; n.vx = Math.abs(n.vx); }
+                if (n.x > W - pad) { n.x = W - pad; n.vx = -Math.abs(n.vx); }
+                if (n.y < pad) { n.y = pad; n.vy = Math.abs(n.vy); }
+                if (n.y > H - pad) { n.y = H - pad; n.vy = -Math.abs(n.vy); }
             });
 
             setFrame({
