@@ -909,18 +909,29 @@ export default function App() {
             </div>
 
             {PORTFOLIO_DATA.working_papers && PORTFOLIO_DATA.working_papers.length > 0 && (
-              <div>
-                <h3 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-4">In progress</h3>
-                <div className="grid md:grid-cols-2 gap-4 mb-8">
-                  {PORTFOLIO_DATA.working_papers.map((wp) => (
-                    <div key={wp.id} className={`p-5 rounded-lg border ${(theme === 'light' || theme === 'spring') ? 'border-stone-200 bg-white' : 'border-white/10 bg-white/5'}`}>
-                      <div className="text-[10px] uppercase tracking-wider opacity-60 mb-2">{wp.status} · {wp.year}</div>
-                      <h4 className="font-semibold leading-snug mb-2">{wp.title}</h4>
-                      <p className="text-sm opacity-60 italic mb-1">{wp.venue}</p>
-                      {wp.note && <p className="text-sm opacity-70">{wp.note}</p>}
-                    </div>
-                  ))}
-                </div>
+              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                <h3 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-4 ml-8">In progress</h3>
+                {PORTFOLIO_DATA.working_papers.map((wp) => (
+                  <div key={wp.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                      ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                      <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
+                          ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                          <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
+                      </div>
+                      <div className="flex gap-2 items-center mb-2">
+                          <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded
+                              ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200 text-stone-800' : 'bg-white/20 text-white'}`}>
+                              {wp.status}
+                          </span>
+                          <span className="text-sm opacity-60">{wp.year}</span>
+                      </div>
+                      <h3 className={`text-lg md:text-xl font-bold mb-2 transition-colors ${getHoverTextColor()}`}>
+                          {wp.title}
+                      </h3>
+                      <p className="opacity-70 mb-2 italic">{wp.venue}</p>
+                      {wp.note && <p className="text-sm opacity-60">{wp.note}</p>}
+                  </div>
+                ))}
               </div>
             )}
 
