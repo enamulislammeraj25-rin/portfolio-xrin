@@ -3,6 +3,12 @@
  * Edit this file only when changing text, links, papers, projects.
  */
 export const PORTFOLIO_DATA = {
+  emailjs: {
+    serviceId: "service_u8iy4ur",
+    templateId: "template_taxlr0e",
+    publicKey: "Q-t9gaQi9qfH8bVY3"
+  },
+
   // --- EDITABLE: Personal Profile Info ---
   profile: {
     name: "Md Enamul Islam Bhuiyan Meraj",

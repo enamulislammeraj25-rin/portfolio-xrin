@@ -29,7 +29,9 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollDir, setScrollDir] = useState('down');
-  const [formStatus, setFormStatus] = useState('idle'); // idle, sending, success
+  const [formStatus, setFormStatus] = useState('idle');
+  const [formData, setFormData] = useState({ first: '', last: '', email: '', topic: 'Research Collaboration', message: '' });
+  const [formError, setFormError] = useState('');
   
   // --- NEW: HOBBIES VISIBILITY STATE ---
   const [showHobbies, setShowHobbies] = useState(true);
@@ -166,13 +168,41 @@ export default function App() {
   };
 
   // --- SEND MESSAGE LOGIC ---
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
+    const cfg = PORTFOLIO_DATA.emailjs || {};
+    const name = `${formData.first} ${formData.last}`.trim();
+    if (!name || !formData.email || !formData.message.trim()) {
+      setFormError('Name, email, and message are required.');
+      return;
+    }
+    setFormError('');
     setFormStatus('sending');
-    setTimeout(() => {
-        setFormStatus('success');
-        setTimeout(() => setFormStatus('idle'), 3000);
-    }, 1500);
+    try {
+      const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: cfg.serviceId,
+          template_id: cfg.templateId,
+          user_id: cfg.publicKey,
+          template_params: {
+            name,
+            title: formData.topic,
+            message: formData.message,
+            from_email: formData.email,
+            to_email: PORTFOLIO_DATA.profile.email,
+          },
+        }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      setFormStatus('success');
+      setFormData({ first: '', last: '', email: '', topic: 'Research Collaboration', message: '' });
+      setTimeout(() => setFormStatus('idle'), 3500);
+    } catch (err) {
+      setFormStatus('idle');
+      setFormError('Could not send. Try emailing me directly.');
+    }
   };
 
   // --- THEME STYLE HELPERS ---
@@ -1222,7 +1252,7 @@ export default function App() {
                   <div>
                       <h2 className="text-3xl font-serif font-bold mb-6">Let's Connect</h2>
                       <p className="opacity-80 text-sm mb-8 leading-relaxed">
-                          Interested in collaboration or have questions about my research? I'm currently accepting new PhD students for Fall 2025.
+                          Questions about my research, collaboration, or a manuscript — write here and it goes to my Gmail.
                       </p>
                       
                       <div className="space-y-6">
@@ -1236,8 +1266,8 @@ export default function App() {
                           <div className="flex items-center gap-4">
                               <MapPin className="w-5 h-5 opacity-80" />
                               <div>
-                                  <div className="text-xs opacity-60 uppercase tracking-wider font-semibold">Lab</div>
-                                  <div className="text-sm font-medium">Y2E2 Building, Suite 300</div>
+                                  <div className="text-xs opacity-60 uppercase tracking-wider font-semibold">Location</div>
+                                  <div className="text-sm font-medium">{PORTFOLIO_DATA.profile.location}</div>
                               </div>
                           </div>
                       </div>
@@ -1255,29 +1285,35 @@ export default function App() {
 
               {/* Right Panel: Form (Clean White/Glass) */}
               <div className="p-10 md:w-3/5 bg-transparent">
-                  <form className="space-y-5">
+                  <form className="space-y-5" onSubmit={handleSendMessage}>
                       <div className="grid grid-cols-2 gap-5">
                           <div className="space-y-1">
                               <label className="text-xs font-bold opacity-60 uppercase tracking-wide">First Name</label>
-                              <input type="text" className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
+                              <input type="text" value={formData.first} onChange={(e) => setFormData({ ...formData, first: e.target.value })} className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
                                   ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`} />
                           </div>
                           <div className="space-y-1">
                               <label className="text-xs font-bold opacity-60 uppercase tracking-wide">Last Name</label>
-                              <input type="text" className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
+                              <input type="text" value={formData.last} onChange={(e) => setFormData({ ...formData, last: e.target.value })} className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
                                   ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`} />
                           </div>
+                      </div>
+
+                      <div className="space-y-1">
+                          <label className="text-xs font-bold opacity-60 uppercase tracking-wide">Email</label>
+                          <input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
+                              ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`} />
                       </div>
                       
                       <div className="space-y-1">
                           <label className="text-xs font-bold opacity-60 uppercase tracking-wide">Topic</label>
                           <div className="relative">
-                            <select className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all appearance-none cursor-pointer
+                            <select value={formData.topic} onChange={(e) => setFormData({ ...formData, topic: e.target.value })} className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all appearance-none cursor-pointer
                                 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`}>
                                 <option className="text-black">Research Collaboration</option>
                                 <option className="text-black">Speaking Inquiry</option>
-                                <option className="text-black">Prospective Student</option>
-                                <option className="text-black">Media/Press</option>
+                                <option className="text-black">Manuscript / paper</option>
+                                <option className="text-black">Other</option>
                             </select>
                             <ChevronRight className="absolute right-3 top-3.5 w-4 h-4 opacity-50 rotate-90 pointer-events-none" />
                           </div>
@@ -1285,13 +1321,14 @@ export default function App() {
 
                       <div className="space-y-1">
                           <label className="text-xs font-bold opacity-60 uppercase tracking-wide">Message</label>
-                          <textarea rows="4" className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
+                          <textarea rows="4" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
                               ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`}></textarea>
                       </div>
 
+                      {formError && <p className="text-sm text-rose-400">{formError}</p>}
+
                       <button 
-                        type="button"
-                        onClick={handleSendMessage}
+                        type="submit"
                         disabled={formStatus !== 'idle'}
                         className={`w-full font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 text-white flex items-center justify-center gap-2
                           ${theme === 'dark' ? 'bg-teal-600 hover:bg-teal-700' : 
