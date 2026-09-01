@@ -24,7 +24,7 @@ import { ResearchNetwork } from './components/ResearchNetwork';
  * MAIN APP COMPONENT
  */
 export default function App() {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('midnight');
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -673,7 +673,7 @@ export default function App() {
             {PORTFOLIO_DATA.profile.name}
           </h1>
           
-          <p className="text-xl md:text-2xl font-light max-w-2xl mx-auto mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-80">
+          <p className="text-sm sm:text-base md:text-xl font-light mx-auto mb-10 whitespace-nowrap animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-80">
             {PORTFOLIO_DATA.profile.tagline}
           </p>
           
