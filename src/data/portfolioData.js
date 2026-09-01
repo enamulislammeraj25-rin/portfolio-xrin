@@ -14,7 +14,7 @@ export const PORTFOLIO_DATA = {
     name: "Md Enamul Islam Bhuiyan Meraj",
     title: "Post Graduate Student of Civil & Geotechnical Engineering",
     institution: "Bangladesh University of Engineering & Technology (BUET)",
-    tagline: "Shear-wave velocity, soil liquefaction, and foundation response under earthquake loading.",
+    tagline: "Civil Engineer | Graduate Civil & Geotechnical Engineering Researcher | BUET",
     bio: "I am a Civil Engineer and M.Sc. researcher in Civil and Geotechnical Engineering at the Bangladesh University of Engineering and Technology (BUET), with a B.Sc. in Civil Engineering from RUET. My current research focuses on geotechnical earthquake engineering, particularly soil liquefaction and seismic site characterization.\n\nBeyond my current work, I am interested in expanding my research toward computational geomechanics, soil–structure interaction, foundation and offshore geotechnics, ground improvement, geohazards, and resilient and sustainable infrastructure. I am particularly interested in research that combines numerical modelling, field-based investigation, and engineering analysis to address complex infrastructure challenges.\n\nAlongside research, I have a strong interest in teaching and academic mentorship. My long-term goal is to pursue doctoral research and build an academic career that integrates research, teaching, and practical engineering problem-solving.",
     email: "enamulislammeraj.25@gmail.com",
     location: "Dhaka, Bangladesh",
