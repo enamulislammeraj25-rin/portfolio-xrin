@@ -776,26 +776,11 @@ export default function App() {
                     ))}
                 </div>
             </div>
-            <div className="relative mx-auto w-full max-w-sm flex items-center justify-center min-h-[22rem] md:min-h-[26rem]">
-                <div className={`absolute w-64 h-64 md:w-80 md:h-80 rounded-full blur-2xl opacity-50
-                    ${theme === 'light' || theme === 'spring' ? 'bg-stone-300' :
-                      theme === 'midnight' ? 'bg-indigo-700' :
-                      theme === 'rain' ? 'bg-sky-800' :
-                      theme === 'ruby' ? 'bg-rose-800' :
-                      theme === 'emerald' ? 'bg-emerald-800' :
-                      theme === 'nature' ? 'bg-lime-800' :
-                      theme === 'musgravite' ? 'bg-purple-800' :
-                      theme === 'dark' ? 'bg-teal-800' :
-                      'bg-white/20'}`} />
+            <div className="relative mx-auto w-full max-w-sm flex items-center justify-center">
                 <img
                   src={PORTFOLIO_DATA.profile.photo}
                   alt={PORTFOLIO_DATA.profile.name}
-                  className="relative z-10 w-[88%] max-w-md pointer-events-none select-none"
-                  style={{
-                    maskImage: 'radial-gradient(ellipse 68% 72% at 50% 42%, #000 58%, transparent 78%)',
-                    WebkitMaskImage: 'radial-gradient(ellipse 68% 72% at 50% 42%, #000 58%, transparent 78%)',
-                    filter: 'drop-shadow(0 18px 28px rgba(0,0,0,0.35))'
-                  }}
+                  className="w-full max-w-md object-contain pointer-events-none select-none"
                 />
             </div>
         </div>
