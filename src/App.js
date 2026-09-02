@@ -790,8 +790,8 @@ export default function App() {
                 <div className="relative aspect-[4/5] overflow-visible">
                     <img
                       src={PORTFOLIO_DATA.profile.photo}
-                      alt=""
-                      className="absolute left-1/2 -translate-x-1/2 bottom-[-6%] w-[118%] max-w-none object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.45)] pointer-events-none select-none"
+                      alt={PORTFOLIO_DATA.profile.name}
+                      className="absolute left-1/2 -translate-x-1/2 bottom-[-8%] w-[122%] max-w-none object-cover object-top drop-shadow-[0_28px_45px_rgba(0,0,0,0.5)] pointer-events-none select-none"
                     />
                 </div>
             </div>
