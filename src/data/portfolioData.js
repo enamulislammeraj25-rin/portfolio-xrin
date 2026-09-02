@@ -19,6 +19,7 @@ export const PORTFOLIO_DATA = {
     email: "enamulislammeraj.25@gmail.com",
     location: "Dhaka, Bangladesh",
     cvLink: "/Enamul_Islam_Meraj_WebsiteCV.pdf",
+    photo: "/profile-placeholder.jpg",
     
     // --- EDITABLE: Social Links URLs ---
     social: {
