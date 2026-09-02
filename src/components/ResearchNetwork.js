@@ -221,7 +221,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
     return (
         <div
             ref={wrapRef}
-            className={`relative w-full h-[36rem] md:h-[46rem] border rounded-lg overflow-hidden cursor-pointer ${cardClass}`}
+            className={`relative w-full h-[24rem] md:h-[30rem] border rounded-lg overflow-hidden cursor-pointer ${cardClass}`}
             onClick={onClick}
             onMouseMove={onMove}
             onMouseLeave={() => setHoverId(null)}

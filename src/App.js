@@ -792,9 +792,6 @@ export default function App() {
                     <GraduationCap className={`w-8 h-8 ${getAccentColor()}`} />
                     Education
                 </h2>
-                <p className="opacity-70">
-                    A timeline of my academic qualifications and research milestones.
-                </p>
             </div>
             <div className="w-full">
                 <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
@@ -857,9 +854,6 @@ export default function App() {
         <div className="flex flex-col gap-8">
             <div className="w-full">
                  <h2 className="text-3xl font-serif font-bold mb-4">Research Interests</h2>
-                 <p className="opacity-70 max-w-2xl">
-                     Centre is geotechnical engineering and does not move. Thick lines are the closest subfields; thin lines are weaker related fields.
-                 </p>
             </div>
             
             <div className="w-full mb-4">
@@ -921,9 +915,6 @@ export default function App() {
             <div className="flex flex-col md:flex-row justify-between items-end">
                 <div>
                     <h2 className="text-3xl font-serif font-bold mb-4">Selected Publications</h2>
-                    <p className="opacity-70">
-                        Peer-reviewed and conference papers, plus manuscripts under review.
-                    </p>
                 </div>
                 <div className="flex gap-2 mt-4 md:mt-0">
                     <button className={`px-4 py-2 text-sm font-medium rounded-lg ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200 text-stone-800' : 'bg-white/10 text-white'}`}>
@@ -1230,9 +1221,6 @@ export default function App() {
                     <Briefcase className={`w-8 h-8 ${getAccentColor()}`} />
                     Experience
                 </h2>
-                <p className="opacity-70">
-                    Professional appointments and history.
-                </p>
             </div>
             <div className="w-full">
                 <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
