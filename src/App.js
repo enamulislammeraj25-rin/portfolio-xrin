@@ -32,6 +32,7 @@ export default function App() {
   const [formStatus, setFormStatus] = useState('idle');
   const [formData, setFormData] = useState({ first: '', last: '', email: '', topic: 'Research Collaboration', message: '' });
   const [formError, setFormError] = useState('');
+  const [eduExpanded, setEduExpanded] = useState(false);
   
   // --- NEW: HOBBIES VISIBILITY STATE ---
   const [showHobbies, setShowHobbies] = useState(true);
@@ -796,38 +797,57 @@ export default function App() {
                 </p>
             </div>
             <div className="w-full">
-                {/* Continuous Vertical Line Container */}
                 <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
-                    {PORTFOLIO_DATA.education.map((edu, idx) => (
+                    {(eduExpanded ? PORTFOLIO_DATA.education : PORTFOLIO_DATA.education.slice(0, 4)).map((edu, idx) => (
                         <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                             ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 
                               'hover:bg-white/5'}`}>
-                            
-                            {/* Outer Circle (Static) - CENTERED */}
                             <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
                                 ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
-                                {/* Inner Dot (Changes Color) */}
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
-                            
                             <div> 
                                 <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/20'}`}>
                                     {edu.year}
                                 </span>
                                 <h3 className={`text-xl font-bold mt-1 transition-colors ${getHoverTextColor()}`}>{edu.institution}</h3>
                                 <div className="text-lg font-medium opacity-90 mb-1">{edu.degree}</div>
+                                {edu.group && (
+                                     <p className="text-sm opacity-70">
+                                        <span className="font-semibold">Group:</span> {edu.group}
+                                    </p>
+                                )}
                                 {edu.advisor && (
                                      <p className="text-sm opacity-70">
                                         <span className="font-semibold">Advisor/Board:</span> {edu.advisor}
                                     </p>
                                 )}
+                                {edu.thesis && (
                                  <p className="text-sm italic opacity-60">
                                     {edu.thesis}
                                 </p>
+                                )}
+                                {edu.achievement && (
+                                     <p className="text-sm opacity-70 mt-1">
+                                        <span className="font-semibold">Achievement:</span> {edu.achievement}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     ))}
                 </div>
+                {PORTFOLIO_DATA.education.length > 4 && (
+                  <div className="flex justify-center mt-4">
+                    <button
+                      type="button"
+                      onClick={() => setEduExpanded(!eduExpanded)}
+                      className={`px-5 py-2 text-sm font-medium rounded-full border transition-colors
+                        ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 hover:bg-white' : 'border-white/20 hover:bg-white/10'}`}
+                    >
+                      {eduExpanded ? 'Show less' : 'Show more'}
+                    </button>
+                  </div>
+                )}
             </div>
           </div>
       </Section>

@@ -50,29 +50,40 @@ export const PORTFOLIO_DATA = {
       institution: "Bangladesh University of Engineering & Technology (BUET)",
       year: "May, 2025 - Present",
       advisor: "Prof. Dr. Mehedi Ahmed Ansary",
-      thesis: "Shear Wave Velocity-Based Deterministic and Probabilistic Liquefaction Assessment of DMDP Area in Bangladesh."
+      thesis: "Thesis: Shear Wave Velocity-Based Deterministic and Probabilistic Liquefaction Assessment of DMDP Area in Bangladesh.",
+      achievement: "Post Graduate Fellowship (December, 2025–present)"
     },
     {
       degree: "B.Sc. in Civil Engineering",
       institution: "Rajshahi University of Engineering & Technology (RUET)",
       year: "February, 2019 - April, 2024",
       advisor: "Prof. Dr. Md. Abdul Alim",
-      thesis: "Thesis: Behavior of single pile in cohesionless soil on horizontal & sloping ground surface under lateral loading"
+      thesis: "Thesis: Behavior of single pile in cohesionless soil on horizontal & sloping ground surface under lateral loading",
+      achievement: "Technical Education Scholarship (2019, 2020, 2021, 2022)"
     },
     {
       degree: "Higher Secondary Certificate (HSC)",
       institution: "Dhaka College",
-      year: "2016 - 2018"
+      year: "2016 - 2018",
+      group: "Science"
     },
     {
-      degree: "Secondary School Certificate",
+      degree: "Secondary School Certificate (SSC)",
       institution: "Motijheel Government Boys’ High School",
-      year: "2014 - 2016"
+      year: "2014 - 2016",
+      group: "Science",
+      achievement: "General Board Scholarship"
     },
     {
       degree: "Junior School Certificate (JSC)",
       institution: "Motijheel Government Boys’ High School",
       year: "2011 - 2013"
+    },
+    {
+      degree: "Primary School Certificate (PSC)",
+      institution: "Sehachar Government Primary School",
+      year: "2010",
+      achievement: "General Board Scholarship"
     }
   ],
 
