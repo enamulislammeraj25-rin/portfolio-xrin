@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Sun, Moon, CloudLightning, Leaf, Gem, Flower2,
   User, Briefcase, GraduationCap, 
@@ -47,7 +47,12 @@ export default function App() {
   const [copiedCiteId, setCopiedCiteId] = useState(null);
   const [selectedInterest, setSelectedInterest] = useState(null);
   const [listFocusId, setListFocusId] = useState(null);
+  const researchListRef = useRef(null);
   const [activeSection, setActiveSection] = useState('about');
+
+  useEffect(() => {
+    if (researchListRef.current) researchListRef.current.scrollTop = 0;
+  }, [listFocusId]);
 
   // Cycle through 9 themes
   const cycleTheme = () => {
@@ -856,13 +861,42 @@ export default function App() {
                  <h2 className="text-3xl font-serif font-bold mb-4">Research Interests</h2>
             </div>
             
-            <div className="w-full mb-4">
-                 <ResearchNetwork
-                    theme={theme}
-                    interests={PORTFOLIO_DATA.research_interests}
-                    selectedId={selectedInterest}
-                    onSelect={(id) => { setSelectedInterest(id); setListFocusId(id); }}
-                 />
+            <div className="w-full flex flex-col md:flex-row gap-4 mb-4 items-stretch">
+                 <div className="w-full md:w-[58%] shrink-0">
+                   <ResearchNetwork
+                      theme={theme}
+                      interests={PORTFOLIO_DATA.research_interests}
+                      selectedId={selectedInterest}
+                      onSelect={(id) => { setSelectedInterest(id); setListFocusId(id); }}
+                   />
+                 </div>
+                 <div
+                    ref={researchListRef}
+                    className={`w-full md:w-[42%] h-[24rem] md:h-[30rem] overflow-y-auto rounded-lg border pr-1
+                      ${(theme === 'light' || theme === 'spring') ? 'border-stone-200' : 'border-white/10'}`}
+                 >
+                     {[...PORTFOLIO_DATA.research_interests].sort((a, b) => {
+                         if (a.id === listFocusId) return -1;
+                         if (b.id === listFocusId) return 1;
+                         return 0;
+                     }).map((interest) => (
+                         <button
+                            type="button"
+                            key={interest.id}
+                            id={`interest-${interest.id}`}
+                            onClick={() => setSelectedInterest(interest.id === selectedInterest ? null : interest.id)}
+                            className={`w-full text-left p-4 rounded-lg transition-all duration-300 border-b last:border-b-0
+                            ${selectedInterest === interest.id
+                                ? ((theme === 'light' || theme === 'spring') ? 'bg-white border-stone-200' : 'bg-white/10 border-white/10')
+                                : ((theme === 'light' || theme === 'spring') ? 'border-stone-100 hover:bg-white' : 'border-white/5 hover:bg-white/5')}`}
+                         >
+                              <span className={`text-base font-medium ${getHoverTextColor()}`}>{interest.topic}</span>
+                              {interest.note && selectedInterest === interest.id && (
+                                <p className="mt-2 text-sm opacity-70">{interest.note}</p>
+                              )}
+                         </button>
+                     ))}
+                 </div>
             </div>
 
             {PORTFOLIO_DATA.current_research && PORTFOLIO_DATA.current_research.length > 0 && (
@@ -883,29 +917,7 @@ export default function App() {
               </div>
             )}
 
-            <div className="w-full grid md:grid-cols-2 gap-3">
-                     {[...PORTFOLIO_DATA.research_interests].sort((a, b) => {
-                         if (a.id === listFocusId) return -1;
-                         if (b.id === listFocusId) return 1;
-                         return 0;
-                     }).map((interest) => (
-                         <button
-                            type="button"
-                            key={interest.id}
-                            id={`interest-${interest.id}`}
-                            onClick={() => setSelectedInterest(interest.id === selectedInterest ? null : interest.id)}
-                            className={`text-left p-4 rounded-lg transition-all duration-300 border
-                            ${selectedInterest === interest.id
-                                ? ((theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-white/10 border-white/20')
-                                : ((theme === 'light' || theme === 'spring') ? 'border-transparent hover:bg-white' : 'border-transparent hover:bg-white/5')}`}
-                         >
-                              <span className={`text-base font-medium ${getHoverTextColor()}`}>{interest.topic}</span>
-                              {interest.note && selectedInterest === interest.id && (
-                                <p className="mt-2 text-sm opacity-70">{interest.note}</p>
-                              )}
-                         </button>
-                     ))}
-            </div>
+
         </div>
       </Section>
 
