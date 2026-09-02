@@ -667,34 +667,34 @@ export default function App() {
       </nav>
 
       {/* --- HERO SECTION --- */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0 transition-colors duration-500">
            <ParticleCanvas theme={theme} />
         </div>
         
-        {/* Gradient Overlay based on Theme */}
         <div className={`absolute inset-0 z-1 pointer-events-none bg-gradient-to-b
             ${theme === 'dark' ? 'from-transparent via-neutral-950/20 to-neutral-950' : 
              (theme === 'light' || theme === 'spring') ? 'from-transparent via-white/50 to-stone-100' :
              'from-transparent via-black/10 to-transparent'}`} 
         />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-8 items-center py-24">
+          <div className="text-left">
           <div className={`mb-6 inline-flex items-center px-3 py-1 rounded-full backdrop-blur-sm text-xs font-semibold tracking-wider uppercase animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border
              ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 bg-white/50 text-stone-600' : 
                'border-white/20 bg-white/10 text-inherit'}`}>
              Open to Collaborations
           </div>
           
-          <h1 className="text-4xl md:text-6xl lg:text-6xl font-serif font-bold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
             {PORTFOLIO_DATA.profile.name}
           </h1>
           
-          <p className="text-sm sm:text-base md:text-xl font-light mx-auto mb-10 whitespace-nowrap animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-80">
+          <p className="text-sm sm:text-base md:text-lg font-light mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-80">
             {PORTFOLIO_DATA.profile.tagline}
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
+          <div className="flex flex-col sm:flex-row items-start gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
             <button 
                 onClick={() => scrollToSection('research')}
                 className={`px-8 py-3.5 rounded-lg font-medium hover:scale-105 transition-transform duration-200 shadow-xl
@@ -714,8 +714,7 @@ export default function App() {
             </a>
           </div>
 
-          {/* Social Icons with Square Rounded Style */}
-          <div className="flex items-center justify-center gap-4 mt-8 mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-700 flex-wrap">
+          <div className="flex items-center justify-start gap-3 mt-8 mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-700 flex-wrap">
             {[
               { icon: GraduationCap, link: PORTFOLIO_DATA.profile.social.scholar, label: "Google Scholar" },
               PORTFOLIO_DATA.profile.social.researchgate && { icon: BookOpen, link: PORTFOLIO_DATA.profile.social.researchgate, label: "ResearchGate" },
@@ -744,7 +743,21 @@ export default function App() {
                 </a>
             ))}
           </div>
+          </div>
 
+          <div className="relative order-first md:order-none h-72 sm:h-80 md:h-[28rem] lg:h-[34rem]">
+            <img
+              src="/hero-portrait.jpg"
+              alt={PORTFOLIO_DATA.profile.name}
+              className="absolute inset-0 w-full h-full object-cover object-[center_top] pointer-events-none select-none"
+              style={{
+                maskImage: 'linear-gradient(to left, #000 42%, transparent 92%), linear-gradient(to top, transparent 0%, #000 18%)',
+                WebkitMaskImage: 'linear-gradient(to left, #000 42%, transparent 92%), linear-gradient(to top, transparent 0%, #000 18%)',
+                WebkitMaskComposite: 'source-in',
+                maskComposite: 'intersect'
+              }}
+            />
+          </div>
         </div>
 
         <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 animate-bounce">
@@ -757,7 +770,7 @@ export default function App() {
 
       {/* --- ABOUT SECTION --- */}
       <Section id="about">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="max-w-4xl">
             <div>
                 <h2 className={`text-sm font-bold tracking-widest uppercase mb-3 ${getAccentColor()}`}>About Me</h2>
                 <h3 className="text-3xl md:text-4xl font-serif font-bold mb-6">
@@ -775,13 +788,6 @@ export default function App() {
                         </div>
                     ))}
                 </div>
-            </div>
-            <div className="relative mx-auto w-full max-w-sm flex items-center justify-center">
-                <img
-                  src={PORTFOLIO_DATA.profile.photo}
-                  alt={PORTFOLIO_DATA.profile.name}
-                  className="w-full max-w-md object-contain pointer-events-none select-none"
-                />
             </div>
         </div>
       </Section>
