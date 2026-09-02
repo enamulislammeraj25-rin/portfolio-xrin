@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Sun, Moon, CloudLightning, Leaf, Gem, Flower2,
-  User, Briefcase, GraduationCap, 
+  Briefcase, GraduationCap, 
   Award, Mail, Download, Search, 
   Menu, X, ChevronRight, Globe, Users, FileText,
   MapPin, Anchor, ArrowDown, ArrowUp,
