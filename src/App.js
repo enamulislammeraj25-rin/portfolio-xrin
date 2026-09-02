@@ -776,24 +776,27 @@ export default function App() {
                     ))}
                 </div>
             </div>
-            <div className="relative mx-auto w-full max-w-md">
-                <div className={`absolute inset-x-8 top-10 bottom-0 rounded-3xl border shadow-2xl
-                    ${theme === 'light' || theme === 'spring' ? 'bg-stone-200/80 border-stone-300' :
-                      theme === 'midnight' ? 'bg-indigo-950/70 border-indigo-400/20' :
-                      theme === 'rain' ? 'bg-[#16343c]/70 border-sky-200/20' :
-                      theme === 'ruby' ? 'bg-rose-950/70 border-rose-400/20' :
-                      theme === 'emerald' ? 'bg-emerald-950/70 border-emerald-400/20' :
-                      theme === 'nature' ? 'bg-green-950/70 border-lime-400/20' :
-                      theme === 'musgravite' ? 'bg-purple-950/70 border-purple-300/20' :
-                      theme === 'dark' ? 'bg-neutral-900/80 border-teal-400/20' :
-                      'bg-white/10 border-white/15'} backdrop-blur-md`} />
-                <div className="relative aspect-[4/5] overflow-visible">
-                    <img
-                      src={PORTFOLIO_DATA.profile.photo}
-                      alt={PORTFOLIO_DATA.profile.name}
-                      className="absolute left-1/2 -translate-x-1/2 bottom-[-8%] w-[122%] max-w-none object-cover object-top drop-shadow-[0_28px_45px_rgba(0,0,0,0.5)] pointer-events-none select-none"
-                    />
-                </div>
+            <div className="relative mx-auto w-full max-w-sm flex items-center justify-center min-h-[22rem] md:min-h-[26rem]">
+                <div className={`absolute w-64 h-64 md:w-80 md:h-80 rounded-full blur-2xl opacity-50
+                    ${theme === 'light' || theme === 'spring' ? 'bg-stone-300' :
+                      theme === 'midnight' ? 'bg-indigo-700' :
+                      theme === 'rain' ? 'bg-sky-800' :
+                      theme === 'ruby' ? 'bg-rose-800' :
+                      theme === 'emerald' ? 'bg-emerald-800' :
+                      theme === 'nature' ? 'bg-lime-800' :
+                      theme === 'musgravite' ? 'bg-purple-800' :
+                      theme === 'dark' ? 'bg-teal-800' :
+                      'bg-white/20'}`} />
+                <img
+                  src={PORTFOLIO_DATA.profile.photo}
+                  alt={PORTFOLIO_DATA.profile.name}
+                  className="relative z-10 w-[88%] max-w-md pointer-events-none select-none"
+                  style={{
+                    maskImage: 'radial-gradient(ellipse 68% 72% at 50% 42%, #000 58%, transparent 78%)',
+                    WebkitMaskImage: 'radial-gradient(ellipse 68% 72% at 50% 42%, #000 58%, transparent 78%)',
+                    filter: 'drop-shadow(0 18px 28px rgba(0,0,0,0.35))'
+                  }}
+                />
             </div>
         </div>
       </Section>
