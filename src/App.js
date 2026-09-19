@@ -917,7 +917,8 @@ export default function App() {
           <div className="flex items-center justify-center">
             <img
               src={
-                theme === 'dark' || theme === 'blueprint' ? '/hero-dark.png' :
+                theme === 'dark' ? '/hero-dark.png' :
+                theme === 'blueprint' ? '/hero-blueprint.png' :
                 theme === 'spring' ? '/hero-spring.png' :
                 theme === 'warm' ? '/hero-warm.png' :
                 '/hero-light.png'
