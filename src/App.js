@@ -220,8 +220,8 @@ export default function App() {
   // --- THEME STYLE HELPERS ---
   const getAppBg = () => {
       switch (theme) {
-          case 'dark': return 'bg-[#141414] text-white';
-          case 'light': return 'bg-white text-stone-900'; 
+          case 'dark': return 'bg-[#141414] text-[#F5F5F5]';
+          case 'light': return 'bg-white text-black'; 
           case 'midnight': return 'bg-slate-950 text-slate-100';
           case 'rain': return 'bg-gradient-to-b from-[#071318] via-[#16343c] to-[#7ea8b4] text-slate-100';
           case 'spring': return 'bg-gradient-to-br from-rose-100 via-pink-100 to-teal-50 text-stone-900';
@@ -437,7 +437,15 @@ export default function App() {
   );
 
   return (
-    <div className={`min-h-screen transition-all duration-700 ease-in-out font-sans ${getAppBg()} ${theme === 'dark' ? 'dark' : ''}`}>
+    <style>{`
+      .theme-light .opacity-80 { opacity: 0.88; }
+      .theme-light .opacity-70 { opacity: 0.80; }
+      .theme-light .opacity-60 { opacity: 0.72; }
+      .theme-dark .opacity-80 { opacity: 0.92; }
+      .theme-dark .opacity-70 { opacity: 0.82; }
+      .theme-dark .opacity-60 { opacity: 0.74; }
+    `}</style>
+    <div className={`min-h-screen transition-all duration-700 ease-in-out font-sans theme-${theme} ${getAppBg()} ${theme === 'dark' ? 'dark' : ''}`}>
       
       <style>{`
         html { scroll-behavior: smooth; }
@@ -798,7 +806,7 @@ export default function App() {
                 <div className="grid grid-cols-2 gap-4 mt-8">
                     {PORTFOLIO_DATA.metrics.map((m, i) => (
                         <div key={i} className={`border-l-2 pl-4 py-2 pr-2 rounded-r-lg transition-all duration-300 group
-                            ${(isLight) ? 'border-stone-300 hover:bg-white' : 'border-white/20 hover:bg-white/5'}`}>
+                            ${(isLight) ? 'border-neutral-500 hover:bg-neutral-50' : 'border-white/20 hover:bg-white/5'}`}>
                             <div className={`text-3xl font-bold transition-colors ${getHoverTextColor()}`}>{m.value}</div>
                             <div className="text-sm opacity-60 uppercase tracking-wide">{m.label}</div>
                         </div>
@@ -818,13 +826,13 @@ export default function App() {
                 </h2>
             </div>
             <div className="w-full">
-                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                     {(eduExpanded ? PORTFOLIO_DATA.education : PORTFOLIO_DATA.education.slice(0, 4)).map((edu, idx) => (
                         <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                             ${(isLight) ? 'hover:bg-white' : 
                               'hover:bg-white/5'}`}>
                             <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
                             <div> 
@@ -863,7 +871,7 @@ export default function App() {
                       type="button"
                       onClick={() => setEduExpanded(!eduExpanded)}
                       className={`px-5 py-2 text-sm font-medium rounded-full border transition-colors
-                        ${(isLight) ? 'border-stone-300 hover:bg-white' : 'border-white/20 hover:bg-white/10'}`}
+                        ${(isLight) ? 'border-neutral-500 hover:bg-neutral-50' : 'border-white/20 hover:bg-white/10'}`}
                     >
                       {eduExpanded ? 'Show less' : 'Show more'}
                     </button>
@@ -919,13 +927,13 @@ export default function App() {
             </div>
 
             {PORTFOLIO_DATA.current_research && PORTFOLIO_DATA.current_research.length > 0 && (
-              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Current research</h3>
                 {PORTFOLIO_DATA.current_research.map((item) => (
                   <div key={item.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300
                       ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                       <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
-                          ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                          ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                           <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
                       </div>
                       <div className="text-sm opacity-60 mb-2">{item.year} · {item.venue}</div>
@@ -981,13 +989,13 @@ export default function App() {
             </div>
 
             {PORTFOLIO_DATA.under_review && PORTFOLIO_DATA.under_review.length > 0 && (
-              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Under review</h3>
                 {PORTFOLIO_DATA.under_review.map((wp) => (
                   <div key={wp.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300
                       ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                       <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
-                          ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                          ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                           <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
                       </div>
                       <div className="text-sm opacity-60 mb-2">{wp.year}</div>
@@ -1000,7 +1008,7 @@ export default function App() {
             )}
 
             {/* Publication List - Converted to Timeline */}
-            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Published</h3>
                 {PORTFOLIO_DATA.publications.map((pub) => (
                     <div key={pub.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
@@ -1008,7 +1016,7 @@ export default function App() {
                         
                         {/* Bullet - CENTERED */}
                         <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                            ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                            ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                             <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                         </div>
 
@@ -1072,14 +1080,14 @@ export default function App() {
       <Section id="projects">
         <div className="flex flex-col gap-8">
             <h2 className="text-3xl font-serif font-bold">Projects</h2>
-            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 {PORTFOLIO_DATA.projects.map((proj, i) => (
                     <div key={i} className={`relative group pl-8 py-8 rounded-r-lg transition-all duration-300 border-transparent
                         ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                         
                         {/* Bullet - CENTERED */}
                         <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                            ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                            ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                             <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                         </div>
 
@@ -1120,14 +1128,14 @@ export default function App() {
       <Section id="certifications">
         <div className="flex flex-col gap-8">
             <h2 className="text-3xl font-serif font-bold">Certifications</h2>
-            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 {PORTFOLIO_DATA.certifications.map((cert, i) => (
                     <div key={i} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                         ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                         
                         {/* Bullet - CENTERED */}
                         <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                            ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                            ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                             <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                         </div>
 
@@ -1141,7 +1149,7 @@ export default function App() {
                                 </div>
                             </div>
                             <a href={cert.link} target="_blank" rel="noreferrer" className={`p-2 rounded-full border transition-colors hover:bg-white/10 opacity-60 hover:opacity-100 self-start md:self-center
-                                ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+                                ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                                 <ExternalLink className="w-4 h-4" />
                             </a>
                         </div>
@@ -1159,14 +1167,14 @@ export default function App() {
             
             <div className="grid md:grid-cols-2 gap-12">
                 {/* Column 1 */}
-                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                     {PORTFOLIO_DATA.skills.slice(0, Math.ceil(PORTFOLIO_DATA.skills.length / 2)).map((skill, i) => (
                         <div key={i} className={`relative group pl-8 pr-6 py-6 rounded-r-lg transition-all duration-300 border-transparent
                             ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                             
                             {/* Bullet - CENTERED */}
                             <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
 
@@ -1187,14 +1195,14 @@ export default function App() {
                 </div>
 
                 {/* Column 2 */}
-                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                     {PORTFOLIO_DATA.skills.slice(Math.ceil(PORTFOLIO_DATA.skills.length / 2)).map((skill, i) => (
                         <div key={i} className={`relative group pl-8 pr-6 py-6 rounded-r-lg transition-all duration-300 border-transparent
                             ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                             
                             {/* Bullet - CENTERED */}
                             <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
 
@@ -1219,14 +1227,14 @@ export default function App() {
             {PORTFOLIO_DATA.tests && (
                 <div>
                         <h3 className="text-xl font-bold mb-6 opacity-80">Standardized Tests & Languages</h3>
-                        <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+                        <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                             {PORTFOLIO_DATA.tests.map((test, i) => (
                                 <div key={i} className={`relative group pl-8 py-4 rounded-r-lg transition-all duration-300 border-transparent
                                     ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                                     
                                     {/* Bullet - CENTERED */}
                                     <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                        ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                        ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                                         <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                                     </div>
 
@@ -1254,7 +1262,7 @@ export default function App() {
                 </h2>
             </div>
             <div className="w-full">
-                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                     {PORTFOLIO_DATA.experience.map((exp, idx) => (
                         <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                             ${(isLight) ? 'hover:bg-white' : 
@@ -1262,7 +1270,7 @@ export default function App() {
                             
                             {/* Outer Circle (Static) - CENTERED */}
                             <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                                 {/* Inner Dot (Changes Color) */}
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
