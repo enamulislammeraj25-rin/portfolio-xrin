@@ -34,8 +34,8 @@ export const ParticleCanvas = ({ theme }) => {
         type = 'truss';
         break;
       case 'light':
-        particleColor = 'rgba(87, 83, 78, 0.3)'; // Stone Grey
-        lineColor = 'rgba(87, 83, 78, 0.1)';
+        particleColor = 'rgba(10, 92, 87, 0.45)';
+        lineColor = 'rgba(10, 92, 87, 0.18)';
         type = 'truss';
         break;
       case 'midnight':

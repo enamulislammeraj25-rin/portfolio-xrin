@@ -221,7 +221,7 @@ export default function App() {
   const getAppBg = () => {
       switch (theme) {
           case 'dark': return 'bg-[#141414] text-white';
-          case 'light': return 'bg-stone-100 text-stone-900'; 
+          case 'light': return 'bg-white text-stone-900'; 
           case 'midnight': return 'bg-slate-950 text-slate-100';
           case 'rain': return 'bg-gradient-to-b from-[#071318] via-[#16343c] to-[#7ea8b4] text-slate-100';
           case 'spring': return 'bg-gradient-to-br from-rose-100 via-pink-100 to-teal-50 text-stone-900';
@@ -691,7 +691,7 @@ export default function App() {
         
         <div className={`absolute inset-0 z-1 pointer-events-none bg-gradient-to-b
             ${theme === 'dark' ? 'from-transparent via-[#141414]/10 to-transparent' : 
-             isLight ? 'from-transparent via-white/40 to-transparent' :
+             isLight ? 'from-transparent via-transparent to-transparent' :
              'from-transparent via-black/10 to-transparent'}`} 
         />
 
