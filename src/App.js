@@ -329,13 +329,13 @@ export default function App() {
   // Updated Nav Hover - Glow Text Effect Only (No background box)
   const getNavHoverColor = () => {
       if (isLight) {
-          return 'hover:text-stone-900 hover:drop-shadow-[0_0_5px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,244,200,0.95)] hover:drop-shadow-[0_0_28px_rgba(255,228,150,0.55)]';
+          return 'hover:text-[#0A5C57]';
       }
       return 'hover:text-[#FFF6D4] hover:drop-shadow-[0_0_5px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,244,200,0.95)] hover:drop-shadow-[0_0_30px_rgba(255,228,150,0.55)]';
   }
 
   const getNavActiveColor = () => {
-      if (isLight) return 'text-stone-900';
+      if (isLight) return 'text-[#0A5C57]';
       return 'text-[#FFFBE6]';
   }
 
@@ -647,9 +647,9 @@ export default function App() {
               <button 
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                style={on ? { filter: navSunGlow } : undefined}
-                onMouseEnter={(e) => { if (!on) e.currentTarget.style.filter = navSunGlowHover; }}
-                onMouseLeave={(e) => { if (!on) e.currentTarget.style.filter = ''; }}
+                style={(theme === 'dark' && on) ? { filter: navSunGlow } : undefined}
+                onMouseEnter={(e) => { if (theme === 'dark' && !on) e.currentTarget.style.filter = navSunGlowHover; }}
+                onMouseLeave={(e) => { if (theme === 'dark' && !on) e.currentTarget.style.filter = ''; }}
                 className={`relative text-[13px] xl:text-sm h-full flex items-center px-2.5 xl:px-3.5 font-medium whitespace-nowrap transition-all duration-500
                     ${on
                       ? `${getNavActiveColor()} opacity-100`
@@ -758,7 +758,6 @@ export default function App() {
                     </span>
                 </a>
             ))}
-          </div>
           </div>
           </div>
 
@@ -920,7 +919,7 @@ export default function App() {
 
             {PORTFOLIO_DATA.current_research && PORTFOLIO_DATA.current_research.length > 0 && (
               <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={{ filter: isLight ? 'drop-shadow(0 0 4px rgba(10,92,87,0.35))' : headingSunGlow }}>Current research</h3>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Current research</h3>
                 {PORTFOLIO_DATA.current_research.map((item) => (
                   <div key={item.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300
                       ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
@@ -982,7 +981,7 @@ export default function App() {
 
             {PORTFOLIO_DATA.under_review && PORTFOLIO_DATA.under_review.length > 0 && (
               <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={{ filter: isLight ? 'drop-shadow(0 0 4px rgba(10,92,87,0.35))' : headingSunGlow }}>Under review</h3>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Under review</h3>
                 {PORTFOLIO_DATA.under_review.map((wp) => (
                   <div key={wp.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300
                       ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
@@ -1001,7 +1000,7 @@ export default function App() {
 
             {/* Publication List - Converted to Timeline */}
             <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={{ filter: isLight ? 'drop-shadow(0 0 4px rgba(10,92,87,0.35))' : headingSunGlow }}>Published</h3>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Published</h3>
                 {PORTFOLIO_DATA.publications.map((pub) => (
                     <div key={pub.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                         ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
