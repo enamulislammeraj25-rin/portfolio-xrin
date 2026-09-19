@@ -629,7 +629,7 @@ export default function App() {
 
       {/* --- NAVIGATION --- */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? `shadow-md border-b py-0 ${getNavStyle()}` : 'bg-transparent py-4'}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
+        <div className="max-w-[90rem] mx-auto px-5 md:px-8 flex justify-between items-center h-14">
           <div className="flex items-center gap-4">
              {/* Left-side Hamburger Menu */}
              <button 
@@ -703,7 +703,7 @@ export default function App() {
              'from-transparent via-black/10 to-transparent'}`} 
         />
 
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-10 items-center py-24">
+        <div className="relative z-10 w-full max-w-[90rem] mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-10 items-center py-24">
           <div className="text-left">
           <div className={`mb-6 inline-flex items-center px-3 py-1 rounded-full backdrop-blur-sm text-xs font-semibold tracking-wider uppercase animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border
              ${isLight ? 'border-stone-300 bg-white/50 text-stone-600' : 
