@@ -330,9 +330,9 @@ export default function App() {
   // Updated Nav Hover - Glow Text Effect Only (No background box)
   const getNavHoverColor = () => {
       if (isLight) {
-          return 'hover:text-[#0A5C57]';
+          return 'hover:text-[#0A5C57] hover:bg-[#CCFBF1] rounded-md';
       }
-      return 'hover:text-[#FFF6D4] hover:drop-shadow-[0_0_5px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,244,200,0.95)] hover:drop-shadow-[0_0_30px_rgba(255,228,150,0.55)]';
+      return 'hover:text-[#FFF6D4] hover:bg-white/10 rounded-md hover:drop-shadow-[0_0_5px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,244,200,0.95)] hover:drop-shadow-[0_0_30px_rgba(255,228,150,0.55)]';
   }
 
   const getNavActiveColor = () => {
@@ -365,8 +365,8 @@ export default function App() {
   const getMenuLinkHoverStyle = () => {
       const transitionClass = "transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1.0)]";
       switch (theme) {
-          case 'dark': return `hover:text-teal-400 hover:drop-shadow-[0_0_5px_rgba(45,212,191,0.8)] hover:bg-white/5 rounded-none px-6 py-3 ${transitionClass}`;
-          case 'light': return `hover:text-stone-900 hover:drop-shadow-[0_0_5px_rgba(87,83,78,0.5)] hover:bg-stone-200/50 rounded-none px-6 py-3 ${transitionClass}`; 
+          case 'dark': return `hover:text-teal-400 hover:bg-white/10 rounded-md mx-3 px-4 py-3 ${transitionClass}`;
+          case 'light': return `hover:text-[#0A5C57] hover:bg-[#CCFBF1] rounded-md mx-3 px-4 py-3 ${transitionClass}`; 
           case 'midnight': return `hover:text-indigo-400 hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.8)] hover:bg-indigo-900/30 rounded-none px-6 py-3 ${transitionClass}`;
           case 'rain': return `hover:text-sky-100 hover:drop-shadow-[0_0_5px_rgba(186,230,253,0.7)] hover:bg-white/10 rounded-none px-6 py-3 ${transitionClass}`;
           case 'spring': return `hover:text-pink-600 hover:drop-shadow-[0_0_5px_rgba(244,114,182,0.8)] hover:bg-white/60 rounded-none px-6 py-3 ${transitionClass}`;
@@ -383,7 +383,7 @@ export default function App() {
   const getSidebarStyle = () => {
       switch (theme) {
           case 'dark': return 'bg-[#141414]/70 backdrop-blur-2xl border-r border-neutral-700';
-          case 'light': return 'bg-white/60 backdrop-blur-2xl border-r border-stone-200';
+          case 'light': return 'bg-white border-r border-stone-200';
           case 'midnight': return 'bg-slate-950/60 backdrop-blur-2xl border-r border-slate-800';
           case 'rain': return 'bg-[#0b1c22]/50 backdrop-blur-2xl border-r border-white/15';
           case 'spring': return 'bg-white/50 backdrop-blur-2xl border-r border-stone-200';
@@ -600,7 +600,7 @@ export default function App() {
 
       {/* --- UNIFIED SIDE/MOBILE MENU (MOVED OUTSIDE NAV) --- */}
       {menuOpen && (
-        <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm" onClick={() => setMenuOpen(false)}>
+        <div className={`fixed inset-0 z-[60] backdrop-blur-sm ${isLight ? "bg-black/20" : "bg-black/60"}`} onClick={() => setMenuOpen(false)}>
             <div className={`absolute top-0 left-0 w-72 h-full py-6 shadow-2xl animate-in slide-in-from-left duration-300 ${getSidebarStyle()}`}
               onClick={e => e.stopPropagation()}
             >
@@ -631,7 +631,7 @@ export default function App() {
           <div className="flex items-center gap-4">
              {/* Left-side Hamburger Menu */}
              <button 
-              className={`p-2 rounded hover:bg-white/10 transition-colors ${(isLight) ? 'text-stone-900' : 'text-white'}`}
+              className={`p-2 rounded-md transition-colors duration-300 ${(isLight) ? 'text-stone-900 hover:bg-[#CCFBF1]' : 'text-white hover:bg-white/10'}`}
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <Menu className="w-6 h-6" />
@@ -657,7 +657,7 @@ export default function App() {
                 style={(theme === 'dark' && on) ? { filter: navSunGlow } : undefined}
                 onMouseEnter={(e) => { if (theme === 'dark' && !on) e.currentTarget.style.filter = navSunGlowHover; }}
                 onMouseLeave={(e) => { if (theme === 'dark' && !on) e.currentTarget.style.filter = ''; }}
-                className={`relative text-[13px] xl:text-sm h-full flex items-center px-2.5 xl:px-3.5 font-medium whitespace-nowrap transition-all duration-500
+                className={`relative text-[13px] xl:text-sm h-9 flex items-center px-2.5 xl:px-3.5 font-medium whitespace-nowrap transition-all duration-300
                     ${on
                       ? `${getNavActiveColor()} opacity-100`
                       : `opacity-70 ${getNavHoverColor()} ${(isLight) ? 'text-stone-600' : 'text-white'}`}`}
