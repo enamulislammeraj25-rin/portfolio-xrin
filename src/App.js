@@ -483,7 +483,7 @@ export default function App() {
   );
 
   return (
-    <div className={`min-h-screen transition-all duration-700 ease-in-out font-sans theme-${theme} ${getAppBg()} ${theme === 'dark' ? 'dark' : ''}`}>
+    <div className={`min-h-screen transition-colors duration-[2000ms] ease-in-out font-sans theme-${theme} ${getAppBg()} ${theme === 'dark' ? 'dark' : ''}`}>
       
       <style>{`
         html { scroll-behavior: smooth; }
@@ -844,12 +844,6 @@ export default function App() {
 
         <div className="relative z-10 w-full max-w-[90rem] mx-auto px-5 md:px-8 grid md:grid-cols-[1fr_auto] gap-6 lg:gap-8 items-center py-24">
           <div className="text-left">
-          <div className={`mb-6 inline-flex items-center px-3 py-1 rounded-full backdrop-blur-sm text-xs font-semibold tracking-wider uppercase animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border
-             ${isLight ? 'border-stone-300 bg-white/50 text-stone-600' : 
-               'border-white/20 bg-white/10 text-inherit'}`}>
-             Open to Collaborations
-          </div>
-          
           {theme === 'blueprint' && (
             <div className="mb-3 text-[11px] tracking-[0.35em] uppercase text-[#F2C14E]/80">Survey of a career</div>
           )}
@@ -914,18 +908,22 @@ export default function App() {
           </div>
           </div>
 
-          <div className="flex items-center justify-end md:pl-4">
-            <img
-              src={
-                theme === 'dark' ? '/hero-dark.png' :
-                theme === 'blueprint' ? '/hero-blueprint.png' :
-                theme === 'spring' ? '/hero-spring.png' :
-                theme === 'warm' ? '/hero-warm.png' :
-                '/hero-light.png'
-              }
-              alt={PORTFOLIO_DATA.profile.name}
-              className="w-64 sm:w-72 md:w-80 lg:w-96 h-auto object-contain pointer-events-none select-none"
-            />
+          <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 ml-auto">
+            {[
+              ['dark', '/hero-dark.png'],
+              ['blueprint', '/hero-blueprint.png'],
+              ['light', '/hero-light.png'],
+            ].map(([key, src], i) => {
+              const on = theme === key || (key === 'light' && theme !== 'dark' && theme !== 'blueprint');
+              return (
+                <img
+                  key={key}
+                  src={src}
+                  alt={on ? PORTFOLIO_DATA.profile.name : ''}
+                  className={`w-64 sm:w-72 md:w-80 lg:w-96 h-auto object-contain pointer-events-none select-none transition-opacity duration-[2000ms] ease-in-out ${i === 0 ? 'relative' : 'absolute inset-0'} ${on ? 'opacity-100' : 'opacity-0'}`}
+                />
+              );
+            })}
           </div>
         </div>
 
