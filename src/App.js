@@ -330,9 +330,9 @@ export default function App() {
   // Updated Nav Hover - Glow Text Effect Only (No background box)
   const getNavHoverColor = () => {
       if (isLight) {
-          return 'hover:text-[#0A5C57] hover:bg-[#CCFBF1] rounded-md';
+          return 'hover:text-[#0A5C57] hover:bg-[#CCFBF1]';
       }
-      return 'hover:text-[#C0F6FC] hover:bg-white/10 rounded-md';
+      return 'hover:text-[#C0F6FC] hover:bg-white/10';
   }
 
   const getNavActiveColor = () => {
@@ -365,8 +365,8 @@ export default function App() {
   const getMenuLinkHoverStyle = () => {
       const transitionClass = "transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1.0)]";
       switch (theme) {
-          case 'dark': return `hover:text-teal-400 hover:bg-white/10 rounded-md mx-3 px-4 py-3 ${transitionClass}`;
-          case 'light': return `hover:text-[#0A5C57] hover:bg-[#CCFBF1] rounded-md mx-3 px-4 py-3 ${transitionClass}`; 
+          case 'dark': return `hover:text-teal-400 hover:drop-shadow-[0_0_5px_rgba(45,212,191,0.8)] hover:bg-white/5 rounded-none px-6 py-3 ${transitionClass}`;
+          case 'light': return `hover:text-stone-900 hover:bg-stone-200/50 rounded-none px-6 py-3 ${transitionClass}`; 
           case 'midnight': return `hover:text-indigo-400 hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.8)] hover:bg-indigo-900/30 rounded-none px-6 py-3 ${transitionClass}`;
           case 'rain': return `hover:text-sky-100 hover:drop-shadow-[0_0_5px_rgba(186,230,253,0.7)] hover:bg-white/10 rounded-none px-6 py-3 ${transitionClass}`;
           case 'spring': return `hover:text-pink-600 hover:drop-shadow-[0_0_5px_rgba(244,114,182,0.8)] hover:bg-white/60 rounded-none px-6 py-3 ${transitionClass}`;
@@ -657,7 +657,7 @@ export default function App() {
                 style={undefined}
                 onMouseEnter={undefined}
                 onMouseLeave={undefined}
-                className={`relative text-[13px] xl:text-sm h-9 flex items-center px-2.5 xl:px-3.5 font-medium whitespace-nowrap transition-all duration-300
+                className={`relative text-[13px] xl:text-sm h-full flex items-center px-2.5 xl:px-3.5 font-medium whitespace-nowrap transition-all duration-300
                     ${on
                       ? `${getNavActiveColor()} opacity-100`
                       : `opacity-70 ${getNavHoverColor()} ${(isLight) ? 'text-stone-600' : 'text-white'}`}`}
