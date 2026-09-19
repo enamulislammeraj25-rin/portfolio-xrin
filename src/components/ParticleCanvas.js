@@ -33,6 +33,11 @@ export const ParticleCanvas = ({ theme }) => {
         lineColor = 'rgba(192, 246, 252, 0.12)';
         type = 'truss';
         break;
+      case 'blueprint':
+        particleColor = 'rgba(242, 193, 78, 0.45)';
+        lineColor = 'rgba(120, 170, 220, 0.16)';
+        type = 'truss';
+        break;
       case 'light':
         particleColor = 'rgba(10, 92, 87, 0.45)';
         lineColor = 'rgba(10, 92, 87, 0.18)';
