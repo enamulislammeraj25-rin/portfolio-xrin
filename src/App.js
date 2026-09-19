@@ -54,7 +54,7 @@ export default function App() {
     if (researchListRef.current) researchListRef.current.scrollTop = 0;
   }, [listFocusId]);
 
-  const isLight = isLight || theme === 'warm';
+  const isLight = theme === 'light' || theme === 'spring' || theme === 'warm';
 
   // Active themes: dark, light, sakura (spring), warm.
   // Held themes stay in style maps below but are not cycled:
