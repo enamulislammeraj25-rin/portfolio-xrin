@@ -694,8 +694,8 @@ export default function App() {
              'from-transparent via-black/10 to-transparent'}`} 
         />
 
-        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center py-24">
-          <div>
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-10 items-center py-24">
+          <div className="text-left">
           <div className={`mb-6 inline-flex items-center px-3 py-1 rounded-full backdrop-blur-sm text-xs font-semibold tracking-wider uppercase animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border
              ${isLight ? 'border-stone-300 bg-white/50 text-stone-600' : 
                'border-white/20 bg-white/10 text-inherit'}`}>
@@ -710,7 +710,7 @@ export default function App() {
             {PORTFOLIO_DATA.profile.tagline}
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
+          <div className="flex flex-col sm:flex-row items-start gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
             <button 
                 onClick={() => scrollToSection('research')}
                 className={`px-8 py-3.5 rounded-lg font-medium hover:scale-105 transition-transform duration-200 shadow-xl
@@ -730,7 +730,7 @@ export default function App() {
             </a>
           </div>
 
-          <div className="flex items-center justify-center gap-3 mt-8 mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-700 flex-wrap">
+          <div className="flex items-center justify-start gap-3 mt-8 mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-700 flex-wrap">
             {[
               { icon: GraduationCap, link: PORTFOLIO_DATA.profile.social.scholar, label: "Google Scholar" },
               PORTFOLIO_DATA.profile.social.researchgate && { icon: BookOpen, link: PORTFOLIO_DATA.profile.social.researchgate, label: "ResearchGate" },
@@ -759,6 +759,20 @@ export default function App() {
                 </a>
             ))}
           </div>
+          </div>
+          </div>
+
+          <div className="flex items-center justify-center">
+            <img
+              src={
+                theme === 'dark' ? '/hero-dark.png' :
+                theme === 'spring' ? '/hero-spring.png' :
+                theme === 'warm' ? '/hero-warm.png' :
+                '/hero-light.png'
+              }
+              alt={PORTFOLIO_DATA.profile.name}
+              className="w-56 sm:w-64 md:w-72 lg:w-80 h-auto object-contain pointer-events-none select-none"
+            />
           </div>
         </div>
 
