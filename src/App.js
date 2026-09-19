@@ -269,11 +269,11 @@ export default function App() {
   const getHoverTextColor = () => {
       switch (theme) {
           case 'dark': return 'group-hover:text-teal-400 transition-colors duration-300';
-          case 'light': return 'group-hover:text-stone-600 transition-colors duration-300';
+          case 'light': return 'group-hover:text-teal-700 transition-colors duration-300';
           case 'midnight': return 'group-hover:text-indigo-300 transition-colors duration-300';
           case 'rain': return 'group-hover:text-sky-100 transition-colors duration-300';
-          case 'spring': return 'group-hover:text-stone-600 transition-colors duration-300';
-          case 'warm': return 'group-hover:text-amber-800 transition-colors duration-300';
+          case 'spring': return 'group-hover:text-rose-600 transition-colors duration-300';
+          case 'warm': return 'group-hover:text-emerald-800 transition-colors duration-300';
           case 'nature': return 'group-hover:text-lime-300 transition-colors duration-300';
           case 'musgravite': return 'group-hover:text-purple-200 transition-colors duration-300';
           case 'ruby': return 'group-hover:text-rose-300 transition-colors duration-300';
@@ -285,11 +285,11 @@ export default function App() {
   const getHoverBgColor = () => {
       switch (theme) {
           case 'dark': return 'group-hover:bg-teal-500 transition-colors duration-300';
-          case 'light': return 'group-hover:bg-stone-500 transition-colors duration-300';
+          case 'light': return 'group-hover:bg-teal-600 transition-colors duration-300';
           case 'midnight': return 'group-hover:bg-indigo-500 transition-colors duration-300';
           case 'rain': return 'group-hover:bg-sky-300 transition-colors duration-300';
-          case 'spring': return 'group-hover:bg-stone-500 transition-colors duration-300';
-          case 'warm': return 'group-hover:bg-amber-600 transition-colors duration-300';
+          case 'spring': return 'group-hover:bg-rose-500 transition-colors duration-300';
+          case 'warm': return 'group-hover:bg-emerald-700 transition-colors duration-300';
           case 'nature': return 'group-hover:bg-lime-500 transition-colors duration-300';
           case 'musgravite': return 'group-hover:bg-purple-400 transition-colors duration-300';
           case 'ruby': return 'group-hover:bg-rose-500 transition-colors duration-300';
@@ -694,8 +694,8 @@ export default function App() {
              'from-transparent via-black/10 to-transparent'}`} 
         />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-8 items-center py-24">
-          <div className="text-left">
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center py-24">
+          <div>
           <div className={`mb-6 inline-flex items-center px-3 py-1 rounded-full backdrop-blur-sm text-xs font-semibold tracking-wider uppercase animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border
              ${isLight ? 'border-stone-300 bg-white/50 text-stone-600' : 
                'border-white/20 bg-white/10 text-inherit'}`}>
@@ -710,7 +710,7 @@ export default function App() {
             {PORTFOLIO_DATA.profile.tagline}
           </p>
           
-          <div className="flex flex-col sm:flex-row items-start gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
             <button 
                 onClick={() => scrollToSection('research')}
                 className={`px-8 py-3.5 rounded-lg font-medium hover:scale-105 transition-transform duration-200 shadow-xl
@@ -730,7 +730,7 @@ export default function App() {
             </a>
           </div>
 
-          <div className="flex items-center justify-start gap-3 mt-8 mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-700 flex-wrap">
+          <div className="flex items-center justify-center gap-3 mt-8 mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-700 flex-wrap">
             {[
               { icon: GraduationCap, link: PORTFOLIO_DATA.profile.social.scholar, label: "Google Scholar" },
               PORTFOLIO_DATA.profile.social.researchgate && { icon: BookOpen, link: PORTFOLIO_DATA.profile.social.researchgate, label: "ResearchGate" },
@@ -759,14 +759,6 @@ export default function App() {
                 </a>
             ))}
           </div>
-          </div>
-
-          <div className="relative order-first md:order-none h-64 sm:h-72 md:h-[26rem] lg:h-[30rem] flex items-end justify-center">
-            <img
-              src={isLight ? "/hero-portrait-light.jpg" : "/hero-portrait.jpg"}
-              alt={PORTFOLIO_DATA.profile.name}
-              className="h-[88%] w-auto max-w-[78%] object-contain object-bottom pointer-events-none select-none"
-            />
           </div>
         </div>
 
