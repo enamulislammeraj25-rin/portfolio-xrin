@@ -437,19 +437,17 @@ export default function App() {
   );
 
   return (
-    <style>{`
-      .theme-light .opacity-80 { opacity: 0.88; }
-      .theme-light .opacity-70 { opacity: 0.80; }
-      .theme-light .opacity-60 { opacity: 0.72; }
-      .theme-dark .opacity-80 { opacity: 0.92; }
-      .theme-dark .opacity-70 { opacity: 0.82; }
-      .theme-dark .opacity-60 { opacity: 0.74; }
-    `}</style>
     <div className={`min-h-screen transition-all duration-700 ease-in-out font-sans theme-${theme} ${getAppBg()} ${theme === 'dark' ? 'dark' : ''}`}>
       
       <style>{`
         html { scroll-behavior: smooth; }
         ::selection { background: #fff; color: #000; opacity: 0.5; }
+        .theme-light .opacity-80 { opacity: 0.88; }
+        .theme-light .opacity-70 { opacity: 0.80; }
+        .theme-light .opacity-60 { opacity: 0.72; }
+        .theme-dark .opacity-80 { opacity: 0.92; }
+        .theme-dark .opacity-70 { opacity: 0.82; }
+        .theme-dark .opacity-60 { opacity: 0.74; }
       `}</style>
 
       {/* --- FLOATING ACTION BUTTON --- */}
