@@ -332,12 +332,12 @@ export default function App() {
       if (isLight) {
           return 'hover:text-[#0A5C57] hover:bg-[#CCFBF1] rounded-md';
       }
-      return 'hover:text-[#FFF6D4] hover:bg-white/10 rounded-md hover:drop-shadow-[0_0_5px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,244,200,0.95)] hover:drop-shadow-[0_0_30px_rgba(255,228,150,0.55)]';
+      return 'hover:text-[#C0F6FC] hover:bg-white/10 rounded-md';
   }
 
   const getNavActiveColor = () => {
       if (isLight) return 'text-[#0A5C57]';
-      return 'text-[#FFFBE6]';
+      return 'text-[#C0F6FC]';
   }
 
   const navSunGlow = 'drop-shadow(0 0 1px #FFF6D4) drop-shadow(0 0 4px rgba(255,233,168,0.55)) drop-shadow(0 0 8px rgba(255,216,96,0.25))';
@@ -654,9 +654,9 @@ export default function App() {
               <button 
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                style={(theme === 'dark' && on) ? { filter: navSunGlow } : undefined}
-                onMouseEnter={(e) => { if (theme === 'dark' && !on) e.currentTarget.style.filter = navSunGlowHover; }}
-                onMouseLeave={(e) => { if (theme === 'dark' && !on) e.currentTarget.style.filter = ''; }}
+                style={undefined}
+                onMouseEnter={undefined}
+                onMouseLeave={undefined}
                 className={`relative text-[13px] xl:text-sm h-9 flex items-center px-2.5 xl:px-3.5 font-medium whitespace-nowrap transition-all duration-300
                     ${on
                       ? `${getNavActiveColor()} opacity-100`
