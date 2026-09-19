@@ -828,7 +828,7 @@ export default function App() {
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
                             <div> 
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border border-[#0A5C57] ${(isLight) ? 'bg-stone-200' : 'bg-white/20'}`}>
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border border-[#0A5C57] ${isLight ? 'bg-[#0A5C57] text-white' : 'bg-white/20 text-white'}`}>
                                     {edu.year}
                                 </span>
                                 <h3 className={`text-xl font-bold mt-1 transition-colors ${getHoverTextColor()}`}>{edu.institution}</h3>
@@ -920,7 +920,7 @@ export default function App() {
 
             {PORTFOLIO_DATA.current_research && PORTFOLIO_DATA.current_research.length > 0 && (
               <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(isLight) ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>Current research</h3>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={{ filter: isLight ? 'drop-shadow(0 0 4px rgba(10,92,87,0.35))' : headingSunGlow }}>Current research</h3>
                 {PORTFOLIO_DATA.current_research.map((item) => (
                   <div key={item.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300
                       ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
@@ -982,7 +982,7 @@ export default function App() {
 
             {PORTFOLIO_DATA.under_review && PORTFOLIO_DATA.under_review.length > 0 && (
               <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(isLight) ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>Under review</h3>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={{ filter: isLight ? 'drop-shadow(0 0 4px rgba(10,92,87,0.35))' : headingSunGlow }}>Under review</h3>
                 {PORTFOLIO_DATA.under_review.map((wp) => (
                   <div key={wp.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300
                       ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
@@ -1001,7 +1001,7 @@ export default function App() {
 
             {/* Publication List - Converted to Timeline */}
             <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(isLight) ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>Published</h3>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={{ filter: isLight ? 'drop-shadow(0 0 4px rgba(10,92,87,0.35))' : headingSunGlow }}>Published</h3>
                 {PORTFOLIO_DATA.publications.map((pub) => (
                     <div key={pub.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                         ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
@@ -1268,7 +1268,7 @@ export default function App() {
                             </div>
                             
                             <div>
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border border-[#0A5C57] ${(isLight) ? 'bg-stone-200' : 'bg-white/20'}`}>
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border border-[#0A5C57] ${isLight ? 'bg-[#0A5C57] text-white' : 'bg-white/20 text-white'}`}>
                                     {exp.period}
                                 </span>
                                 <h3 className={`text-xl font-bold mt-1 transition-colors duration-300 ${getHoverTextColor()}`}>{exp.role}</h3>
