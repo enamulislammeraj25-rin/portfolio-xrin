@@ -833,7 +833,7 @@ export default function App() {
       <>
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0 transition-colors duration-500">
-           {theme !== 'light' && theme !== 'atelier' && theme !== 'blueprint' && <ParticleCanvas theme={theme} />}
+           {theme !== 'light' && theme !== 'dark' && theme !== 'atelier' && theme !== 'blueprint' && <ParticleCanvas theme={theme} />}
         </div>
         
         <div className={`absolute inset-0 z-1 pointer-events-none bg-gradient-to-b
@@ -842,7 +842,7 @@ export default function App() {
              'from-transparent via-black/10 to-transparent'}`} 
         />
 
-        <div className="relative z-10 w-full max-w-[90rem] mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-10 items-center py-24">
+        <div className="relative z-10 w-full max-w-[90rem] mx-auto px-5 md:px-8 grid md:grid-cols-[1fr_auto] gap-6 lg:gap-8 items-center py-24">
           <div className="text-left">
           <div className={`mb-6 inline-flex items-center px-3 py-1 rounded-full backdrop-blur-sm text-xs font-semibold tracking-wider uppercase animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border
              ${isLight ? 'border-stone-300 bg-white/50 text-stone-600' : 
@@ -853,7 +853,7 @@ export default function App() {
           {theme === 'blueprint' && (
             <div className="mb-3 text-[11px] tracking-[0.35em] uppercase text-[#F2C14E]/80">Survey of a career</div>
           )}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+          <h1 className="text-3xl sm:text-4xl md:text-[2.4rem] lg:text-[2.7rem] xl:text-5xl font-serif font-bold tracking-tight mb-6 max-lg:whitespace-normal lg:whitespace-nowrap animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
             {PORTFOLIO_DATA.profile.name}
           </h1>
           {theme === 'blueprint' && <div className="w-24 h-[2px] bg-[#F2C14E] mb-6" />}
@@ -914,7 +914,7 @@ export default function App() {
           </div>
           </div>
 
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-end md:pl-4">
             <img
               src={
                 theme === 'dark' ? '/hero-dark.png' :
@@ -924,7 +924,7 @@ export default function App() {
                 '/hero-light.png'
               }
               alt={PORTFOLIO_DATA.profile.name}
-              className="w-56 sm:w-64 md:w-72 lg:w-80 h-auto object-contain pointer-events-none select-none"
+              className="w-64 sm:w-72 md:w-80 lg:w-96 h-auto object-contain pointer-events-none select-none"
             />
           </div>
         </div>
