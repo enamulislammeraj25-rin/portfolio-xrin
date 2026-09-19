@@ -269,10 +269,10 @@ export default function App() {
   const getHoverTextColor = () => {
       switch (theme) {
           case 'dark': return 'group-hover:text-teal-400 transition-colors duration-300';
-          case 'light': return 'group-hover:text-teal-700 transition-colors duration-300';
+          case 'light': return 'group-hover:text-[#0A5C57] transition-colors duration-300';
           case 'midnight': return 'group-hover:text-indigo-300 transition-colors duration-300';
           case 'rain': return 'group-hover:text-sky-100 transition-colors duration-300';
-          case 'spring': return 'group-hover:text-rose-600 transition-colors duration-300';
+          case 'spring': return 'group-hover:text-[#6D28D9] transition-colors duration-300';
           case 'warm': return 'group-hover:text-emerald-800 transition-colors duration-300';
           case 'nature': return 'group-hover:text-lime-300 transition-colors duration-300';
           case 'musgravite': return 'group-hover:text-purple-200 transition-colors duration-300';
@@ -285,10 +285,10 @@ export default function App() {
   const getHoverBgColor = () => {
       switch (theme) {
           case 'dark': return 'group-hover:bg-teal-500 transition-colors duration-300';
-          case 'light': return 'group-hover:bg-teal-600 transition-colors duration-300';
+          case 'light': return 'group-hover:bg-[#0A5C57] transition-colors duration-300';
           case 'midnight': return 'group-hover:bg-indigo-500 transition-colors duration-300';
           case 'rain': return 'group-hover:bg-sky-300 transition-colors duration-300';
-          case 'spring': return 'group-hover:bg-rose-500 transition-colors duration-300';
+          case 'spring': return 'group-hover:bg-[#6D28D9] transition-colors duration-300';
           case 'warm': return 'group-hover:bg-emerald-700 transition-colors duration-300';
           case 'nature': return 'group-hover:bg-lime-500 transition-colors duration-300';
           case 'musgravite': return 'group-hover:bg-purple-400 transition-colors duration-300';

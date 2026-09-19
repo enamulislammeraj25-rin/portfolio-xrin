@@ -255,7 +255,6 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
                 >
                     <span
                         className={`font-semibold leading-tight transition-all duration-300 ${n.fixed ? 'text-[11px] md:text-xs' : (selectedId === n.id ? 'text-sm md:text-base' : 'text-[10px] md:text-[11px]')}`}
-                        style={{ textShadow: '0 1px 2px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.45)' }}
                     >
                         {n.short}
                     </span>
