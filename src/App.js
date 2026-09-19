@@ -54,13 +54,13 @@ export default function App() {
     if (researchListRef.current) researchListRef.current.scrollTop = 0;
   }, [listFocusId]);
 
-  const isLight = theme === 'light' || theme === 'spring' || theme === 'warm';
+  const isLight = theme === 'light' || theme === 'spring' || theme === 'warm' || theme === 'atelier';
 
   // Active themes: dark, light, sakura (spring), warm.
   // Held themes stay in style maps below but are not cycled:
   // midnight, nature, musgravite, ruby, emerald, rain
   const cycleTheme = () => {
-    const themes = ['dark', 'light', 'blueprint'];
+    const themes = ['dark', 'light', 'blueprint', 'atelier'];
     // const themes = ['dark', 'light', 'spring', 'warm'];
     // const themes = ['dark', 'light', 'midnight', 'spring', 'nature', 'musgravite', 'ruby', 'emerald', 'rain'];
     const currentIndex = Math.max(0, themes.indexOf(theme));
@@ -222,6 +222,7 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'bg-[#141414] text-[#F5F5F5]';
           case 'blueprint': return 'bg-[#07111F] text-[#E7F0FA]';
+          case 'atelier': return 'bg-[#EFE6D6] text-[#1C1914]';
           case 'light': return 'bg-white text-black'; 
           case 'midnight': return 'bg-slate-950 text-slate-100';
           case 'rain': return 'bg-gradient-to-b from-[#071318] via-[#16343c] to-[#7ea8b4] text-slate-100';
@@ -239,6 +240,7 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'text-[#C0F6FC]';
           case 'blueprint': return 'text-[#F2C14E]';
+          case 'atelier': return 'text-[#C24A2A]';
           case 'light': return 'text-stone-700';
           case 'midnight': return 'text-indigo-400';
           case 'rain': return 'text-sky-200';
@@ -257,6 +259,7 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'bg-transparent border border-transparent hover:bg-white/5 hover:border-neutral-700';
           case 'blueprint': return 'bg-[#0B1C33]/40 border border-[#1E3A5F] hover:border-[#F2C14E]/60 hover:bg-[#0E2440]';
+          case 'atelier': return 'bg-[#F7F0E4] border border-[#1C1914]/15 hover:border-[#C24A2A] hover:bg-[#F3E7D4]';
           case 'light': return 'bg-transparent border border-transparent text-stone-900 hover:bg-white hover:border-stone-400 hover:shadow-md';
           case 'midnight': return 'bg-transparent border border-transparent text-slate-200 hover:bg-white/5 hover:border-indigo-500/50';
           case 'rain': return 'bg-white/10 border border-white/20 text-slate-100 hover:bg-white/15 hover:border-white/30 backdrop-blur-xl';
@@ -274,6 +277,7 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'group-hover:text-[#C0F6FC] transition-colors duration-300';
           case 'blueprint': return 'group-hover:text-[#F2C14E] transition-colors duration-300';
+          case 'atelier': return 'group-hover:text-[#C24A2A] transition-colors duration-300';
           case 'light': return 'group-hover:text-[#0A5C57] transition-colors duration-300';
           case 'midnight': return 'group-hover:text-indigo-300 transition-colors duration-300';
           case 'rain': return 'group-hover:text-sky-100 transition-colors duration-300';
@@ -291,6 +295,7 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'group-hover:bg-[#C0F6FC] transition-colors duration-300';
           case 'blueprint': return 'group-hover:bg-[#F2C14E] transition-colors duration-300';
+          case 'atelier': return 'group-hover:bg-[#C24A2A] transition-colors duration-300';
           case 'light': return 'group-hover:bg-[#0A5C57] transition-colors duration-300';
           case 'midnight': return 'group-hover:bg-indigo-500 transition-colors duration-300';
           case 'rain': return 'group-hover:bg-sky-300 transition-colors duration-300';
@@ -309,6 +314,7 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'bg-[#C0F6FC]';
           case 'blueprint': return 'bg-[#F2C14E]';
+          case 'atelier': return 'bg-[#C24A2A]';
           case 'light': return 'bg-stone-500';
           case 'midnight': return 'bg-indigo-500';
           case 'rain': return 'bg-sky-300';
@@ -326,6 +332,7 @@ export default function App() {
       // Reduced blur from 3xl to md/lg for better scroll performance
       if (theme === 'dark') return 'bg-[#141414]/90 border-neutral-700 backdrop-blur-md';
       if (theme === 'blueprint') return 'bg-[#07111F]/92 border-[#1E3A5F] backdrop-blur-md';
+      if (theme === 'atelier') return 'bg-[#EFE6D6]/95 border-[#1C1914]/10 backdrop-blur-md';
       if (theme === 'light') return 'bg-white/90 border-stone-200 backdrop-blur-md';
       if (theme === 'midnight') return 'bg-slate-950/90 border-slate-800 backdrop-blur-md';
       if (theme === 'rain') return 'bg-[#0b1c22]/45 border-white/15 backdrop-blur-2xl';
@@ -342,12 +349,16 @@ export default function App() {
       if (theme === 'blueprint') {
           return 'hover:text-[#F2C14E] hover:bg-[#F2C14E]/10';
       }
+      if (theme === 'atelier') {
+          return 'hover:text-[#C24A2A] hover:bg-[#C24A2A]/10';
+      }
       return 'hover:text-[#C0F6FC] hover:bg-white/10';
   }
 
   const getNavActiveColor = () => {
       if (isLight) return 'text-[#0A5C57]';
       if (theme === 'blueprint') return 'text-[#F2C14E]';
+      if (theme === 'atelier') return 'text-[#C24A2A]';
       return 'text-[#C0F6FC]';
   }
 
@@ -360,6 +371,7 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'hover:drop-shadow-[0_0_8px_rgba(192,246,252,0.55)] text-[#C0F6FC]/80 hover:text-[#C0F6FC] border-white/10 bg-white/5';
           case 'blueprint': return 'bg-[#0B1C33] text-[#F2C14E] border-[#F2C14E]/70 hover:bg-[#F2C14E] hover:text-[#07111F]';
+          case 'atelier': return 'bg-transparent text-[#1C1914] border-[#1C1914] hover:bg-[#C24A2A] hover:text-[#EFE6D6] hover:border-[#C24A2A]';
           case 'light': return 'bg-white text-[#0A5C57] border-[#0A5C57] hover:bg-[#CCFBF1] hover:text-[#2DD4BF]'; 
           case 'midnight': return 'hover:drop-shadow-[0_0_8px_rgba(129,140,248,0.8)] text-indigo-400/80 hover:text-indigo-300 border-indigo-900 bg-indigo-950/30';
           case 'rain': return 'hover:drop-shadow-[0_0_8px_rgba(186,230,253,0.7)] text-sky-200/80 hover:text-sky-100 border-white/20 bg-white/10';
@@ -379,6 +391,7 @@ export default function App() {
       switch (theme) {
           case 'dark': return `hover:text-[#C0F6FC] hover:bg-white/5 rounded-none px-6 py-3 ${transitionClass}`;
           case 'blueprint': return `hover:text-[#F2C14E] hover:bg-[#F2C14E]/10 rounded-none px-6 py-3 ${transitionClass}`;
+          case 'atelier': return `hover:text-[#C24A2A] hover:bg-[#C24A2A]/10 rounded-none px-6 py-3 ${transitionClass}`;
           case 'light': return `hover:text-stone-900 hover:bg-stone-200/50 rounded-none px-6 py-3 ${transitionClass}`; 
           case 'midnight': return `hover:text-indigo-400 hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.8)] hover:bg-indigo-900/30 rounded-none px-6 py-3 ${transitionClass}`;
           case 'rain': return `hover:text-sky-100 hover:drop-shadow-[0_0_5px_rgba(186,230,253,0.7)] hover:bg-white/10 rounded-none px-6 py-3 ${transitionClass}`;
@@ -397,6 +410,7 @@ export default function App() {
       switch (theme) {
           case 'dark': return 'bg-[#141414]/70 backdrop-blur-2xl border-r border-neutral-700';
           case 'blueprint': return 'bg-[#07111F] border-r border-[#1E3A5F]';
+          case 'atelier': return 'bg-[#EFE6D6] border-r border-[#1C1914]/15';
           case 'light': return 'bg-white border-r border-stone-200';
           case 'midnight': return 'bg-slate-950/60 backdrop-blur-2xl border-r border-slate-800';
           case 'rain': return 'bg-[#0b1c22]/50 backdrop-blur-2xl border-r border-white/15';
@@ -414,6 +428,7 @@ export default function App() {
       switch(theme) {
           case 'dark': return <Moon className="w-5 h-5" />;
           case 'blueprint': return <Compass className="w-5 h-5" />;
+          case 'atelier': return <BookOpen className="w-5 h-5" />;
           case 'light': return <Sun className="w-5 h-5" />;
           case 'midnight': return <CloudLightning className="w-5 h-5" />;
           case 'rain': return <CloudLightning className="w-5 h-5" />;
@@ -705,9 +720,65 @@ export default function App() {
       </nav>
 
       {/* --- HERO SECTION --- */}
+      {theme === 'atelier' ? (
+      <section className="relative min-h-screen overflow-hidden bg-[#EFE6D6] text-[#1C1914]">
+        <div className="absolute left-0 top-0 bottom-0 w-2 bg-[#C24A2A]" />
+        <div className="absolute left-2 top-0 bottom-0 w-10 bg-[#2C4A3E] hidden md:flex items-center justify-center">
+          <span className="text-[#EFE6D6] text-[10px] tracking-[0.45em] uppercase" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+            Geotechnical research · BUET
+          </span>
+        </div>
+        <div className="relative z-10 min-h-screen max-w-[90rem] mx-auto pl-6 md:pl-20 pr-5 md:pr-8 grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-stretch py-28">
+          <div className="flex flex-col justify-center">
+            <div className="text-[11px] tracking-[0.42em] uppercase text-[#C24A2A] mb-6">01 — Portfolio</div>
+            <h1 className="font-serif leading-[0.9] mb-8">
+              <span className="block text-5xl sm:text-6xl md:text-7xl text-[#1C1914]">Enamul</span>
+              <span className="block text-5xl sm:text-6xl md:text-7xl text-[#C24A2A]">Islam Meraj</span>
+            </h1>
+            <div className="border-l-4 border-[#2C4A3E] pl-5 max-w-xl mb-10">
+              <p className="text-base md:text-lg leading-relaxed text-[#1C1914]/80">
+                {PORTFOLIO_DATA.profile.tagline}
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm tracking-wide uppercase">
+              <button onClick={() => scrollToSection('research')} className="text-[#C24A2A] border-b border-[#C24A2A] pb-0.5 hover:text-[#2C4A3E] hover:border-[#2C4A3E]">
+                Read the research
+              </button>
+              <a href={PORTFOLIO_DATA.profile.cvLink} download="Enamul_Islam_Meraj_WebsiteCV.pdf" className="text-[#1C1914] border-b border-[#1C1914]/30 pb-0.5 hover:border-[#1C1914]">
+                Download CV
+              </a>
+              <button onClick={() => scrollToSection('contact')} className="text-[#2C4A3E] border-b border-[#2C4A3E]/40 pb-0.5 hover:border-[#2C4A3E]">
+                Write
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-3 mt-10">
+              {['Scholar', 'ORCID', 'ResearchGate', 'Email'].map((label, i) => {
+                const href = [
+                  PORTFOLIO_DATA.profile.social.scholar,
+                  PORTFOLIO_DATA.profile.social.orcid,
+                  PORTFOLIO_DATA.profile.social.researchgate,
+                  PORTFOLIO_DATA.profile.social.email
+                ][i];
+                return href ? (
+                  <a key={label} href={href} target="_blank" rel="noreferrer" className="text-[11px] tracking-[0.2em] uppercase text-[#1C1914]/55 hover:text-[#C24A2A]">
+                    {label}
+                  </a>
+                ) : null;
+              })}
+            </div>
+          </div>
+          <div className="relative hidden lg:flex items-end justify-end pb-6">
+            <div className="absolute right-6 bottom-16 w-64 h-80 bg-[#C24A2A]" />
+            <div className="absolute right-20 bottom-28 w-64 h-80 bg-[#2C4A3E]" />
+            <img src="/hero-light.png" alt={PORTFOLIO_DATA.profile.name} className="relative z-10 w-72 object-contain" />
+          </div>
+        </div>
+      </section>
+      ) : (
+      {/* --- HERO SECTION --- */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0 transition-colors duration-500">
-           {theme !== 'light' && <ParticleCanvas theme={theme} />}
+           {theme !== 'light' && theme !== 'atelier' && <ParticleCanvas theme={theme} />}
         </div>
         {theme === 'blueprint' && (
           <div className="absolute inset-0 z-[1] pointer-events-none opacity-40"
@@ -818,14 +889,32 @@ export default function App() {
         </div>
       </section>
 
+      )}
+
       {/* --- ABOUT SECTION --- */}
       <Section id="about">
         <div className="w-full">
             <div>
+                {theme === 'atelier' ? (
+                  <>
+                    <div className="grid md:grid-cols-[140px_1fr] gap-6 mb-8">
+                      <div className="text-[11px] tracking-[0.35em] uppercase text-[#C24A2A] pt-2">02 — About</div>
+                      <h3 className="text-4xl md:text-5xl font-serif leading-tight text-[#1C1914]">
+                        Ground first.<br/>Then the structure.
+                      </h3>
+                    </div>
+                    <div className="md:ml-[164px] border-l-4 border-[#2C4A3E] pl-6 mb-8 text-[#2C4A3E] font-serif italic text-xl">
+                      Analyzing ground behavior to build safer, resilient infrastructure.
+                    </div>
+                  </>
+                ) : (
+                  <>
                 <h2 className={`text-sm font-bold tracking-widest uppercase mb-3 ${getAccentColor()}`}>About Me</h2>
                 <h3 className="text-3xl md:text-4xl font-serif font-bold mb-6">
                     Analyzing ground behavior to build safer, resilient infrastructure.
                 </h3>
+                  </>
+                )}
                 <p className="text-lg opacity-80 leading-relaxed mb-6 whitespace-pre-line">
                     {PORTFOLIO_DATA.profile.bio}
                 </p>
