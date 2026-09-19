@@ -60,7 +60,8 @@ export default function App() {
   // Held themes stay in style maps below but are not cycled:
   // midnight, nature, musgravite, ruby, emerald, rain
   const cycleTheme = () => {
-    const themes = ['dark', 'light', 'blueprint', 'atelier', 'folio'];
+    const themes = ['dark', 'light', 'blueprint'];
+    // const themes = ['dark', 'light', 'blueprint', 'atelier', 'folio'];
     // const themes = ['dark', 'light', 'spring', 'warm'];
     // const themes = ['dark', 'light', 'midnight', 'spring', 'nature', 'musgravite', 'ruby', 'emerald', 'rain'];
     const currentIndex = Math.max(0, themes.indexOf(theme));
