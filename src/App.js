@@ -835,14 +835,6 @@ export default function App() {
         <div className="absolute inset-0 z-0 transition-colors duration-500">
            {theme !== 'light' && theme !== 'atelier' && theme !== 'blueprint' && <ParticleCanvas theme={theme} />}
         </div>
-        {theme === 'blueprint' && (
-          <div className="absolute inset-0 z-[1] pointer-events-none opacity-40"
-            style={{
-              backgroundImage: 'linear-gradient(rgba(242,193,78,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(242,193,78,0.08) 1px, transparent 1px)',
-              backgroundSize: '48px 48px'
-            }}
-          />
-        )}
         
         <div className={`absolute inset-0 z-1 pointer-events-none bg-gradient-to-b
             ${theme === 'dark' ? 'from-transparent via-[#141414]/10 to-transparent' : 
