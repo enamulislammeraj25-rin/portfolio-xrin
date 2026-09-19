@@ -775,7 +775,7 @@ export default function App() {
         </div>
       </section>
       ) : (
-      {/* --- HERO SECTION --- */}
+      <>
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0 transition-colors duration-500">
            {theme !== 'light' && theme !== 'atelier' && <ParticleCanvas theme={theme} />}
@@ -888,7 +888,7 @@ export default function App() {
             </div>
         </div>
       </section>
-
+      </>
       )}
 
       {/* --- ABOUT SECTION --- */}
