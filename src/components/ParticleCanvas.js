@@ -29,8 +29,8 @@ export const ParticleCanvas = ({ theme }) => {
 
     switch (theme) {
       case 'dark':
-        particleColor = 'rgba(45, 212, 191, 0.4)'; // Teal
-        lineColor = 'rgba(45, 212, 191, 0.1)';
+        particleColor = 'rgba(192, 246, 252, 0.4)';
+        lineColor = 'rgba(192, 246, 252, 0.12)';
         type = 'truss';
         break;
       case 'light':

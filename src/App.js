@@ -236,7 +236,7 @@ export default function App() {
 
   const getAccentColor = () => {
       switch (theme) {
-          case 'dark': return 'text-teal-600';
+          case 'dark': return 'text-[#C0F6FC]';
           case 'light': return 'text-stone-700';
           case 'midnight': return 'text-indigo-400';
           case 'rain': return 'text-sky-200';
@@ -269,7 +269,7 @@ export default function App() {
 
   const getHoverTextColor = () => {
       switch (theme) {
-          case 'dark': return 'group-hover:text-teal-400 transition-colors duration-300';
+          case 'dark': return 'group-hover:text-[#C0F6FC] transition-colors duration-300';
           case 'light': return 'group-hover:text-[#0A5C57] transition-colors duration-300';
           case 'midnight': return 'group-hover:text-indigo-300 transition-colors duration-300';
           case 'rain': return 'group-hover:text-sky-100 transition-colors duration-300';
@@ -285,7 +285,7 @@ export default function App() {
 
   const getHoverBgColor = () => {
       switch (theme) {
-          case 'dark': return 'group-hover:bg-teal-500 transition-colors duration-300';
+          case 'dark': return 'group-hover:bg-[#C0F6FC] transition-colors duration-300';
           case 'light': return 'group-hover:bg-[#0A5C57] transition-colors duration-300';
           case 'midnight': return 'group-hover:bg-indigo-500 transition-colors duration-300';
           case 'rain': return 'group-hover:bg-sky-300 transition-colors duration-300';
@@ -302,7 +302,7 @@ export default function App() {
   // Progress Bar Color Logic
   const getProgressBarColor = () => {
       switch (theme) {
-          case 'dark': return 'bg-teal-500';
+          case 'dark': return 'bg-[#C0F6FC]';
           case 'light': return 'bg-stone-500';
           case 'midnight': return 'bg-indigo-500';
           case 'rain': return 'bg-sky-300';
@@ -347,7 +347,7 @@ export default function App() {
   
   const getGlowStyle = () => {
       switch (theme) {
-          case 'dark': return 'hover:drop-shadow-[0_0_8px_rgba(45,212,191,0.8)] text-teal-500/80 hover:text-teal-400 border-white/10 bg-white/5'; 
+          case 'dark': return 'hover:drop-shadow-[0_0_8px_rgba(192,246,252,0.55)] text-[#C0F6FC]/80 hover:text-[#C0F6FC] border-white/10 bg-white/5'; 
           case 'light': return 'bg-white text-[#0A5C57] border-[#0A5C57] hover:bg-[#CCFBF1] hover:text-[#2DD4BF]'; 
           case 'midnight': return 'hover:drop-shadow-[0_0_8px_rgba(129,140,248,0.8)] text-indigo-400/80 hover:text-indigo-300 border-indigo-900 bg-indigo-950/30';
           case 'rain': return 'hover:drop-shadow-[0_0_8px_rgba(186,230,253,0.7)] text-sky-200/80 hover:text-sky-100 border-white/20 bg-white/10';
@@ -365,7 +365,7 @@ export default function App() {
   const getMenuLinkHoverStyle = () => {
       const transitionClass = "transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1.0)]";
       switch (theme) {
-          case 'dark': return `hover:text-teal-400 hover:drop-shadow-[0_0_5px_rgba(45,212,191,0.8)] hover:bg-white/5 rounded-none px-6 py-3 ${transitionClass}`;
+          case 'dark': return `hover:text-[#C0F6FC] hover:bg-white/5 rounded-none px-6 py-3 ${transitionClass}`;
           case 'light': return `hover:text-stone-900 hover:bg-stone-200/50 rounded-none px-6 py-3 ${transitionClass}`; 
           case 'midnight': return `hover:text-indigo-400 hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.8)] hover:bg-indigo-900/30 rounded-none px-6 py-3 ${transitionClass}`;
           case 'rain': return `hover:text-sky-100 hover:drop-shadow-[0_0_5px_rgba(186,230,253,0.7)] hover:bg-white/10 rounded-none px-6 py-3 ${transitionClass}`;
@@ -729,7 +729,7 @@ export default function App() {
             <a 
                 href={PORTFOLIO_DATA.profile.cvLink}
                 download="Enamul_Islam_Meraj_WebsiteCV.pdf"
-                className={`px-8 py-3.5 border border-[#0A5C57] rounded-lg font-medium transition-colors flex items-center gap-2
+                className={`px-8 py-3.5 border rounded-lg font-medium transition-colors flex items-center gap-2 ${isLight ? 'border-[#0A5C57]' : 'border-[#C0F6FC]'}
                     ${isLight ? 'hover:bg-white text-stone-800' : 
                       'hover:bg-white/10 text-white'}`}
             >
@@ -834,7 +834,7 @@ export default function App() {
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
                             <div> 
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border border-[#0A5C57] ${isLight ? 'bg-[#0A5C57] text-white' : 'bg-white/20 text-white'}`}>
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border ${isLight ? 'border-[#0A5C57] bg-[#0A5C57] text-white' : 'border-[#C0F6FC] bg-white/15 text-white'}`}>
                                     {edu.year}
                                 </span>
                                 <h3 className={`text-xl font-bold mt-1 transition-colors ${getHoverTextColor()}`}>{edu.institution}</h3>
@@ -1274,7 +1274,7 @@ export default function App() {
                             </div>
                             
                             <div>
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border border-[#0A5C57] ${isLight ? 'bg-[#0A5C57] text-white' : 'bg-white/20 text-white'}`}>
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border ${isLight ? 'border-[#0A5C57] bg-[#0A5C57] text-white' : 'border-[#C0F6FC] bg-white/15 text-white'}`}>
                                     {exp.period}
                                 </span>
                                 <h3 className={`text-xl font-bold mt-1 transition-colors duration-300 ${getHoverTextColor()}`}>{exp.role}</h3>
@@ -1318,7 +1318,7 @@ export default function App() {
               
               {/* Left Panel: Info (Solid Color) */}
               <div className={`p-10 md:w-2/5 flex flex-col justify-between text-white
-                  ${theme === 'dark' ? 'bg-teal-900' : 
+                  ${theme === 'dark' ? 'bg-[#0A2E33]' : 
                     theme === 'light' ? 'bg-stone-800' : 
                     theme === 'midnight' ? 'bg-indigo-900' :
                     theme === 'rain' ? 'bg-[#16343c]/80' :
@@ -1411,7 +1411,7 @@ export default function App() {
                         type="submit"
                         disabled={formStatus !== 'idle'}
                         className={`w-full font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 text-white flex items-center justify-center gap-2
-                          ${theme === 'dark' ? 'bg-teal-600 hover:bg-teal-700' : 
+                          ${theme === 'dark' ? 'bg-[#C0F6FC] text-[#141414] hover:bg-[#A8EEF7]' : 
                             theme === 'light' ? 'bg-stone-800 hover:bg-black' : 
                             theme === 'midnight' ? 'bg-indigo-700 hover:bg-indigo-800' :
                             theme === 'rain' ? 'bg-sky-800 hover:bg-sky-900' :
