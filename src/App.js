@@ -60,7 +60,8 @@ export default function App() {
   // Held themes stay in style maps below but are not cycled:
   // midnight, nature, musgravite, ruby, emerald, rain
   const cycleTheme = () => {
-    const themes = ['dark', 'light', 'spring', 'warm'];
+    const themes = ['dark', 'light'];
+    // const themes = ['dark', 'light', 'spring', 'warm'];
     // const themes = ['dark', 'light', 'midnight', 'spring', 'nature', 'musgravite', 'ruby', 'emerald', 'rain'];
     const currentIndex = Math.max(0, themes.indexOf(theme));
     const nextIndex = (currentIndex + 1) % themes.length;
@@ -219,7 +220,7 @@ export default function App() {
   // --- THEME STYLE HELPERS ---
   const getAppBg = () => {
       switch (theme) {
-          case 'dark': return 'bg-neutral-950 text-white';
+          case 'dark': return 'bg-[#1C1C1C] text-white';
           case 'light': return 'bg-stone-100 text-stone-900'; 
           case 'midnight': return 'bg-slate-950 text-slate-100';
           case 'rain': return 'bg-gradient-to-b from-[#071318] via-[#16343c] to-[#7ea8b4] text-slate-100';
@@ -229,7 +230,7 @@ export default function App() {
           case 'musgravite': return 'bg-gradient-to-br from-stone-800 via-slate-700 to-purple-900 text-stone-100';
           case 'ruby': return 'bg-gradient-to-br from-red-950 via-rose-950 to-stone-950 text-rose-50';
           case 'emerald': return 'bg-gradient-to-br from-emerald-950 via-teal-950 to-green-900 text-emerald-50';
-          default: return 'bg-neutral-950 text-white';
+          default: return 'bg-[#1C1C1C] text-white';
       }
   };
 
@@ -317,7 +318,7 @@ export default function App() {
 
   const getNavStyle = () => {
       // Reduced blur from 3xl to md/lg for better scroll performance
-      if (theme === 'dark') return 'bg-neutral-950/90 border-neutral-800 backdrop-blur-md';
+      if (theme === 'dark') return 'bg-[#1C1C1C]/90 border-neutral-700 backdrop-blur-md';
       if (theme === 'light') return 'bg-white/90 border-stone-200 backdrop-blur-md';
       if (theme === 'midnight') return 'bg-slate-950/90 border-slate-800 backdrop-blur-md';
       if (theme === 'rain') return 'bg-[#0b1c22]/45 border-white/15 backdrop-blur-2xl';
@@ -381,7 +382,7 @@ export default function App() {
   // Sidebar Background Style with Blur (More transparent for clearer glass effect)
   const getSidebarStyle = () => {
       switch (theme) {
-          case 'dark': return 'bg-neutral-950/60 backdrop-blur-2xl border-r border-neutral-800';
+          case 'dark': return 'bg-[#1C1C1C]/70 backdrop-blur-2xl border-r border-neutral-700';
           case 'light': return 'bg-white/60 backdrop-blur-2xl border-r border-stone-200';
           case 'midnight': return 'bg-slate-950/60 backdrop-blur-2xl border-r border-slate-800';
           case 'rain': return 'bg-[#0b1c22]/50 backdrop-blur-2xl border-r border-white/15';
@@ -689,7 +690,7 @@ export default function App() {
         </div>
         
         <div className={`absolute inset-0 z-1 pointer-events-none bg-gradient-to-b
-            ${theme === 'dark' ? 'from-transparent via-neutral-950/20 to-neutral-950' : 
+            ${theme === 'dark' ? 'from-transparent via-[#1C1C1C]/10 to-transparent' : 
              isLight ? 'from-transparent via-white/40 to-transparent' :
              'from-transparent via-black/10 to-transparent'}`} 
         />
