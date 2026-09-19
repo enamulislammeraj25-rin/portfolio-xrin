@@ -833,7 +833,7 @@ export default function App() {
       <>
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0 transition-colors duration-500">
-           {theme !== 'light' && theme !== 'atelier' && <ParticleCanvas theme={theme} />}
+           {theme !== 'light' && theme !== 'atelier' && theme !== 'blueprint' && <ParticleCanvas theme={theme} />}
         </div>
         {theme === 'blueprint' && (
           <div className="absolute inset-0 z-[1] pointer-events-none opacity-40"
