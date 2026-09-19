@@ -204,7 +204,7 @@ export const ResearchNetwork = ({ theme, interests = [], selectedId, onSelect })
         setHoverId(n ? n.id : null);
     };
 
-    const isLight = theme === 'light' || theme === 'spring';
+    const isLight = theme === 'light' || theme === 'spring' || theme === 'warm';
     const cardClass = isLight ? 'bg-white/70 border-stone-200' : 'bg-neutral-900/50 border-white/10';
     const labelCls = isLight ? 'text-stone-800' : 'text-neutral-100';
 

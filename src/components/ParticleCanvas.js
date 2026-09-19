@@ -55,6 +55,11 @@ export const ParticleCanvas = ({ theme }) => {
         type = 'petals';
         particleCount = 60;
         break;
+      case 'warm':
+        particleColor = 'rgba(180, 130, 70, 0.28)';
+        lineColor = 'rgba(180, 130, 70, 0.08)';
+        type = 'truss';
+        break;
       case 'nature':
         particleColor = 'rgba(234, 179, 8, 0.4)'; 
         lineColor = 'rgba(255, 255, 255, 0)'; 

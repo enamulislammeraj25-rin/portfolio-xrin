@@ -24,7 +24,7 @@ import { ResearchNetwork } from './components/ResearchNetwork';
  * MAIN APP COMPONENT
  */
 export default function App() {
-  const [theme, setTheme] = useState('midnight');
+  const [theme, setTheme] = useState('light');
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -54,10 +54,15 @@ export default function App() {
     if (researchListRef.current) researchListRef.current.scrollTop = 0;
   }, [listFocusId]);
 
-  // Cycle through 9 themes
+  const isLight = isLight || theme === 'warm';
+
+  // Active themes: dark, light, sakura (spring), warm.
+  // Held themes stay in style maps below but are not cycled:
+  // midnight, nature, musgravite, ruby, emerald, rain
   const cycleTheme = () => {
-    const themes = ['dark', 'light', 'midnight', 'spring', 'nature', 'musgravite', 'ruby', 'emerald', 'rain'];
-    const currentIndex = themes.indexOf(theme);
+    const themes = ['dark', 'light', 'spring', 'warm'];
+    // const themes = ['dark', 'light', 'midnight', 'spring', 'nature', 'musgravite', 'ruby', 'emerald', 'rain'];
+    const currentIndex = Math.max(0, themes.indexOf(theme));
     const nextIndex = (currentIndex + 1) % themes.length;
     setTheme(themes[nextIndex]);
   };
@@ -219,6 +224,7 @@ export default function App() {
           case 'midnight': return 'bg-slate-950 text-slate-100';
           case 'rain': return 'bg-gradient-to-b from-[#071318] via-[#16343c] to-[#7ea8b4] text-slate-100';
           case 'spring': return 'bg-gradient-to-br from-rose-100 via-pink-100 to-teal-50 text-stone-900';
+          case 'warm': return 'bg-[#F6EFE4] text-stone-800';
           case 'nature': return 'bg-gradient-to-br from-green-950 via-stone-900 to-emerald-950 text-stone-100';
           case 'musgravite': return 'bg-gradient-to-br from-stone-800 via-slate-700 to-purple-900 text-stone-100';
           case 'ruby': return 'bg-gradient-to-br from-red-950 via-rose-950 to-stone-950 text-rose-50';
@@ -234,6 +240,7 @@ export default function App() {
           case 'midnight': return 'text-indigo-400';
           case 'rain': return 'text-sky-200';
           case 'spring': return 'text-stone-700';
+          case 'warm': return 'text-amber-800';
           case 'nature': return 'text-lime-400';
           case 'musgravite': return 'text-purple-300';
           case 'ruby': return 'text-rose-400';
@@ -250,6 +257,7 @@ export default function App() {
           case 'midnight': return 'bg-transparent border border-transparent text-slate-200 hover:bg-white/5 hover:border-indigo-500/50';
           case 'rain': return 'bg-white/10 border border-white/20 text-slate-100 hover:bg-white/15 hover:border-white/30 backdrop-blur-xl';
           case 'spring': return 'bg-transparent border border-transparent text-stone-900 hover:bg-white/60 hover:border-stone-400 hover:shadow-md';
+          case 'warm': return 'bg-transparent border border-transparent text-stone-800 hover:bg-[#FFF8EE] hover:border-amber-200 hover:shadow-md';
           case 'nature': return 'bg-transparent border border-transparent text-stone-200 hover:bg-stone-800/60 hover:border-lime-800';
           case 'musgravite': return 'bg-transparent border border-transparent text-purple-50 hover:bg-purple-900/30 hover:border-purple-500/30';
           case 'ruby': return 'bg-transparent border border-transparent text-rose-50 hover:bg-rose-950/40 hover:border-rose-500/30';
@@ -265,6 +273,7 @@ export default function App() {
           case 'midnight': return 'group-hover:text-indigo-300 transition-colors duration-300';
           case 'rain': return 'group-hover:text-sky-100 transition-colors duration-300';
           case 'spring': return 'group-hover:text-stone-600 transition-colors duration-300';
+          case 'warm': return 'group-hover:text-amber-800 transition-colors duration-300';
           case 'nature': return 'group-hover:text-lime-300 transition-colors duration-300';
           case 'musgravite': return 'group-hover:text-purple-200 transition-colors duration-300';
           case 'ruby': return 'group-hover:text-rose-300 transition-colors duration-300';
@@ -280,6 +289,7 @@ export default function App() {
           case 'midnight': return 'group-hover:bg-indigo-500 transition-colors duration-300';
           case 'rain': return 'group-hover:bg-sky-300 transition-colors duration-300';
           case 'spring': return 'group-hover:bg-stone-500 transition-colors duration-300';
+          case 'warm': return 'group-hover:bg-amber-600 transition-colors duration-300';
           case 'nature': return 'group-hover:bg-lime-500 transition-colors duration-300';
           case 'musgravite': return 'group-hover:bg-purple-400 transition-colors duration-300';
           case 'ruby': return 'group-hover:bg-rose-500 transition-colors duration-300';
@@ -296,6 +306,7 @@ export default function App() {
           case 'midnight': return 'bg-indigo-500';
           case 'rain': return 'bg-sky-300';
           case 'spring': return 'bg-pink-400';
+          case 'warm': return 'bg-amber-600';
           case 'nature': return 'bg-lime-500';
           case 'musgravite': return 'bg-purple-400';
           case 'ruby': return 'bg-rose-500';
@@ -311,19 +322,20 @@ export default function App() {
       if (theme === 'midnight') return 'bg-slate-950/90 border-slate-800 backdrop-blur-md';
       if (theme === 'rain') return 'bg-[#0b1c22]/45 border-white/15 backdrop-blur-2xl';
       if (theme === 'spring') return 'bg-white/70 backdrop-blur-md border-stone-200';
+      if (theme === 'warm') return 'bg-[#F6EFE4]/90 backdrop-blur-md border-amber-100';
       return 'backdrop-blur-md border-white/10 bg-black/50';
   };
 
   // Updated Nav Hover - Glow Text Effect Only (No background box)
   const getNavHoverColor = () => {
-      if (theme === 'light' || theme === 'spring') {
+      if (isLight) {
           return 'hover:text-stone-900 hover:drop-shadow-[0_0_5px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,244,200,0.95)] hover:drop-shadow-[0_0_28px_rgba(255,228,150,0.55)]';
       }
       return 'hover:text-[#FFF6D4] hover:drop-shadow-[0_0_5px_rgba(255,255,255,1)] hover:drop-shadow-[0_0_14px_rgba(255,244,200,0.95)] hover:drop-shadow-[0_0_30px_rgba(255,228,150,0.55)]';
   }
 
   const getNavActiveColor = () => {
-      if (theme === 'light' || theme === 'spring') return 'text-stone-900';
+      if (isLight) return 'text-stone-900';
       return 'text-[#FFFBE6]';
   }
 
@@ -338,7 +350,8 @@ export default function App() {
           case 'light': return 'hover:drop-shadow-[0_0_8px_rgba(87,83,78,0.6)] text-stone-500 hover:text-stone-800 border-stone-300 bg-stone-100'; 
           case 'midnight': return 'hover:drop-shadow-[0_0_8px_rgba(129,140,248,0.8)] text-indigo-400/80 hover:text-indigo-300 border-indigo-900 bg-indigo-950/30';
           case 'rain': return 'hover:drop-shadow-[0_0_8px_rgba(186,230,253,0.7)] text-sky-200/80 hover:text-sky-100 border-white/20 bg-white/10';
-          case 'spring': return 'hover:drop-shadow-[0_0_8px_rgba(244,114,182,0.8)] text-pink-500/80 hover:text-pink-600 border-pink-200 bg-white/40'; 
+          case 'spring': return 'hover:drop-shadow-[0_0_8px_rgba(244,114,182,0.8)] text-pink-500/80 hover:text-pink-600 border-pink-200 bg-white/40';
+          case 'warm': return 'hover:drop-shadow-[0_0_8px_rgba(180,83,9,0.35)] text-amber-800 hover:text-amber-950 border-amber-200 bg-[#FFF8EE]';
           case 'nature': return 'hover:drop-shadow-[0_0_8px_rgba(163,230,53,0.8)] text-lime-500/80 hover:text-lime-400 border-lime-900/30 bg-lime-950/20'; 
           case 'musgravite': return 'hover:drop-shadow-[0_0_8px_rgba(216,180,254,0.8)] text-purple-400/80 hover:text-purple-300 border-purple-900/30 bg-purple-950/20'; 
           case 'ruby': return 'hover:drop-shadow-[0_0_8px_rgba(251,113,133,0.8)] text-rose-400/80 hover:text-rose-300 border-rose-900/30 bg-rose-950/20'; 
@@ -356,6 +369,7 @@ export default function App() {
           case 'midnight': return `hover:text-indigo-400 hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.8)] hover:bg-indigo-900/30 rounded-none px-6 py-3 ${transitionClass}`;
           case 'rain': return `hover:text-sky-100 hover:drop-shadow-[0_0_5px_rgba(186,230,253,0.7)] hover:bg-white/10 rounded-none px-6 py-3 ${transitionClass}`;
           case 'spring': return `hover:text-pink-600 hover:drop-shadow-[0_0_5px_rgba(244,114,182,0.8)] hover:bg-white/60 rounded-none px-6 py-3 ${transitionClass}`;
+          case 'warm': return `hover:text-amber-900 hover:bg-amber-100/70 rounded-none px-6 py-3 ${transitionClass}`;
           case 'nature': return `hover:text-lime-400 hover:drop-shadow-[0_0_5px_rgba(163,230,53,0.8)] hover:bg-lime-900/20 rounded-none px-6 py-3 ${transitionClass}`;
           case 'musgravite': return `hover:text-purple-300 hover:drop-shadow-[0_0_5px_rgba(216,180,254,0.8)] hover:bg-purple-900/20 rounded-none px-6 py-3 ${transitionClass}`;
           case 'ruby': return `hover:text-rose-300 hover:drop-shadow-[0_0_5px_rgba(251,113,133,0.8)] hover:bg-rose-900/20 rounded-none px-6 py-3 ${transitionClass}`;
@@ -372,6 +386,7 @@ export default function App() {
           case 'midnight': return 'bg-slate-950/60 backdrop-blur-2xl border-r border-slate-800';
           case 'rain': return 'bg-[#0b1c22]/50 backdrop-blur-2xl border-r border-white/15';
           case 'spring': return 'bg-white/50 backdrop-blur-2xl border-r border-stone-200';
+          case 'warm': return 'bg-[#F6EFE4]/80 backdrop-blur-2xl border-r border-amber-100';
           case 'nature': return 'bg-stone-900/60 backdrop-blur-2xl border-r border-stone-700';
           case 'musgravite': return 'bg-stone-900/60 backdrop-blur-2xl border-r border-purple-900/30';
           case 'ruby': return 'bg-stone-900/60 backdrop-blur-2xl border-r border-rose-900/30';
@@ -387,6 +402,7 @@ export default function App() {
           case 'midnight': return <CloudLightning className="w-5 h-5" />;
           case 'rain': return <CloudLightning className="w-5 h-5" />;
           case 'spring': return <Flower2 className="w-5 h-5" />;
+          case 'warm': return <Sun className="w-5 h-5" />;
           case 'nature': return <Leaf className="w-5 h-5" />;
           default: return <Gem className="w-5 h-5" />;
       }
@@ -431,7 +447,7 @@ export default function App() {
       <button 
         onClick={handleFloatingButtonClick}
         className={`fixed bottom-8 right-8 z-40 p-3 rounded-full shadow-xl transition-all duration-300 hover:scale-110
-            ${(theme === 'light' || theme === 'spring') ? 'bg-stone-800 text-white' : 'bg-white/10 backdrop-blur-md border border-white/20 text-white'}`}
+            ${(isLight) ? 'bg-stone-800 text-white' : 'bg-white/10 backdrop-blur-md border border-white/20 text-white'}`}
       >
           {scrollDir === 'down' ? <ArrowDown className="w-6 h-6" /> : <ArrowUp className="w-6 h-6" />}
       </button>
@@ -440,11 +456,11 @@ export default function App() {
       {selectedProject && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedProject(null)}>
             <div className={`w-full max-w-4xl h-[80vh] rounded-lg overflow-hidden shadow-2xl flex flex-col animate-in fade-in zoom-in-95
-                ${(theme === 'light' || theme === 'spring') ? 'bg-white text-stone-900' : 'bg-neutral-900 text-white border border-white/10'}`}
+                ${(isLight) ? 'bg-white text-stone-900' : 'bg-neutral-900 text-white border border-white/10'}`}
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}
-                <div className={`p-6 border-b flex justify-between items-center ${(theme === 'light' || theme === 'spring') ? 'border-stone-200' : 'border-white/10'}`}>
+                <div className={`p-6 border-b flex justify-between items-center ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
                     <div>
                         <h2 className="text-2xl font-bold font-serif">{selectedProject.title}</h2>
                         <p className="text-sm opacity-60 mt-1">Project Showcase</p>
@@ -464,7 +480,7 @@ export default function App() {
                         {selectedProject.files && selectedProject.files.length > 0 ? (
                             selectedProject.files.map((file, i) => (
                                 <div key={i} className={`p-4 rounded-lg border flex flex-col items-center justify-center gap-3 hover:bg-black/5 transition-colors cursor-pointer group
-                                    ${(theme === 'light' || theme === 'spring') ? 'border-stone-200' : 'border-white/10'}`}>
+                                    ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
                                     {file.type === 'image' && <FileImage className={`w-8 h-8 ${getAccentColor()}`} />}
                                     {file.type === 'code' && <FileCode className={`w-8 h-8 ${getAccentColor()}`} />}
                                     {file.type === 'pdf' && <FileText className={`w-8 h-8 ${getAccentColor()}`} />}
@@ -481,7 +497,7 @@ export default function App() {
                 </div>
 
                 {/* Footer Actions */}
-                <div className={`p-6 border-t flex justify-end gap-4 ${(theme === 'light' || theme === 'spring') ? 'border-stone-200' : 'border-white/10'}`}>
+                <div className={`p-6 border-t flex justify-end gap-4 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
                     <button onClick={() => setSelectedProject(null)} className="px-6 py-2 rounded-lg font-medium hover:opacity-80">Close</button>
                     <a href={selectedProject.link} target="_blank" rel="noreferrer" className={`px-6 py-2 rounded-lg font-medium text-white shadow-lg
                         ${theme === 'light' ? 'bg-stone-800 hover:bg-stone-900' : 'bg-white/10 hover:bg-white/20 border border-white/20'}`}>
@@ -496,10 +512,10 @@ export default function App() {
       {hobbiesModalOpen && (
          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setHobbiesModalOpen(false)}>
             <div className={`w-full max-w-4xl max-h-[80vh] rounded-lg overflow-hidden shadow-2xl flex flex-col animate-in fade-in zoom-in-95
-                ${(theme === 'light' || theme === 'spring') ? 'bg-white text-stone-900' : 'bg-neutral-900 text-white border border-white/10'}`}
+                ${(isLight) ? 'bg-white text-stone-900' : 'bg-neutral-900 text-white border border-white/10'}`}
                 onClick={e => e.stopPropagation()}
             >
-                <div className={`p-6 border-b flex justify-between items-center ${(theme === 'light' || theme === 'spring') ? 'border-stone-200' : 'border-white/10'}`}>
+                <div className={`p-6 border-b flex justify-between items-center ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
                     <div className="flex items-center gap-3">
                         <h2 className="text-2xl font-bold font-serif">Hobbies & Interests</h2>
                          {/* TOGGLE SWITCH IN MODAL */}
@@ -527,7 +543,7 @@ export default function App() {
       {searchOpen && (
         <div className="fixed inset-0 z-[100] flex items-start justify-center pt-32 bg-black/40 backdrop-blur-md" onClick={() => setSearchOpen(false)}>
           <div className={`w-full max-w-2xl rounded-lg shadow-2xl overflow-hidden border animate-in fade-in zoom-in-95 duration-200
-            ${(theme === 'light' || theme === 'spring') ? 'bg-white text-stone-900 border-stone-200' : 'bg-black/80 backdrop-blur-xl border-white/10 text-white'}`}
+            ${(isLight) ? 'bg-white text-stone-900 border-stone-200' : 'bg-black/80 backdrop-blur-xl border-white/10 text-white'}`}
             onClick={e => e.stopPropagation()}
           >
             <div className="flex items-center px-4 border-b border-white/10">
@@ -608,7 +624,7 @@ export default function App() {
           <div className="flex items-center gap-4">
              {/* Left-side Hamburger Menu */}
              <button 
-              className={`p-2 rounded hover:bg-white/10 transition-colors ${(theme === 'light' || theme === 'spring') ? 'text-stone-900' : 'text-white'}`}
+              className={`p-2 rounded hover:bg-white/10 transition-colors ${(isLight) ? 'text-stone-900' : 'text-white'}`}
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <Menu className="w-6 h-6" />
@@ -618,7 +634,7 @@ export default function App() {
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="cursor-pointer group"
             >
-              <h1 className={`text-base font-serif font-bold tracking-tight transition-colors ${(theme === 'light' || theme === 'spring') ? 'text-stone-900' : 'text-white'}`}>
+              <h1 className={`text-base font-serif font-bold tracking-tight transition-colors ${(isLight) ? 'text-stone-900' : 'text-white'}`}>
                 M. E. I. B. Meraj<span className={getAccentColor()}></span>
               </h1>
             </div>
@@ -637,7 +653,7 @@ export default function App() {
                 className={`relative text-[13px] xl:text-sm h-full flex items-center px-2.5 xl:px-3.5 font-medium whitespace-nowrap transition-all duration-500
                     ${on
                       ? `${getNavActiveColor()} opacity-100`
-                      : `opacity-70 ${getNavHoverColor()} ${(theme === 'light' || theme === 'spring') ? 'text-stone-600' : 'text-white'}`}`}
+                      : `opacity-70 ${getNavHoverColor()} ${(isLight) ? 'text-stone-600' : 'text-white'}`}`}
               >
                 {link.name}
               </button>
@@ -647,7 +663,7 @@ export default function App() {
           <div className="flex items-center space-x-4">
             <button 
               onClick={() => setSearchOpen(true)}
-              className={`p-2 opacity-70 hover:opacity-100 transition-colors ${(theme === 'light' || theme === 'spring') ? 'text-stone-900' : 'text-white'}`}
+              className={`p-2 opacity-70 hover:opacity-100 transition-colors ${(isLight) ? 'text-stone-900' : 'text-white'}`}
               aria-label="Search"
             >
               <Search className="w-5 h-5" />
@@ -657,7 +673,7 @@ export default function App() {
             <button 
               onClick={cycleTheme}
               className={`p-2 rounded-full transition-colors flex items-center gap-2
-                ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200 text-stone-900' : 'bg-white/10 backdrop-blur-md text-white border border-white/20'}`}
+                ${(isLight) ? 'bg-stone-200 text-stone-900' : 'bg-white/10 backdrop-blur-md text-white border border-white/20'}`}
               aria-label="Toggle Theme"
             >
               <ThemeIcon />
@@ -667,25 +683,22 @@ export default function App() {
       </nav>
 
       {/* --- HERO SECTION --- */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-black text-white">
-        <div className="absolute inset-0 z-0 opacity-25">
-           <ParticleCanvas theme="dark" />
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0 transition-colors duration-500">
+           <ParticleCanvas theme={theme} />
         </div>
-
-        <img
-          src="/hero-portrait.jpg"
-          alt=""
-          className="pointer-events-none select-none absolute inset-y-0 right-0 z-[1] h-full w-full md:w-[62%] object-cover object-[center_top]"
-          style={{
-            maskImage: 'linear-gradient(to left, #000 38%, rgba(0,0,0,0.55) 62%, transparent 92%)',
-            WebkitMaskImage: 'linear-gradient(to left, #000 38%, rgba(0,0,0,0.55) 62%, transparent 92%)'
-          }}
+        
+        <div className={`absolute inset-0 z-1 pointer-events-none bg-gradient-to-b
+            ${theme === 'dark' ? 'from-transparent via-neutral-950/20 to-neutral-950' : 
+             isLight ? 'from-transparent via-white/40 to-transparent' :
+             'from-transparent via-black/10 to-transparent'}`} 
         />
-        <div className="absolute inset-0 z-[2] pointer-events-none bg-gradient-to-r from-black via-black/80 to-transparent md:via-black/55 md:to-transparent" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 py-24">
-          <div className="max-w-xl text-left">
-          <div className="mb-6 inline-flex items-center px-3 py-1 rounded-full backdrop-blur-sm text-xs font-semibold tracking-wider uppercase animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border border-white/20 bg-white/10 text-white">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-8 items-center py-24">
+          <div className="text-left">
+          <div className={`mb-6 inline-flex items-center px-3 py-1 rounded-full backdrop-blur-sm text-xs font-semibold tracking-wider uppercase animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border
+             ${isLight ? 'border-stone-300 bg-white/50 text-stone-600' : 
+               'border-white/20 bg-white/10 text-inherit'}`}>
              Open to Collaborations
           </div>
           
@@ -693,21 +706,25 @@ export default function App() {
             {PORTFOLIO_DATA.profile.name}
           </h1>
           
-          <p className="text-sm sm:text-base md:text-lg font-light mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 text-white/80">
+          <p className="text-sm sm:text-base md:text-lg font-light mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-80">
             {PORTFOLIO_DATA.profile.tagline}
           </p>
           
           <div className="flex flex-col sm:flex-row items-start gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
             <button 
                 onClick={() => scrollToSection('research')}
-                className="px-8 py-3.5 rounded-lg font-medium hover:scale-105 transition-transform duration-200 shadow-xl bg-white text-black shadow-white/20"
+                className={`px-8 py-3.5 rounded-lg font-medium hover:scale-105 transition-transform duration-200 shadow-xl
+                    ${isLight ? 'bg-stone-800 text-white shadow-stone-400/50' : 
+                      'bg-white text-black shadow-white/20'}`}
             >
               View Research
             </button>
             <a 
                 href={PORTFOLIO_DATA.profile.cvLink}
                 download="Enamul_Islam_Meraj_WebsiteCV.pdf"
-                className="px-8 py-3.5 border rounded-lg font-medium transition-colors flex items-center gap-2 border-white/30 hover:bg-white/10 text-white"
+                className={`px-8 py-3.5 border rounded-lg font-medium transition-colors flex items-center gap-2
+                    ${isLight ? 'border-stone-300 hover:bg-white text-stone-800' : 
+                      'border-white/30 hover:bg-white/10 text-white'}`}
             >
               <Download className="w-4 h-4" /> Download CV
             </a>
@@ -732,21 +749,31 @@ export default function App() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.label}
-                  className="relative group w-12 h-12 flex items-center justify-center rounded-lg border transition-all duration-300 hover:scale-110 border-white/20 bg-white/5 text-white hover:bg-white/15"
+                  className={`relative group w-12 h-12 flex items-center justify-center rounded-lg border transition-all duration-300 hover:scale-110 ${getGlowStyle()}`}
                 >
                     <social.icon className="w-5 h-5" />
-                    <span className="pointer-events-none absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 rounded text-[10px] font-semibold tracking-wide opacity-0 group-hover:opacity-100 transition-opacity z-20 bg-white text-neutral-900">
+                    <span className={`pointer-events-none absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 rounded text-[10px] font-semibold tracking-wide opacity-0 group-hover:opacity-100 transition-opacity z-20
+                      ${isLight ? 'bg-stone-800 text-white' : 'bg-white text-neutral-900'}`}>
                       {social.label}
                     </span>
                 </a>
             ))}
           </div>
           </div>
+
+          <div className="relative order-first md:order-none h-64 sm:h-72 md:h-[26rem] lg:h-[30rem] flex items-end justify-center">
+            <img
+              src={isLight ? "/hero-portrait-light.jpg" : "/hero-portrait.jpg"}
+              alt={PORTFOLIO_DATA.profile.name}
+              className="h-[88%] w-auto max-w-[78%] object-contain object-bottom pointer-events-none select-none"
+            />
+          </div>
         </div>
 
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
-            <div className="w-6 h-10 border-2 rounded-full flex justify-center p-1 opacity-50 border-white">
-                <div className="w-1 h-2 rounded-full animate-scroll bg-white" />
+        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div className={`w-6 h-10 border-2 rounded-full flex justify-center p-1 opacity-50
+                ${isLight ? 'border-stone-400' : 'border-white'}`}>
+                <div className={`w-1 h-2 rounded-full animate-scroll ${isLight ? 'bg-stone-400' : 'bg-white'}`} />
             </div>
         </div>
       </section>
@@ -765,7 +792,7 @@ export default function App() {
                 <div className="grid grid-cols-2 gap-4 mt-8">
                     {PORTFOLIO_DATA.metrics.map((m, i) => (
                         <div key={i} className={`border-l-2 pl-4 py-2 pr-2 rounded-r-lg transition-all duration-300 group
-                            ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 hover:bg-white' : 'border-white/20 hover:bg-white/5'}`}>
+                            ${(isLight) ? 'border-stone-300 hover:bg-white' : 'border-white/20 hover:bg-white/5'}`}>
                             <div className={`text-3xl font-bold transition-colors ${getHoverTextColor()}`}>{m.value}</div>
                             <div className="text-sm opacity-60 uppercase tracking-wide">{m.label}</div>
                         </div>
@@ -785,17 +812,17 @@ export default function App() {
                 </h2>
             </div>
             <div className="w-full">
-                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
                     {(eduExpanded ? PORTFOLIO_DATA.education : PORTFOLIO_DATA.education.slice(0, 4)).map((edu, idx) => (
                         <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                            ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 
+                            ${(isLight) ? 'hover:bg-white' : 
                               'hover:bg-white/5'}`}>
                             <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
                             <div> 
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/20'}`}>
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(isLight) ? 'bg-stone-200' : 'bg-white/20'}`}>
                                     {edu.year}
                                 </span>
                                 <h3 className={`text-xl font-bold mt-1 transition-colors ${getHoverTextColor()}`}>{edu.institution}</h3>
@@ -830,7 +857,7 @@ export default function App() {
                       type="button"
                       onClick={() => setEduExpanded(!eduExpanded)}
                       className={`px-5 py-2 text-sm font-medium rounded-full border transition-colors
-                        ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 hover:bg-white' : 'border-white/20 hover:bg-white/10'}`}
+                        ${(isLight) ? 'border-stone-300 hover:bg-white' : 'border-white/20 hover:bg-white/10'}`}
                     >
                       {eduExpanded ? 'Show less' : 'Show more'}
                     </button>
@@ -859,7 +886,7 @@ export default function App() {
                  <div
                     ref={researchListRef}
                     className={`w-full md:w-[42%] h-[24rem] md:h-[30rem] overflow-y-auto rounded-lg border pr-1
-                      ${(theme === 'light' || theme === 'spring') ? 'border-stone-200' : 'border-white/10'}`}
+                      ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}
                  >
                      {[...PORTFOLIO_DATA.research_interests].sort((a, b) => {
                          if (a.id === listFocusId) return -1;
@@ -873,8 +900,8 @@ export default function App() {
                             onClick={() => setSelectedInterest(interest.id === selectedInterest ? null : interest.id)}
                             className={`w-full text-left p-4 rounded-lg transition-all duration-300 border-b last:border-b-0
                             ${selectedInterest === interest.id
-                                ? ((theme === 'light' || theme === 'spring') ? 'bg-white border-stone-200' : 'bg-white/10 border-white/10')
-                                : ((theme === 'light' || theme === 'spring') ? 'border-stone-100 hover:bg-white' : 'border-white/5 hover:bg-white/5')}`}
+                                ? ((isLight) ? 'bg-white border-stone-200' : 'bg-white/10 border-white/10')
+                                : ((isLight) ? 'border-stone-100 hover:bg-white' : 'border-white/5 hover:bg-white/5')}`}
                          >
                               <span className={`text-base font-medium ${getHoverTextColor()}`}>{interest.topic}</span>
                               {interest.note && selectedInterest === interest.id && (
@@ -886,13 +913,13 @@ export default function App() {
             </div>
 
             {PORTFOLIO_DATA.current_research && PORTFOLIO_DATA.current_research.length > 0 && (
-              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(theme === 'light' || theme === 'spring') ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>Current research</h3>
+              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(isLight) ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>Current research</h3>
                 {PORTFOLIO_DATA.current_research.map((item) => (
                   <div key={item.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300
-                      ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                      ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                       <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
-                          ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                          ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                           <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
                       </div>
                       <div className="text-sm opacity-60 mb-2">{item.year} · {item.venue}</div>
@@ -915,7 +942,7 @@ export default function App() {
                     <h2 className="text-3xl font-serif font-bold mb-4">Selected Publications</h2>
                 </div>
                 <div className="flex gap-2 mt-4 md:mt-0">
-                    <button className={`px-4 py-2 text-sm font-medium rounded-lg ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200 text-stone-800' : 'bg-white/10 text-white'}`}>
+                    <button className={`px-4 py-2 text-sm font-medium rounded-lg ${(isLight) ? 'bg-stone-200 text-stone-800' : 'bg-white/10 text-white'}`}>
                         All Years
                     </button>
                 </div>
@@ -928,33 +955,33 @@ export default function App() {
                     <AreaChart data={PORTFOLIO_DATA.citation_history}>
                         <defs>
                             <linearGradient id="colorCitations" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor={(theme === 'light' || theme === 'spring') ? '#78716c' : '#ffffff'} stopOpacity={0.3}/>
-                                <stop offset="95%" stopColor={(theme === 'light' || theme === 'spring') ? '#78716c' : '#ffffff'} stopOpacity={0}/>
+                                <stop offset="5%" stopColor={(isLight) ? '#78716c' : '#ffffff'} stopOpacity={0.3}/>
+                                <stop offset="95%" stopColor={(isLight) ? '#78716c' : '#ffffff'} stopOpacity={0}/>
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={(theme === 'light' || theme === 'spring') ? "#e5e5e5" : "#ffffff30"} />
-                        <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{fill: (theme === 'light' || theme === 'spring') ? '#737373' : '#a3a3a3'}} />
-                        <YAxis axisLine={false} tickLine={false} tick={{fill: (theme === 'light' || theme === 'spring') ? '#737373' : '#a3a3a3'}} />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={(isLight) ? "#e5e5e5" : "#ffffff30"} />
+                        <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{fill: (isLight) ? '#737373' : '#a3a3a3'}} />
+                        <YAxis axisLine={false} tickLine={false} tick={{fill: (isLight) ? '#737373' : '#a3a3a3'}} />
                         <Tooltip 
                             contentStyle={{ 
-                                backgroundColor: (theme === 'light' || theme === 'spring') ? '#fff' : '#171717', 
-                                borderColor: (theme === 'light' || theme === 'spring') ? '#e5e5e5' : '#404040', 
+                                backgroundColor: (isLight) ? '#fff' : '#171717', 
+                                borderColor: (isLight) ? '#e5e5e5' : '#404040', 
                                 borderRadius: '8px' 
                             }}
                         />
-                        <Area type="monotone" dataKey="citations" stroke={(theme === 'light' || theme === 'spring') ? '#78716c' : '#ffffff'} strokeWidth={3} fillOpacity={1} fill="url(#colorCitations)" />
+                        <Area type="monotone" dataKey="citations" stroke={(isLight) ? '#78716c' : '#ffffff'} strokeWidth={3} fillOpacity={1} fill="url(#colorCitations)" />
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
 
             {PORTFOLIO_DATA.under_review && PORTFOLIO_DATA.under_review.length > 0 && (
-              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(theme === 'light' || theme === 'spring') ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>Under review</h3>
+              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(isLight) ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>Under review</h3>
                 {PORTFOLIO_DATA.under_review.map((wp) => (
                   <div key={wp.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300
-                      ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                      ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                       <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
-                          ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                          ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                           <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
                       </div>
                       <div className="text-sm opacity-60 mb-2">{wp.year}</div>
@@ -967,15 +994,15 @@ export default function App() {
             )}
 
             {/* Publication List - Converted to Timeline */}
-            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(theme === 'light' || theme === 'spring') ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>Published</h3>
+            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
+                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${(isLight) ? 'text-stone-800' : 'text-[#FFF6D4]'}`} style={{ filter: headingSunGlow }}>Published</h3>
                 {PORTFOLIO_DATA.publications.map((pub) => (
                     <div key={pub.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                        ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                        ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                         
                         {/* Bullet - CENTERED */}
                         <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                            ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                            ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                             <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                         </div>
 
@@ -983,7 +1010,7 @@ export default function App() {
                             <div className="flex-1">
                                 <div className="flex gap-2 items-center mb-2">
                                     <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded
-                                        ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200 text-stone-800' : 'bg-white/20 text-white'}`}>
+                                        ${(isLight) ? 'bg-stone-200 text-stone-800' : 'bg-white/20 text-white'}`}>
                                         {pub.type}
                                     </span>
                                     <span className="text-sm opacity-60">{pub.year}</span>
@@ -1039,14 +1066,14 @@ export default function App() {
       <Section id="projects">
         <div className="flex flex-col gap-8">
             <h2 className="text-3xl font-serif font-bold">Projects</h2>
-            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
                 {PORTFOLIO_DATA.projects.map((proj, i) => (
                     <div key={i} className={`relative group pl-8 py-8 rounded-r-lg transition-all duration-300 border-transparent
-                        ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                        ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                         
                         {/* Bullet - CENTERED */}
                         <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                            ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                            ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                             <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                         </div>
 
@@ -1065,7 +1092,7 @@ export default function App() {
                             <div className="flex gap-2 flex-wrap mb-4">
                                 {proj.stack.map(tech => (
                                     <span key={tech} className={`px-2 py-1 text-[10px] font-mono rounded opacity-70
-                                        ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10'}`}>
+                                        ${(isLight) ? 'bg-stone-200' : 'bg-white/10'}`}>
                                         {tech}
                                     </span>
                                 ))}
@@ -1087,14 +1114,14 @@ export default function App() {
       <Section id="certifications">
         <div className="flex flex-col gap-8">
             <h2 className="text-3xl font-serif font-bold">Certifications</h2>
-            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
                 {PORTFOLIO_DATA.certifications.map((cert, i) => (
                     <div key={i} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                        ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                        ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                         
                         {/* Bullet - CENTERED */}
                         <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                            ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                            ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                             <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                         </div>
 
@@ -1108,7 +1135,7 @@ export default function App() {
                                 </div>
                             </div>
                             <a href={cert.link} target="_blank" rel="noreferrer" className={`p-2 rounded-full border transition-colors hover:bg-white/10 opacity-60 hover:opacity-100 self-start md:self-center
-                                ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                                ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
                                 <ExternalLink className="w-4 h-4" />
                             </a>
                         </div>
@@ -1126,14 +1153,14 @@ export default function App() {
             
             <div className="grid md:grid-cols-2 gap-12">
                 {/* Column 1 */}
-                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
                     {PORTFOLIO_DATA.skills.slice(0, Math.ceil(PORTFOLIO_DATA.skills.length / 2)).map((skill, i) => (
                         <div key={i} className={`relative group pl-8 pr-6 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                            ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                            ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                             
                             {/* Bullet - CENTERED */}
                             <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
 
@@ -1142,7 +1169,7 @@ export default function App() {
                                     <span className={`font-bold text-lg transition-colors ${getHoverTextColor()}`}>{skill.name}</span>
                                     <span className="opacity-60 font-mono text-sm">{skill.level}%</span>
                                 </div>
-                                <div className={`w-full h-2 rounded-full overflow-hidden ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10'}`}>
+                                <div className={`w-full h-2 rounded-full overflow-hidden ${(isLight) ? 'bg-stone-200' : 'bg-white/10'}`}>
                                     <div 
                                         className={`h-full rounded-full transition-all duration-1000 ease-out ${getProgressBarColor()}`} 
                                         style={{ width: `${skill.level}%` }}
@@ -1154,14 +1181,14 @@ export default function App() {
                 </div>
 
                 {/* Column 2 */}
-                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
                     {PORTFOLIO_DATA.skills.slice(Math.ceil(PORTFOLIO_DATA.skills.length / 2)).map((skill, i) => (
                         <div key={i} className={`relative group pl-8 pr-6 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                            ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                            ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                             
                             {/* Bullet - CENTERED */}
                             <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
 
@@ -1170,7 +1197,7 @@ export default function App() {
                                     <span className={`font-bold text-lg transition-colors ${getHoverTextColor()}`}>{skill.name}</span>
                                     <span className="opacity-60 font-mono text-sm">{skill.level}%</span>
                                 </div>
-                                <div className={`w-full h-2 rounded-full overflow-hidden ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/10'}`}>
+                                <div className={`w-full h-2 rounded-full overflow-hidden ${(isLight) ? 'bg-stone-200' : 'bg-white/10'}`}>
                                     <div 
                                         className={`h-full rounded-full transition-all duration-1000 ease-out ${getProgressBarColor()}`} 
                                         style={{ width: `${skill.level}%` }}
@@ -1186,14 +1213,14 @@ export default function App() {
             {PORTFOLIO_DATA.tests && (
                 <div>
                         <h3 className="text-xl font-bold mb-6 opacity-80">Standardized Tests & Languages</h3>
-                        <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                        <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
                             {PORTFOLIO_DATA.tests.map((test, i) => (
                                 <div key={i} className={`relative group pl-8 py-4 rounded-r-lg transition-all duration-300 border-transparent
-                                    ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                                    ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                                     
                                     {/* Bullet - CENTERED */}
                                     <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                        ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                        ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                                         <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                                     </div>
 
@@ -1221,21 +1248,21 @@ export default function App() {
                 </h2>
             </div>
             <div className="w-full">
-                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(theme === 'light' || theme === 'spring') ? 'border-stone-300' : 'border-white/20'}`}>
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-stone-300' : 'border-white/20'}`}>
                     {PORTFOLIO_DATA.experience.map((exp, idx) => (
                         <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                            ${(theme === 'light' || theme === 'spring') ? 'hover:bg-white' : 
+                            ${(isLight) ? 'hover:bg-white' : 
                               'hover:bg-white/5'}`}>
                             
                             {/* Outer Circle (Static) - CENTERED */}
                             <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
+                                ${(isLight) ? 'bg-white border-stone-300' : 'bg-neutral-950 border-neutral-700'}`}>
                                 {/* Inner Dot (Changes Color) */}
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
                             
                             <div>
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(theme === 'light' || theme === 'spring') ? 'bg-stone-200' : 'bg-white/20'}`}>
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(isLight) ? 'bg-stone-200' : 'bg-white/20'}`}>
                                     {exp.period}
                                 </span>
                                 <h3 className={`text-xl font-bold mt-1 transition-colors duration-300 ${getHoverTextColor()}`}>{exp.role}</h3>
@@ -1261,7 +1288,7 @@ export default function App() {
                 <button 
                     onClick={() => setShowHobbies(false)} 
                     className={`flex items-center gap-2 px-3 py-1 rounded-full border text-xs transition-colors hover:bg-white/10 
-                        ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 text-stone-600' : 'border-white/20 text-white/60'}`}
+                        ${(isLight) ? 'border-stone-300 text-stone-600' : 'border-white/20 text-white/60'}`}
                     title="Hide from page (Accessible via Menu)"
                 >
                     <Settings className="w-3 h-3" /> Hide Section
@@ -1275,7 +1302,7 @@ export default function App() {
       <Section id="contact" className="mb-0 md:mb-12">
           {/* Main Card Container */}
           <div className={`flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-2xl border
-              ${(theme === 'light' || theme === 'spring') ? 'bg-white border-stone-200' : 'bg-white/5 border-white/10 backdrop-blur-xl'}`}>
+              ${(isLight) ? 'bg-white border-stone-200' : 'bg-white/5 border-white/10 backdrop-blur-xl'}`}>
               
               {/* Left Panel: Info (Solid Color) */}
               <div className={`p-10 md:w-2/5 flex flex-col justify-between text-white
@@ -1284,6 +1311,7 @@ export default function App() {
                     theme === 'midnight' ? 'bg-indigo-900' :
                     theme === 'rain' ? 'bg-[#16343c]/80' :
                     theme === 'spring' ? 'bg-stone-700' :
+                    theme === 'warm' ? 'bg-amber-900' :
                     theme === 'nature' ? 'bg-lime-900' :
                     theme === 'musgravite' ? 'bg-purple-900' :
                     theme === 'ruby' ? 'bg-rose-900' :
@@ -1330,26 +1358,26 @@ export default function App() {
                           <div className="space-y-1">
                               <label className="text-xs font-bold opacity-60 uppercase tracking-wide">First Name</label>
                               <input type="text" value={formData.first} onChange={(e) => setFormData({ ...formData, first: e.target.value })} className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
-                                  ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`} />
+                                  ${(isLight) ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`} />
                           </div>
                           <div className="space-y-1">
                               <label className="text-xs font-bold opacity-60 uppercase tracking-wide">Last Name</label>
                               <input type="text" value={formData.last} onChange={(e) => setFormData({ ...formData, last: e.target.value })} className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
-                                  ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`} />
+                                  ${(isLight) ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`} />
                           </div>
                       </div>
 
                       <div className="space-y-1">
                           <label className="text-xs font-bold opacity-60 uppercase tracking-wide">Email</label>
                           <input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
-                              ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`} />
+                              ${(isLight) ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`} />
                       </div>
                       
                       <div className="space-y-1">
                           <label className="text-xs font-bold opacity-60 uppercase tracking-wide">Topic</label>
                           <div className="relative">
                             <select value={formData.topic} onChange={(e) => setFormData({ ...formData, topic: e.target.value })} className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all appearance-none cursor-pointer
-                                ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`}>
+                                ${(isLight) ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`}>
                                 <option className="text-black">Research Collaboration</option>
                                 <option className="text-black">Speaking Inquiry</option>
                                 <option className="text-black">Manuscript or paper</option>
@@ -1362,7 +1390,7 @@ export default function App() {
                       <div className="space-y-1">
                           <label className="text-xs font-bold opacity-60 uppercase tracking-wide">Message</label>
                           <textarea rows="4" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className={`w-full rounded-lg p-3 bg-transparent border focus:outline-none focus:ring-2 transition-all
-                              ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`}></textarea>
+                              ${(isLight) ? 'border-stone-300 focus:ring-stone-400' : 'border-white/20 focus:border-white focus:ring-white/20 text-white'}`}></textarea>
                       </div>
 
                       {formError && <p className="text-sm text-rose-400">{formError}</p>}
@@ -1376,6 +1404,7 @@ export default function App() {
                             theme === 'midnight' ? 'bg-indigo-700 hover:bg-indigo-800' :
                             theme === 'rain' ? 'bg-sky-800 hover:bg-sky-900' :
                             theme === 'spring' ? 'bg-stone-700 hover:bg-stone-800' :
+                            theme === 'warm' ? 'bg-amber-800 hover:bg-amber-900' :
                             theme === 'nature' ? 'bg-lime-700 hover:bg-lime-800' :
                             theme === 'musgravite' ? 'bg-purple-700 hover:bg-purple-800' :
                             theme === 'ruby' ? 'bg-rose-700 hover:bg-rose-800' :
