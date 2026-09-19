@@ -348,7 +348,7 @@ export default function App() {
   const getGlowStyle = () => {
       switch (theme) {
           case 'dark': return 'hover:drop-shadow-[0_0_8px_rgba(45,212,191,0.8)] text-teal-500/80 hover:text-teal-400 border-white/10 bg-white/5'; 
-          case 'light': return 'bg-white text-[#0A5C57] border-[#0A5C57] hover:bg-[#0A5C57]/10 hover:text-[#0A5C57]'; 
+          case 'light': return 'bg-white text-[#0A5C57] border-[#0A5C57] hover:bg-[#CCFBF1] hover:text-[#2DD4BF]'; 
           case 'midnight': return 'hover:drop-shadow-[0_0_8px_rgba(129,140,248,0.8)] text-indigo-400/80 hover:text-indigo-300 border-indigo-900 bg-indigo-950/30';
           case 'rain': return 'hover:drop-shadow-[0_0_8px_rgba(186,230,253,0.7)] text-sky-200/80 hover:text-sky-100 border-white/20 bg-white/10';
           case 'spring': return 'hover:drop-shadow-[0_0_8px_rgba(244,114,182,0.8)] text-pink-500/80 hover:text-pink-600 border-pink-200 bg-white/40';
