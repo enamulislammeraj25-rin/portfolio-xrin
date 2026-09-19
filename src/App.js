@@ -222,7 +222,7 @@ export default function App() {
   const getAppBg = () => {
       switch (theme) {
           case 'dark': return 'bg-[#141414] text-[#F5F5F5]';
-          case 'blueprint': return 'bg-[#07111F] text-[#E7F0FA]';
+          case 'blueprint': return 'bg-[#07101D] text-[#E7F0FA]';
           case 'atelier': return 'bg-[#EFE6D6] text-[#1C1914]';
           case 'folio': return 'bg-[#FAFAF8] text-[#111111]';
           case 'light': return 'bg-white text-black'; 
@@ -338,7 +338,7 @@ export default function App() {
   const getNavStyle = () => {
       // Reduced blur from 3xl to md/lg for better scroll performance
       if (theme === 'dark') return 'bg-[#141414]/90 border-neutral-700 backdrop-blur-md';
-      if (theme === 'blueprint') return 'bg-[#07111F]/92 border-[#1E3A5F] backdrop-blur-md';
+      if (theme === 'blueprint') return 'bg-[#07101D]/92 border-[#1E3A5F] backdrop-blur-md';
       if (theme === 'atelier') return 'bg-[#EFE6D6]/95 border-[#1C1914]/10 backdrop-blur-md';
       if (theme === 'folio') return 'bg-[#FAFAF8]/95 border-black/10 backdrop-blur-md';
       if (theme === 'light') return 'bg-white/90 border-stone-200 backdrop-blur-md';
@@ -382,7 +382,7 @@ export default function App() {
   const getGlowStyle = () => {
       switch (theme) {
           case 'dark': return 'hover:drop-shadow-[0_0_8px_rgba(45,212,191,0.7)] text-teal-400/80 hover:text-teal-300 border-white/10 bg-white/5';
-          case 'blueprint': return 'bg-[#0B1C33] text-[#F2C14E] border-[#F2C14E]/70 hover:bg-[#F2C14E] hover:text-[#07111F]';
+          case 'blueprint': return 'bg-[#0B1C33] text-[#F2C14E] border-[#F2C14E]/70 hover:bg-[#F2C14E] hover:text-[#07101D]';
           case 'atelier': return 'bg-transparent text-[#1C1914] border-[#1C1914] hover:bg-[#C24A2A] hover:text-[#EFE6D6] hover:border-[#C24A2A]';
           case 'folio': return 'bg-transparent text-black border-black/20 hover:border-black';
           case 'light': return 'bg-white text-[#0A5C57] border-[#0A5C57] hover:bg-[#CCFBF1] hover:text-[#2DD4BF]'; 
@@ -423,7 +423,7 @@ export default function App() {
   const getSidebarStyle = () => {
       switch (theme) {
           case 'dark': return 'bg-[#141414]/70 backdrop-blur-2xl border-r border-neutral-700';
-          case 'blueprint': return 'bg-[#07111F] border-r border-[#1E3A5F]';
+          case 'blueprint': return 'bg-[#07101D] border-r border-[#1E3A5F]';
           case 'atelier': return 'bg-[#EFE6D6] border-r border-[#1C1914]/15';
           case 'folio': return 'bg-[#FAFAF8] border-r border-black/10';
           case 'light': return 'bg-white border-r border-stone-200';
@@ -867,7 +867,7 @@ export default function App() {
                 onClick={() => scrollToSection('research')}
                 className={`px-8 py-3.5 rounded-lg font-medium hover:scale-105 transition-transform duration-200 shadow-xl
                     ${isLight ? 'bg-stone-800 text-white shadow-stone-400/50' :
-                      theme === 'blueprint' ? 'bg-[#F2C14E] text-[#07111F] shadow-[#F2C14E]/20' :
+                      theme === 'blueprint' ? 'bg-[#F2C14E] text-[#07101D] shadow-[#F2C14E]/20' :
                       'bg-white text-black shadow-white/20'}`}
             >
               View Research
@@ -1578,7 +1578,7 @@ export default function App() {
                         disabled={formStatus !== 'idle'}
                         className={`w-full font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 text-white flex items-center justify-center gap-2
                           ${theme === 'dark' ? 'bg-teal-600 hover:bg-teal-500 text-white' :
-                          theme === 'blueprint' ? 'bg-[#F2C14E] text-[#07111F] hover:bg-[#E0B13C]' : 
+                          theme === 'blueprint' ? 'bg-[#F2C14E] text-[#07101D] hover:bg-[#E0B13C]' : 
                             theme === 'light' ? 'bg-stone-800 hover:bg-black' : 
                             theme === 'midnight' ? 'bg-indigo-700 hover:bg-indigo-800' :
                             theme === 'rain' ? 'bg-sky-800 hover:bg-sky-900' :
