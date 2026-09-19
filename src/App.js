@@ -348,7 +348,7 @@ export default function App() {
   const getGlowStyle = () => {
       switch (theme) {
           case 'dark': return 'hover:drop-shadow-[0_0_8px_rgba(45,212,191,0.8)] text-teal-500/80 hover:text-teal-400 border-white/10 bg-white/5'; 
-          case 'light': return 'hover:drop-shadow-[0_0_8px_rgba(87,83,78,0.6)] text-stone-500 hover:text-stone-800 border-stone-300 bg-stone-100'; 
+          case 'light': return 'bg-white text-[#0A5C57] border-[#0A5C57] hover:bg-[#0A5C57]/10 hover:text-[#0A5C57]'; 
           case 'midnight': return 'hover:drop-shadow-[0_0_8px_rgba(129,140,248,0.8)] text-indigo-400/80 hover:text-indigo-300 border-indigo-900 bg-indigo-950/30';
           case 'rain': return 'hover:drop-shadow-[0_0_8px_rgba(186,230,253,0.7)] text-sky-200/80 hover:text-sky-100 border-white/20 bg-white/10';
           case 'spring': return 'hover:drop-shadow-[0_0_8px_rgba(244,114,182,0.8)] text-pink-500/80 hover:text-pink-600 border-pink-200 bg-white/40';
@@ -786,7 +786,7 @@ export default function App() {
 
       {/* --- ABOUT SECTION --- */}
       <Section id="about">
-        <div className="max-w-4xl">
+        <div className="w-full">
             <div>
                 <h2 className={`text-sm font-bold tracking-widest uppercase mb-3 ${getAccentColor()}`}>About Me</h2>
                 <h3 className="text-3xl md:text-4xl font-serif font-bold mb-6">
