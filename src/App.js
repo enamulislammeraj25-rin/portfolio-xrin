@@ -722,9 +722,9 @@ export default function App() {
             <a 
                 href={PORTFOLIO_DATA.profile.cvLink}
                 download="Enamul_Islam_Meraj_WebsiteCV.pdf"
-                className={`px-8 py-3.5 border rounded-lg font-medium transition-colors flex items-center gap-2
-                    ${isLight ? 'border-stone-300 hover:bg-white text-stone-800' : 
-                      'border-white/30 hover:bg-white/10 text-white'}`}
+                className={`px-8 py-3.5 border border-[#0A5C57] rounded-lg font-medium transition-colors flex items-center gap-2
+                    ${isLight ? 'hover:bg-white text-stone-800' : 
+                      'hover:bg-white/10 text-white'}`}
             >
               <Download className="w-4 h-4" /> Download CV
             </a>
@@ -828,7 +828,7 @@ export default function App() {
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
                             <div> 
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(isLight) ? 'bg-stone-200' : 'bg-white/20'}`}>
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border border-[#0A5C57] ${(isLight) ? 'bg-stone-200' : 'bg-white/20'}`}>
                                     {edu.year}
                                 </span>
                                 <h3 className={`text-xl font-bold mt-1 transition-colors ${getHoverTextColor()}`}>{edu.institution}</h3>
@@ -1268,7 +1268,7 @@ export default function App() {
                             </div>
                             
                             <div>
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full ${(isLight) ? 'bg-stone-200' : 'bg-white/20'}`}>
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border border-[#0A5C57] ${(isLight) ? 'bg-stone-200' : 'bg-white/20'}`}>
                                     {exp.period}
                                 </span>
                                 <h3 className={`text-xl font-bold mt-1 transition-colors duration-300 ${getHoverTextColor()}`}>{exp.role}</h3>
