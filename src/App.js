@@ -667,22 +667,25 @@ export default function App() {
       </nav>
 
       {/* --- HERO SECTION --- */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0 transition-colors duration-500">
-           <ParticleCanvas theme={theme} />
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-black text-white">
+        <div className="absolute inset-0 z-0 opacity-25">
+           <ParticleCanvas theme="dark" />
         </div>
-        
-        <div className={`absolute inset-0 z-1 pointer-events-none bg-gradient-to-b
-            ${theme === 'dark' ? 'from-transparent via-neutral-950/20 to-neutral-950' : 
-             (theme === 'light' || theme === 'spring') ? 'from-transparent via-white/50 to-stone-100' :
-             'from-transparent via-black/10 to-transparent'}`} 
-        />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-8 items-center py-24">
-          <div className="text-left">
-          <div className={`mb-6 inline-flex items-center px-3 py-1 rounded-full backdrop-blur-sm text-xs font-semibold tracking-wider uppercase animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border
-             ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 bg-white/50 text-stone-600' : 
-               'border-white/20 bg-white/10 text-inherit'}`}>
+        <img
+          src="/hero-portrait.jpg"
+          alt=""
+          className="pointer-events-none select-none absolute inset-y-0 right-0 z-[1] h-full w-full md:w-[62%] object-cover object-[center_top]"
+          style={{
+            maskImage: 'linear-gradient(to left, #000 38%, rgba(0,0,0,0.55) 62%, transparent 92%)',
+            WebkitMaskImage: 'linear-gradient(to left, #000 38%, rgba(0,0,0,0.55) 62%, transparent 92%)'
+          }}
+        />
+        <div className="absolute inset-0 z-[2] pointer-events-none bg-gradient-to-r from-black via-black/80 to-transparent md:via-black/55 md:to-transparent" />
+
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 py-24">
+          <div className="max-w-xl text-left">
+          <div className="mb-6 inline-flex items-center px-3 py-1 rounded-full backdrop-blur-sm text-xs font-semibold tracking-wider uppercase animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border border-white/20 bg-white/10 text-white">
              Open to Collaborations
           </div>
           
@@ -690,25 +693,21 @@ export default function App() {
             {PORTFOLIO_DATA.profile.name}
           </h1>
           
-          <p className="text-sm sm:text-base md:text-lg font-light mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-80">
+          <p className="text-sm sm:text-base md:text-lg font-light mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 text-white/80">
             {PORTFOLIO_DATA.profile.tagline}
           </p>
           
           <div className="flex flex-col sm:flex-row items-start gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
             <button 
                 onClick={() => scrollToSection('research')}
-                className={`px-8 py-3.5 rounded-lg font-medium hover:scale-105 transition-transform duration-200 shadow-xl
-                    ${(theme === 'light' || theme === 'spring') ? 'bg-stone-800 text-white shadow-stone-400/50' : 
-                      'bg-white text-black shadow-white/20'}`}
+                className="px-8 py-3.5 rounded-lg font-medium hover:scale-105 transition-transform duration-200 shadow-xl bg-white text-black shadow-white/20"
             >
               View Research
             </button>
             <a 
                 href={PORTFOLIO_DATA.profile.cvLink}
                 download="Enamul_Islam_Meraj_WebsiteCV.pdf"
-                className={`px-8 py-3.5 border rounded-lg font-medium transition-colors flex items-center gap-2
-                    ${(theme === 'light' || theme === 'spring') ? 'border-stone-300 hover:bg-white' : 
-                      'border-white/30 hover:bg-white/10 text-white'}`}
+                className="px-8 py-3.5 border rounded-lg font-medium transition-colors flex items-center gap-2 border-white/30 hover:bg-white/10 text-white"
             >
               <Download className="w-4 h-4" /> Download CV
             </a>
@@ -733,37 +732,21 @@ export default function App() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.label}
-                  className={`relative group w-12 h-12 flex items-center justify-center rounded-lg border transition-all duration-300 hover:scale-110 ${getGlowStyle()}`}
+                  className="relative group w-12 h-12 flex items-center justify-center rounded-lg border transition-all duration-300 hover:scale-110 border-white/20 bg-white/5 text-white hover:bg-white/15"
                 >
                     <social.icon className="w-5 h-5" />
-                    <span className={`pointer-events-none absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 rounded text-[10px] font-semibold tracking-wide opacity-0 group-hover:opacity-100 transition-opacity z-20
-                      ${(theme === 'light' || theme === 'spring') ? 'bg-stone-800 text-white' : 'bg-white text-neutral-900'}`}>
+                    <span className="pointer-events-none absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 rounded text-[10px] font-semibold tracking-wide opacity-0 group-hover:opacity-100 transition-opacity z-20 bg-white text-neutral-900">
                       {social.label}
                     </span>
                 </a>
             ))}
           </div>
           </div>
-
-          <div className="relative order-first md:order-none h-72 sm:h-80 md:h-[28rem] lg:h-[34rem]">
-            <img
-              src="/hero-portrait.jpg"
-              alt={PORTFOLIO_DATA.profile.name}
-              className="absolute inset-0 w-full h-full object-cover object-[center_top] pointer-events-none select-none"
-              style={{
-                maskImage: 'linear-gradient(to left, #000 42%, transparent 92%), linear-gradient(to top, transparent 0%, #000 18%)',
-                WebkitMaskImage: 'linear-gradient(to left, #000 42%, transparent 92%), linear-gradient(to top, transparent 0%, #000 18%)',
-                WebkitMaskComposite: 'source-in',
-                maskComposite: 'intersect'
-              }}
-            />
-          </div>
         </div>
 
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <div className={`w-6 h-10 border-2 rounded-full flex justify-center p-1 opacity-50
-                ${(theme === 'light' || theme === 'spring') ? 'border-stone-400' : 'border-white'}`}>
-                <div className={`w-1 h-2 rounded-full animate-scroll ${(theme === 'light' || theme === 'spring') ? 'bg-stone-400' : 'bg-white'}`} />
+        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
+            <div className="w-6 h-10 border-2 rounded-full flex justify-center p-1 opacity-50 border-white">
+                <div className="w-1 h-2 rounded-full animate-scroll bg-white" />
             </div>
         </div>
       </section>
