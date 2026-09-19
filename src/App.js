@@ -686,7 +686,7 @@ export default function App() {
       {/* --- HERO SECTION --- */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0 transition-colors duration-500">
-           <ParticleCanvas theme={theme} />
+           {theme !== 'light' && <ParticleCanvas theme={theme} />}
         </div>
         
         <div className={`absolute inset-0 z-1 pointer-events-none bg-gradient-to-b
