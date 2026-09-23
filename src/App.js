@@ -40,6 +40,8 @@ export default function App() {
   // To show the full Hobbies block on the page again: change false -> true.
   // Even when hidden, Menu -> Hobbies still opens the hobbies modal.
   const [showHobbies, setShowHobbies] = useState(false);
+  // Set true to restore the old Research Interests graph + side list.
+  const SHOW_LEGACY_RESEARCH_GRAPH = false;
   const [hobbiesModalOpen, setHobbiesModalOpen] = useState(false);
 
   // --- SEARCH STATE ---
@@ -991,9 +993,67 @@ export default function App() {
       <Section id="research">
         <div className="flex flex-col gap-8">
             <div className="w-full">
-                 <h2 className="text-3xl font-serif font-bold mb-4">Research Interests</h2>
+                 <h2 className="text-3xl font-serif font-bold mb-4">Research</h2>
+                 <p className="text-base md:text-lg leading-relaxed opacity-80 max-w-4xl">
+                    My primary work is in geotechnical earthquake engineering. The M.Sc. thesis develops a shear-wave-velocity framework for liquefaction assessment of the DMDP area in Bangladesh, combining a deterministic Andrus–Stokoe path with a probabilistic Monte Carlo path so site-level uncertainty is explicit rather than hidden in a single factor of safety. The aim is mapped seismic geo-risk that can support planning and foundation decisions in a dense urban corridor.
+                 </p>
+                 <p className="text-base md:text-lg leading-relaxed opacity-80 max-w-4xl mt-4">
+                    Two parallel lines sit under the same geotechnics roof and do not replace that thesis: a PRISMA-guided review of vacuum-based soft-soil improvement with emphasis on HVDM, now under review; and a cradle-to-grave LCA/LCCA of a real rural road protection job in Jamalpur–Gaibandha, comparing a geotextile wrapped-face wall with a conventional 1:1 earthen slope that is rebuilt after monsoon failure. I am seeking doctoral work in earthquake geotechnics and seismic site characterization.
+                 </p>
             </div>
-            
+
+            <div>
+              <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Active work</h3>
+              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
+                {[
+                  {
+                    status: "In progress · M.Sc. thesis",
+                    year: "2025–",
+                    title: "Shear Wave Velocity-Based Deterministic and Probabilistic Liquefaction Assessment of DMDP Area in Bangladesh",
+                    note: "Supervisor: Prof. Dr. Mehedi Ahmed Ansary. Vs data, Andrus–Stokoe deterministic assessment, and Monte Carlo probabilistic assessment."
+                  },
+                  {
+                    status: "Under review",
+                    year: "2025",
+                    title: "Vacuum-Based Soft Soil Improvement: A PRISMA-Guided Systematic Review with Special Emphasis on the High Vacuum Densification Method (HVDM)",
+                    note: "Journal manuscript. Ground-improvement line; does not replace the liquefaction thesis."
+                  },
+                  {
+                    status: "In progress",
+                    year: "2025–",
+                    title: "Life-cycle assessment and life-cycle cost of a geotextile wrapped-face wall versus a rebuilt 1:1 earthen slope",
+                    note: "Jamalpur–Gaibandha rural road. openLCA / ecoinvent 3.12 / EF 3.1. Factor library before the Excel model. Geometry from the BUET drawing."
+                  }
+                ].map((item) => (
+                  <div key={item.title} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                    <div className={`absolute -left-[9px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
+                      <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
+                    </div>
+                    <div className="text-xs uppercase tracking-wider opacity-60 mb-1">{item.status} · {item.year}</div>
+                    <h3 className={`text-lg md:text-xl font-bold mb-2 ${getHoverTextColor()}`}>{item.title}</h3>
+                    <p className="text-sm opacity-70">{item.note}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold uppercase tracking-widest opacity-60 mb-3">Interests</h3>
+              <div className="flex flex-wrap gap-2">
+                {PORTFOLIO_DATA.research_interests.map((interest) => (
+                  <span key={interest.id} className={`px-3 py-1.5 text-sm rounded-full border ${(isLight) ? 'border-stone-300 bg-white' : 'border-white/15 bg-white/5'}`}>
+                    {interest.topic}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/*
+              LEGACY RESEARCH UI — graph + scrolling list + old "Current research" strip.
+              Restore: set SHOW_LEGACY_RESEARCH_GRAPH = true at the top of App().
+              Do not delete this block.
+            */}
+            {SHOW_LEGACY_RESEARCH_GRAPH && (
             <div className="w-full flex flex-col md:flex-row gap-4 mb-4 items-stretch">
                  <div className="w-full md:w-[58%] shrink-0">
                    <ResearchNetwork
@@ -1049,7 +1109,7 @@ export default function App() {
                 ))}
               </div>
             )}
-
+            )}
 
         </div>
       </Section>
