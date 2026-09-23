@@ -121,7 +121,7 @@ export const PORTFOLIO_DATA = {
     { name: "AutoCAD", level: 45 },
     { name: "PLAXIS 2D/3D", level: 40 },
     { name: "ArcGIS Pro", level: 30 },
-    { name: "Microsoft Office Suite", level: 55 },
+    { name: "Microsoft Office Suite", level: 75 },
     { name: "Python", level: 25 },
     { name: "CSI ETABS & SAFE", level: 40 },
     { name: "GeoStudio (GeoSlope)", level: 30 },
