@@ -118,15 +118,15 @@ export const PORTFOLIO_DATA = {
 
   // --- EDITABLE: Skills & Expertise ---
   skills: [
-    { name: "CSI ETABS & SAFE", level: 90 },
-    { name: "PLAXIS 2D/3D", level: 85 },
-    { name: "GeoStudio (GeoSlope)", level: 80 },
-    { name: "AutoCAD", level: 85 },
-    { name: "ArcGIS Pro", level: 75 },
-    { name: "Python", level: 60 },
-    { name: "C/C++", level: 60 },
-    { name: "Microsoft Office Suite", level: 95 },
-    { name: "SketchUP", level: 70 }
+    { name: "AutoCAD", level: 45 },
+    { name: "PLAXIS 2D/3D", level: 40 },
+    { name: "ArcGIS Pro", level: 30 },
+    { name: "Microsoft Office Suite", level: 55 },
+    { name: "Python", level: 25 },
+    { name: "CSI ETABS & SAFE", level: 40 },
+    { name: "GeoStudio (GeoSlope)", level: 30 },
+    { name: "C/C++", level: 25 },
+    { name: "SketchUP", level: 30 }
   ],
   
   // --- EDITABLE: Standardized Tests ---
