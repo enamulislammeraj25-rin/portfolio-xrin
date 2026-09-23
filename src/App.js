@@ -1054,6 +1054,7 @@ export default function App() {
               Do not delete this block.
             */}
             {SHOW_LEGACY_RESEARCH_GRAPH && (
+            <>
             <div className="w-full flex flex-col md:flex-row gap-4 mb-4 items-stretch">
                  <div className="w-full md:w-[58%] shrink-0">
                    <ResearchNetwork
@@ -1109,6 +1110,7 @@ export default function App() {
                 ))}
               </div>
             )}
+            </>
             )}
 
         </div>
