@@ -84,7 +84,7 @@ export default function App() {
         // Auto-close menu on scroll
         if (menuOpen) setMenuOpen(false);
 
-        const ids = ['about','education','research','publications','projects','certifications','skills','career','hobbies','contact'];
+        const ids = ['about','research','publications','education','career','projects','skills','certifications','hobbies','contact'];
         const y = window.scrollY + 96;
         let current = ids[0];
         for (const id of ids) {
@@ -135,13 +135,13 @@ export default function App() {
 
   const allNavLinks = [
     { name: "About", id: "about" },
-    { name: "Education", id: "education" },
     { name: "Research", id: "research" },
     { name: "Publications", id: "publications" },
-    { name: "Projects", id: "projects" },
-    { name: "Certifications", id: "certifications" },
-    { name: "Skills", id: "skills" },
+    { name: "Education", id: "education" },
     { name: "Career", id: "career" },
+    { name: "Projects", id: "projects" },
+    { name: "Skills", id: "skills" },
+    { name: "Certifications", id: "certifications" },
     { name: "Hobbies", id: "hobbies" }, // Hobbies ID for link logic
     { name: "Contact", id: "contact" }
   ];
@@ -987,77 +987,6 @@ export default function App() {
         </div>
       </Section>
 
-      {/* --- EDUCATION SECTION --- */}
-      <Section id="education">
-          <div className="flex flex-col gap-8">
-            <div className="w-full">
-                <h2 className="text-3xl font-serif font-bold mb-4 flex items-center gap-3">
-                    <GraduationCap className={`w-8 h-8 ${getAccentColor()}`} />
-                    Education
-                </h2>
-            </div>
-            <div className="w-full">
-                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
-                    {/*
-                      Education default view = first 2 rows only (M.Sc. + B.Sc.).
-                      HSC, SSC, JSC, PSC stay in portfolioData.education and appear after "Show more".
-                      To show school rows immediately again, change slice(0, 2) back to slice(0, 4)
-                      and length > 2 back to length > 4.
-                    */}
-                    {(eduExpanded ? PORTFOLIO_DATA.education : PORTFOLIO_DATA.education.slice(0, 2)).map((edu, idx) => (
-                        <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                            ${(isLight) ? 'hover:bg-white' : 
-                              'hover:bg-white/5'}`}>
-                            <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
-                                <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
-                            </div>
-                            <div> 
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border ${isLight ? 'border-[#0A5C57] bg-[#0A5C57] text-white' : 'border-white/25 bg-white/15 text-white'}`}>
-                                    {edu.year}
-                                </span>
-                                <h3 className={`text-xl font-bold mt-1 transition-colors ${getHoverTextColor()}`}>{edu.institution}</h3>
-                                <div className="text-lg font-medium opacity-90 mb-1">{edu.degree}</div>
-                                {edu.group && (
-                                     <p className="text-sm opacity-70">
-                                        <span className="font-semibold">Group:</span> {edu.group}
-                                    </p>
-                                )}
-                                {edu.advisor && (
-                                     <p className="text-sm opacity-70">
-                                        <span className="font-semibold">Advisor/Board:</span> {edu.advisor}
-                                    </p>
-                                )}
-                                {edu.thesis && (
-                                 <p className="text-sm italic opacity-60">
-                                    {edu.thesis}
-                                </p>
-                                )}
-                                {edu.achievement && (
-                                     <p className="text-sm opacity-70 mt-1">
-                                        <span className="font-semibold">Achievement:</span> {edu.achievement}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                {PORTFOLIO_DATA.education.length > 2 && (
-                  <div className="flex justify-center mt-4">
-                    <button
-                      type="button"
-                      onClick={() => setEduExpanded(!eduExpanded)}
-                      className={`px-5 py-2 text-sm font-medium rounded-full border transition-colors
-                        ${(isLight) ? 'border-neutral-500 hover:bg-neutral-50' : 'border-white/20 hover:bg-white/10'}`}
-                    >
-                      {eduExpanded ? 'Show less' : 'Show more'}
-                    </button>
-                  </div>
-                )}
-            </div>
-          </div>
-      </Section>
-
       {/* --- RESEARCH SECTION --- */}
       <Section id="research">
         <div className="flex flex-col gap-8">
@@ -1253,6 +1182,119 @@ export default function App() {
         </div>
       </Section>
 
+      {/* --- EDUCATION SECTION --- */}
+      <Section id="education">
+          <div className="flex flex-col gap-8">
+            <div className="w-full">
+                <h2 className="text-3xl font-serif font-bold mb-4 flex items-center gap-3">
+                    <GraduationCap className={`w-8 h-8 ${getAccentColor()}`} />
+                    Education
+                </h2>
+            </div>
+            <div className="w-full">
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
+                    {/*
+                      Education default view = first 2 rows only (M.Sc. + B.Sc.).
+                      HSC, SSC, JSC, PSC stay in portfolioData.education and appear after "Show more".
+                      To show school rows immediately again, change slice(0, 2) back to slice(0, 4)
+                      and length > 2 back to length > 4.
+                    */}
+                    {(eduExpanded ? PORTFOLIO_DATA.education : PORTFOLIO_DATA.education.slice(0, 2)).map((edu, idx) => (
+                        <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                            ${(isLight) ? 'hover:bg-white' : 
+                              'hover:bg-white/5'}`}>
+                            <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                                ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
+                                <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                            </div>
+                            <div> 
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border ${isLight ? 'border-[#0A5C57] bg-[#0A5C57] text-white' : 'border-white/25 bg-white/15 text-white'}`}>
+                                    {edu.year}
+                                </span>
+                                <h3 className={`text-xl font-bold mt-1 transition-colors ${getHoverTextColor()}`}>{edu.institution}</h3>
+                                <div className="text-lg font-medium opacity-90 mb-1">{edu.degree}</div>
+                                {edu.group && (
+                                     <p className="text-sm opacity-70">
+                                        <span className="font-semibold">Group:</span> {edu.group}
+                                    </p>
+                                )}
+                                {edu.advisor && (
+                                     <p className="text-sm opacity-70">
+                                        <span className="font-semibold">Advisor/Board:</span> {edu.advisor}
+                                    </p>
+                                )}
+                                {edu.thesis && (
+                                 <p className="text-sm italic opacity-60">
+                                    {edu.thesis}
+                                </p>
+                                )}
+                                {edu.achievement && (
+                                     <p className="text-sm opacity-70 mt-1">
+                                        <span className="font-semibold">Achievement:</span> {edu.achievement}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {PORTFOLIO_DATA.education.length > 2 && (
+                  <div className="flex justify-center mt-4">
+                    <button
+                      type="button"
+                      onClick={() => setEduExpanded(!eduExpanded)}
+                      className={`px-5 py-2 text-sm font-medium rounded-full border transition-colors
+                        ${(isLight) ? 'border-neutral-500 hover:bg-neutral-50' : 'border-white/20 hover:bg-white/10'}`}
+                    >
+                      {eduExpanded ? 'Show less' : 'Show more'}
+                    </button>
+                  </div>
+                )}
+            </div>
+          </div>
+      </Section>
+
+      {/* --- CAREER / EXPERIENCE (MOVED BEFORE HOBBIES) --- */}
+      <Section id="career">
+          <div className="flex flex-col gap-8">
+            <div className="w-full">
+                <h2 className="text-3xl font-serif font-bold mb-4 flex items-center gap-3">
+                    <Briefcase className={`w-8 h-8 ${getAccentColor()}`} />
+                    Experience
+                </h2>
+            </div>
+            <div className="w-full">
+                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
+                    {PORTFOLIO_DATA.experience.map((exp, idx) => (
+                        <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                            ${(isLight) ? 'hover:bg-white' : 
+                              'hover:bg-white/5'}`}>
+                            
+                            {/* Outer Circle (Static) - CENTERED */}
+                            <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                                ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
+                                {/* Inner Dot (Changes Color) */}
+                                <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                            </div>
+                            
+                            <div>
+                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border ${isLight ? 'border-[#0A5C57] bg-[#0A5C57] text-white' : 'border-white/25 bg-white/15 text-white'}`}>
+                                    {exp.period}
+                                </span>
+                                <h3 className={`text-xl font-bold mt-1 transition-colors duration-300 ${getHoverTextColor()}`}>{exp.role}</h3>
+                                <div className="text-lg font-medium opacity-90 mb-2">
+                                    {exp.institution}
+                                </div>
+                                <p className="opacity-70 leading-relaxed">
+                                    {exp.description}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+          </div>
+      </Section>
+
       {/* --- PROJECTS (MOVED DOWN & CHANGED TO TIMELINE) --- */}
       <Section id="projects">
         <div className="flex flex-col gap-8">
@@ -1294,41 +1336,6 @@ export default function App() {
                             >
                                 View Project <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                             </button>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-      </Section>
-
-      {/* --- CERTIFICATIONS SECTION (CHANGED TO TIMELINE) --- */}
-      <Section id="certifications">
-        <div className="flex flex-col gap-8">
-            <h2 className="text-3xl font-serif font-bold">Certifications</h2>
-            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
-                {PORTFOLIO_DATA.certifications.map((cert, i) => (
-                    <div key={i} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                        ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
-                        
-                        {/* Bullet - CENTERED */}
-                        <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                            ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
-                            <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
-                        </div>
-
-                        <div className="flex flex-col md:flex-row md:items-center gap-4 justify-between">
-                            <div className="flex-1">
-                                <h4 className={`font-bold text-lg leading-tight mb-1 transition-colors ${getHoverTextColor()}`}>{cert.title}</h4>
-                                <div className="text-sm opacity-60 flex gap-2">
-                                    <span>{cert.issuer}</span>
-                                    <span>•</span>
-                                    <span>{cert.date}</span>
-                                </div>
-                            </div>
-                            <a href={cert.link} target="_blank" rel="noreferrer" className={`p-2 rounded-full border transition-colors hover:bg-white/10 opacity-60 hover:opacity-100 self-start md:self-center
-                                ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
-                                <ExternalLink className="w-4 h-4" />
-                            </a>
                         </div>
                     </div>
                 ))}
@@ -1429,46 +1436,39 @@ export default function App() {
         </div>
       </Section>
 
-      {/* --- CAREER / EXPERIENCE (MOVED BEFORE HOBBIES) --- */}
-      <Section id="career">
-          <div className="flex flex-col gap-8">
-            <div className="w-full">
-                <h2 className="text-3xl font-serif font-bold mb-4 flex items-center gap-3">
-                    <Briefcase className={`w-8 h-8 ${getAccentColor()}`} />
-                    Experience
-                </h2>
-            </div>
-            <div className="w-full">
-                <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
-                    {PORTFOLIO_DATA.experience.map((exp, idx) => (
-                        <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                            ${(isLight) ? 'hover:bg-white' : 
-                              'hover:bg-white/5'}`}>
-                            
-                            {/* Outer Circle (Static) - CENTERED */}
-                            <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                                ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
-                                {/* Inner Dot (Changes Color) */}
-                                <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
-                            </div>
-                            
-                            <div>
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border ${isLight ? 'border-[#0A5C57] bg-[#0A5C57] text-white' : 'border-white/25 bg-white/15 text-white'}`}>
-                                    {exp.period}
-                                </span>
-                                <h3 className={`text-xl font-bold mt-1 transition-colors duration-300 ${getHoverTextColor()}`}>{exp.role}</h3>
-                                <div className="text-lg font-medium opacity-90 mb-2">
-                                    {exp.institution}
-                                </div>
-                                <p className="opacity-70 leading-relaxed">
-                                    {exp.description}
-                                </p>
-                            </div>
+      {/* --- CERTIFICATIONS SECTION (CHANGED TO TIMELINE) --- */}
+      <Section id="certifications">
+        <div className="flex flex-col gap-8">
+            <h2 className="text-3xl font-serif font-bold">Certifications</h2>
+            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
+                {PORTFOLIO_DATA.certifications.map((cert, i) => (
+                    <div key={i} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                        ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
+                        
+                        {/* Bullet - CENTERED */}
+                        <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                            ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
+                            <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                         </div>
-                    ))}
-                </div>
+
+                        <div className="flex flex-col md:flex-row md:items-center gap-4 justify-between">
+                            <div className="flex-1">
+                                <h4 className={`font-bold text-lg leading-tight mb-1 transition-colors ${getHoverTextColor()}`}>{cert.title}</h4>
+                                <div className="text-sm opacity-60 flex gap-2">
+                                    <span>{cert.issuer}</span>
+                                    <span>•</span>
+                                    <span>{cert.date}</span>
+                                </div>
+                            </div>
+                            <a href={cert.link} target="_blank" rel="noreferrer" className={`p-2 rounded-full border transition-colors hover:bg-white/10 opacity-60 hover:opacity-100 self-start md:self-center
+                                ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
+                                <ExternalLink className="w-4 h-4" />
+                            </a>
+                        </div>
+                    </div>
+                ))}
             </div>
-          </div>
+        </div>
       </Section>
 
       {/* --- HOBBIES SECTION (MOVED BEFORE CONTACT) --- */}
