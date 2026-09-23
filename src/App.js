@@ -1005,9 +1005,9 @@ export default function App() {
                  <div className="flex flex-col gap-3">
                    <div className="text-xs font-bold uppercase tracking-widest opacity-50">At a glance</div>
                    {[
-                     { tag: "Thesis", status: "In progress", line: "Vs liquefaction · DMDP", sub: "Andrus–Stokoe + Monte Carlo" },
-                     { tag: "Paper", status: "Under review", line: "HVDM / vacuum improvement", sub: "PRISMA systematic review" },
-                     { tag: "Project · paper", status: "In progress", line: "WFW vs 1:1 slope LCA/LCCA", sub: "Jamalpur–Gaibandha. Field project; journal paper in preparation." },
+                     { tag: "Thesis · paper", status: "In preparation", line: "Shear-wave-velocity liquefaction assessment of the DMDP area", sub: "Deterministic Andrus–Stokoe and probabilistic Monte Carlo procedures. Intended for journal submission under supervisory guidance." },
+                     { tag: "Journal manuscript", status: "Under review", line: "Vacuum-based soft-soil improvement, with emphasis on HVDM", sub: "PRISMA-guided systematic review." },
+                     { tag: "Project · paper", status: "In preparation", line: "Life-cycle assessment of a wrapped-face wall and a conventional 1:1 slope", sub: "Jamalpur–Gaibandha rural road. Comparative LCA/LCCA; manuscript planned from the same study." },
                    ].map((card) => (
                      <div key={card.line} className={`p-4 rounded-lg border ${(isLight) ? 'border-stone-200 bg-white' : 'border-white/15 bg-white/5'}`}>
                        <div className="flex items-center justify-between gap-2 mb-2">
