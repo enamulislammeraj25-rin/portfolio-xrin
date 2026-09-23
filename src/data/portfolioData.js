@@ -108,12 +108,20 @@ export const PORTFOLIO_DATA = {
       date: "March, 2025",
       link: "https://lntedutech.com"
     },
+    /*
+     * HIDDEN from the Certifications block for the academic site.
+     * Yale "Financial Markets" (Coursera) does not support the geotech/PhD story.
+     * Microsoft 365, Construction Management, and L&T remain visible.
+     * To show this card again, uncomment the object below.
+     *
     {
       title: "Financial Markets",
       issuer: "Yale University (Coursera)",
       date: "February, 2025",
       link: "https://www.coursera.org"
     }
+    */
+    
   ],
 
   // --- EDITABLE: Skills & Expertise ---

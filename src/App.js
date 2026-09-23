@@ -35,7 +35,10 @@ export default function App() {
   const [eduExpanded, setEduExpanded] = useState(false);
   
   // --- NEW: HOBBIES VISIBILITY STATE ---
-  const [showHobbies, setShowHobbies] = useState(true);
+  // Hobbies section is OFF on the page by default (academic look).
+  // To show the full Hobbies block on the page again: change false -> true.
+  // Even when hidden, Menu -> Hobbies still opens the hobbies modal.
+  const [showHobbies, setShowHobbies] = useState(false);
   const [hobbiesModalOpen, setHobbiesModalOpen] = useState(false);
 
   // --- SEARCH STATE ---
@@ -884,9 +887,15 @@ export default function App() {
               PORTFOLIO_DATA.profile.social.orcid && { icon: Fingerprint, link: PORTFOLIO_DATA.profile.social.orcid, label: "ORCID" },
               { icon: Mail, link: PORTFOLIO_DATA.profile.social.email, label: "Email" },
               { icon: Linkedin, link: PORTFOLIO_DATA.profile.social.linkedin, label: "LinkedIn" },
-              { icon: MessageCircle, link: PORTFOLIO_DATA.profile.social.whatsapp, label: "WhatsApp" },
-              { icon: Facebook, link: PORTFOLIO_DATA.profile.social.facebook, label: "Facebook" },
-              { icon: Instagram, link: PORTFOLIO_DATA.profile.social.instagram, label: "Instagram" },
+              /*
+               * PERSONAL SOCIAL ICONS — hidden for the academic/US-PhD version of the site.
+               * Faculty pages usually keep Scholar, ORCID, ResearchGate, email, LinkedIn only.
+               * The URLs are still in src/data/portfolioData.js (profile.social).
+               * To show these buttons again on the hero, uncomment the 3 lines below.
+               */
+              // { icon: MessageCircle, link: PORTFOLIO_DATA.profile.social.whatsapp, label: "WhatsApp" },
+              // { icon: Facebook, link: PORTFOLIO_DATA.profile.social.facebook, label: "Facebook" },
+              // { icon: Instagram, link: PORTFOLIO_DATA.profile.social.instagram, label: "Instagram" },
               { icon: Twitter, link: PORTFOLIO_DATA.profile.social.twitter, label: "X" },
               { icon: Send, link: PORTFOLIO_DATA.profile.social.telegram, label: "Telegram" },
             ].filter(Boolean).map((social, idx) => (
@@ -988,7 +997,13 @@ export default function App() {
             </div>
             <div className="w-full">
                 <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
-                    {(eduExpanded ? PORTFOLIO_DATA.education : PORTFOLIO_DATA.education.slice(0, 4)).map((edu, idx) => (
+                    {/*
+                      Education default view = first 2 rows only (M.Sc. + B.Sc.).
+                      HSC, SSC, JSC, PSC stay in portfolioData.education and appear after "Show more".
+                      To show school rows immediately again, change slice(0, 2) back to slice(0, 4)
+                      and length > 2 back to length > 4.
+                    */}
+                    {(eduExpanded ? PORTFOLIO_DATA.education : PORTFOLIO_DATA.education.slice(0, 2)).map((edu, idx) => (
                         <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
                             ${(isLight) ? 'hover:bg-white' : 
                               'hover:bg-white/5'}`}>
@@ -1026,7 +1041,7 @@ export default function App() {
                         </div>
                     ))}
                 </div>
-                {PORTFOLIO_DATA.education.length > 4 && (
+                {PORTFOLIO_DATA.education.length > 2 && (
                   <div className="flex justify-center mt-4">
                     <button
                       type="button"
