@@ -5,7 +5,8 @@ import {
   Award, Mail, Download, Search, 
   Menu, X, ChevronRight, Globe, Users, FileText,
   MapPin, Anchor, ArrowDown, ArrowUp,
-  Facebook, Instagram, Twitter, Send, MessageCircle,
+  Twitter, Send,
+  // Facebook, Instagram, MessageCircle, // uncomment with the hero personal-social rows
   FileImage, FileCode, FolderOpen,
   CheckCircle2, Linkedin, ExternalLink,
   Camera, Video, Settings, Eye, EyeOff,
