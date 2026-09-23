@@ -1007,7 +1007,7 @@ export default function App() {
                    {[
                      { tag: "Thesis", status: "In progress", line: "Vs liquefaction · DMDP", sub: "Andrus–Stokoe + Monte Carlo" },
                      { tag: "Paper", status: "Under review", line: "HVDM / vacuum improvement", sub: "PRISMA systematic review" },
-                     { tag: "Project", status: "In progress", line: "WFW vs 1:1 slope LCA/LCCA", sub: "Jamalpur–Gaibandha rural road" },
+                     { tag: "Project · paper", status: "In progress", line: "WFW vs 1:1 slope LCA/LCCA", sub: "Jamalpur–Gaibandha. Field project; journal paper in preparation." },
                    ].map((card) => (
                      <div key={card.line} className={`p-4 rounded-lg border ${(isLight) ? 'border-stone-200 bg-white' : 'border-white/15 bg-white/5'}`}>
                        <div className="flex items-center justify-between gap-2 mb-2">
