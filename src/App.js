@@ -44,6 +44,7 @@ export default function App() {
   const [showHobbies, setShowHobbies] = useState(false);
   // Set true to restore the old Research Interests graph + side list.
   const SHOW_LEGACY_RESEARCH_GRAPH = false;
+  const SHOW_CITATION_GRAPH = false;
   const [hobbiesModalOpen, setHobbiesModalOpen] = useState(false);
 
   // --- SEARCH STATE ---
