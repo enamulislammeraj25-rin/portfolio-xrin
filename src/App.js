@@ -3,9 +3,11 @@ import {
   Sun, Moon, CloudLightning, Leaf, Gem, Flower2,
   Briefcase, GraduationCap, 
   Award, Mail, Download, Search, 
-  Menu, X, ChevronRight, Globe, Users, FileText,
+  Menu, X, ChevronRight, FileText,
+  // Globe, Users, // contact-card socials — uncomment with that block
   MapPin, Anchor, ArrowDown, ArrowUp,
-  Twitter, Send,
+  Twitter,
+  // Send, // Telegram hero icon — uncomment with the Telegram row
   // Facebook, Instagram, MessageCircle, // uncomment with the hero personal-social rows
   FileImage, FileCode, FolderOpen,
   CheckCircle2, Linkedin, ExternalLink,
@@ -904,7 +906,8 @@ export default function App() {
               // { icon: Facebook, link: PORTFOLIO_DATA.profile.social.facebook, label: "Facebook" },
               // { icon: Instagram, link: PORTFOLIO_DATA.profile.social.instagram, label: "Instagram" },
               { icon: Twitter, link: PORTFOLIO_DATA.profile.social.twitter, label: "X" },
-              { icon: Send, link: PORTFOLIO_DATA.profile.social.telegram, label: "Telegram" },
+              // Telegram hidden on the academic hero. URL remains in portfolioData.js.
+              // { icon: Send, link: PORTFOLIO_DATA.profile.social.telegram, label: "Telegram" },
             ].filter(Boolean).map((social, idx) => (
                 <a
                   key={idx}
@@ -1583,6 +1586,9 @@ export default function App() {
                       </div>
                   </div>
 
+                  {/*
+                    Contact-card social icons (Globe / X / Users) — hidden for the academic site.
+                    Email and location above stay visible. Uncomment this block to restore.
                   <div className="mt-12 pt-8 border-t border-white/20">
                       <p className="text-xs opacity-60 mb-4">Socials</p>
                       <div className="flex gap-4">
@@ -1591,6 +1597,7 @@ export default function App() {
                           <Users className="w-5 h-5 opacity-80 hover:opacity-100 cursor-pointer" />
                       </div>
                   </div>
+                  */}
               </div>
 
               {/* Right Panel: Form (Clean White/Glass) */}
