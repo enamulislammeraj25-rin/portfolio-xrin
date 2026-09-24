@@ -144,7 +144,11 @@ export default function App() {
     { name: "Projects", id: "projects" },
     { name: "Skills", id: "skills" },
     { name: "Certifications", id: "certifications" },
-    { name: "Hobbies", id: "hobbies" }, // Hobbies ID for link logic
+    // Hobbies removed from the top bar and hamburger for the academic site.
+    // The section is already off the page (showHobbies = false).
+    // Menu -> Hobbies used to open the modal via scrollToSection('hobbies').
+    // To restore the nav label, uncomment the next line.
+    // { name: "Hobbies", id: "hobbies" },
     { name: "Contact", id: "contact" }
   ];
 
