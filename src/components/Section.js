@@ -23,7 +23,7 @@ export const Section = ({ children, id, className = "" }) => {
     <section 
       id={id}
       ref={ref}
-      className={`py-20 md:py-28 px-5 md:px-8 max-w-[90rem] mx-auto transition-all duration-1000 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}
+      className={`py-12 md:py-16 px-5 md:px-8 max-w-[90rem] mx-auto transition-all duration-1000 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}
     >
       {children}
     </section>

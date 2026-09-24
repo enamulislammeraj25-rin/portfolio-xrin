@@ -975,13 +975,16 @@ export default function App() {
                   </>
                 ) : (
                   <>
-                <h2 className={`text-sm font-bold tracking-widest uppercase mb-3 ${getAccentColor()}`}>About Me</h2>
-                <h3 className="text-3xl md:text-4xl font-serif font-bold mb-6">
+                <h2 className="text-3xl font-serif font-bold mb-4">About Me</h2>
+                {/*
+                  Old About slogan (removed so About matches Research / Publications heading weight).
+                  <h3 className="text-3xl md:text-4xl font-serif font-bold mb-6">
                     Analyzing ground behavior to build safer, resilient infrastructure.
-                </h3>
+                  </h3>
+                */}
                   </>
                 )}
-                <p className="text-lg opacity-80 leading-relaxed mb-6 whitespace-pre-line text-justify">
+                <p className="text-base leading-relaxed mb-5 whitespace-pre-line text-justify opacity-80">
                     {PORTFOLIO_DATA.profile.bio}
                 </p>
                 <div className="grid grid-cols-2 gap-4 mt-8">
@@ -999,14 +1002,14 @@ export default function App() {
 
       {/* --- RESEARCH SECTION --- */}
       <Section id="research">
-        <div className="flex flex-col gap-8">
-            <div className="w-full grid md:grid-cols-[minmax(0,1.2fr)_minmax(16rem,0.8fr)] gap-8 items-start">
+        <div className="flex flex-col gap-5">
+            <div className="w-full grid md:grid-cols-[minmax(0,1.2fr)_minmax(16rem,0.8fr)] gap-6 items-start">
                  <div>
                  <h2 className="text-3xl font-serif font-bold mb-4">Research</h2>
-                 <p className="text-base md:text-lg leading-relaxed opacity-80 text-justify">
+                 <p className="text-base leading-relaxed opacity-80 text-justify">
                     My primary work is in geotechnical earthquake engineering. The M.Sc. thesis develops a shear-wave-velocity framework for liquefaction assessment of the DMDP area in Bangladesh, combining a deterministic Andrus–Stokoe path with a probabilistic Monte Carlo path so site-level uncertainty is explicit rather than hidden in a single factor of safety. The aim is mapped seismic geo-risk that can support planning and foundation decisions in a dense urban corridor.
                  </p>
-                 <p className="text-base md:text-lg leading-relaxed opacity-80 text-justify mt-4">
+                 <p className="text-base leading-relaxed opacity-80 text-justify mt-3">
                     Two parallel lines sit under the same geotechnics roof and do not replace that thesis: a PRISMA-guided review of vacuum-based soft-soil improvement with emphasis on HVDM, now under review; and a cradle-to-grave LCA/LCCA of a real rural road protection job in Jamalpur–Gaibandha, comparing a geotextile wrapped-face wall with a conventional 1:1 earthen slope that is rebuilt after monsoon failure. I am seeking doctoral work in earthquake geotechnics and seismic site characterization.
                  </p>
                  </div>
@@ -1089,14 +1092,14 @@ export default function App() {
               <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Current research</h3>
                 {PORTFOLIO_DATA.current_research.map((item) => (
-                  <div key={item.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300
+                  <div key={item.id} className={`relative group pl-8 py-3 rounded-r-lg transition-all duration-300
                       ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                       <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
                           ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                           <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
                       </div>
                       <div className="text-sm opacity-60 mb-2">{item.year} · {item.venue}</div>
-                      <h3 className={`text-lg md:text-xl font-bold mb-2 ${getHoverTextColor()}`}>{item.title}</h3>
+                      <h3 className={`text-base md:text-lg font-bold mb-1 ${getHoverTextColor()}`}>{item.title}</h3>
                       {item.note && <p className="text-sm opacity-60">{item.note}</p>}
                   </div>
                 ))}
@@ -1110,7 +1113,7 @@ export default function App() {
 
       {/* --- PUBLICATIONS (MOVED UP) --- */}
       <Section id="publications">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-5">
             <div className="flex flex-col md:flex-row justify-between items-end">
                 <div>
                     <h2 className="text-3xl font-serif font-bold mb-4">Selected Publications</h2>
@@ -1154,14 +1157,14 @@ export default function App() {
               <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Under review</h3>
                 {PORTFOLIO_DATA.under_review.map((wp) => (
-                  <div key={wp.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300
+                  <div key={wp.id} className={`relative group pl-8 py-3 rounded-r-lg transition-all duration-300
                       ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                       <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
                           ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                           <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
                       </div>
                       <div className="text-sm opacity-60 mb-2">{wp.year}</div>
-                      <h3 className={`text-lg md:text-xl font-bold mb-2 transition-colors ${getHoverTextColor()}`}>{wp.title}</h3>
+                      <h3 className={`text-base md:text-lg font-bold mb-1 transition-colors ${getHoverTextColor()}`}>{wp.title}</h3>
                       <p className="opacity-70 mb-2 italic">{wp.venue}</p>
                       {wp.note && <p className="text-sm opacity-60">{wp.note}</p>}
                   </div>
@@ -1173,7 +1176,7 @@ export default function App() {
             <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Published</h3>
                 {PORTFOLIO_DATA.publications.map((pub) => (
-                    <div key={pub.id} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                    <div key={pub.id} className={`relative group pl-8 py-3 rounded-r-lg transition-all duration-300 border-transparent
                         ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                         
                         {/* Bullet - CENTERED */}
@@ -1191,7 +1194,7 @@ export default function App() {
                                     </span>
                                     <span className="text-sm opacity-60">{pub.year}</span>
                                 </div>
-                                <h3 className={`text-lg md:text-xl font-bold mb-2 transition-colors ${getHoverTextColor()}`}>
+                                <h3 className={`text-base md:text-lg font-bold mb-1 transition-colors ${getHoverTextColor()}`}>
                                     {pub.title}
                                 </h3>
                                 <p className="opacity-70 mb-3 italic">
@@ -1240,7 +1243,7 @@ export default function App() {
 
       {/* --- EDUCATION SECTION --- */}
       <Section id="education">
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-5">
             <div className="w-full">
                 <h2 className="text-3xl font-serif font-bold mb-4 flex items-center gap-3">
                     <GraduationCap className={`w-8 h-8 ${getAccentColor()}`} />
@@ -1256,7 +1259,7 @@ export default function App() {
                       and length > 2 back to length > 4.
                     */}
                     {(eduExpanded ? PORTFOLIO_DATA.education : PORTFOLIO_DATA.education.slice(0, 2)).map((edu, idx) => (
-                        <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                        <div key={idx} className={`relative group pl-8 py-3 rounded-r-lg transition-all duration-300 border-transparent
                             ${(isLight) ? 'hover:bg-white' : 
                               'hover:bg-white/5'}`}>
                             <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
@@ -1311,7 +1314,7 @@ export default function App() {
 
       {/* --- CAREER / EXPERIENCE (MOVED BEFORE HOBBIES) --- */}
       <Section id="career">
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-5">
             <div className="w-full">
                 <h2 className="text-3xl font-serif font-bold mb-4 flex items-center gap-3">
                     <Briefcase className={`w-8 h-8 ${getAccentColor()}`} />
@@ -1321,7 +1324,7 @@ export default function App() {
             <div className="w-full">
                 <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                     {PORTFOLIO_DATA.experience.map((exp, idx) => (
-                        <div key={idx} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                        <div key={idx} className={`relative group pl-8 py-3 rounded-r-lg transition-all duration-300 border-transparent
                             ${(isLight) ? 'hover:bg-white' : 
                               'hover:bg-white/5'}`}>
                             
@@ -1353,7 +1356,7 @@ export default function App() {
 
       {/* --- PROJECTS (MOVED DOWN & CHANGED TO TIMELINE) --- */}
       <Section id="projects">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-5">
             <h2 className="text-3xl font-serif font-bold">Projects</h2>
             <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 {PORTFOLIO_DATA.projects.map((proj, i) => (
@@ -1401,7 +1404,7 @@ export default function App() {
 
       {/* --- SKILLS SECTION (2-COLUMN TIMELINE) --- */}
       <Section id="skills">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-5">
             <h2 className="text-3xl font-serif font-bold">Technical Expertise</h2>
             <h3 className="text-xl font-bold opacity-80">Software & Tools</h3>
             
@@ -1409,7 +1412,7 @@ export default function App() {
                 {/* Column 1 */}
                 <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                     {PORTFOLIO_DATA.skills.slice(0, Math.ceil(PORTFOLIO_DATA.skills.length / 2)).map((skill, i) => (
-                        <div key={i} className={`relative group pl-8 pr-6 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                        <div key={i} className={`relative group pl-8 pr-6 py-3 rounded-r-lg transition-all duration-300 border-transparent
                             ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                             
                             {/* Bullet - CENTERED */}
@@ -1437,7 +1440,7 @@ export default function App() {
                 {/* Column 2 */}
                 <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                     {PORTFOLIO_DATA.skills.slice(Math.ceil(PORTFOLIO_DATA.skills.length / 2)).map((skill, i) => (
-                        <div key={i} className={`relative group pl-8 pr-6 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                        <div key={i} className={`relative group pl-8 pr-6 py-3 rounded-r-lg transition-all duration-300 border-transparent
                             ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                             
                             {/* Bullet - CENTERED */}
@@ -1494,11 +1497,11 @@ export default function App() {
 
       {/* --- CERTIFICATIONS SECTION (CHANGED TO TIMELINE) --- */}
       <Section id="certifications">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-5">
             <h2 className="text-3xl font-serif font-bold">Certifications</h2>
             <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 {PORTFOLIO_DATA.certifications.map((cert, i) => (
-                    <div key={i} className={`relative group pl-8 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                    <div key={i} className={`relative group pl-8 py-3 rounded-r-lg transition-all duration-300 border-transparent
                         ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                         
                         {/* Bullet - CENTERED */}
