@@ -40,8 +40,10 @@ export const PORTFOLIO_DATA = {
   metrics: [
     { label: "Citations", value: "—" },
     { label: "h-index", value: "—" },
-    { label: "Projects", value: "3" },
-    { label: "Years Active", value: "5" }
+    // Hidden on the academic About strip until the numbers mean something.
+    // Uncomment to show again.
+    // { label: "Projects", value: "3" },
+    // { label: "Years Active", value: "5" }
   ],
 
   // --- EDITABLE: Education History ---

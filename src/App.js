@@ -1012,11 +1012,11 @@ export default function App() {
                  <div className="flex flex-col gap-3">
                    <div className="text-xs font-bold uppercase tracking-widest opacity-50">At a glance</div>
                    {[
-                     { tag: "Thesis · paper", status: "In preparation", line: "Shear-wave-velocity liquefaction assessment of the DMDP area", sub: "Deterministic Andrus–Stokoe and probabilistic Monte Carlo procedures. Intended for journal submission under supervisory guidance." },
+                     { tag: "Thesis · paper", status: "In preparation", key: "vs-dmdp", line: <>V<sub>s</sub>-based liquefaction assessment of the DMDP area</>, sub: "Deterministic Andrus–Stokoe and probabilistic Monte Carlo procedures. Intended for journal submission under supervisory guidance." },
                      { tag: "Journal manuscript", status: "Under review", line: "Vacuum-based soft-soil improvement, with emphasis on HVDM", sub: "PRISMA-guided systematic review." },
                      { tag: "Project · paper", status: "In preparation", line: "Life-cycle assessment of a wrapped-face wall and a conventional 1:1 slope rural road", sub: "Jamalpur–Gaibandha rural road. Comparative LCA/LCCA; manuscript planned from the same study." },
                    ].map((card) => (
-                     <div key={card.line} className={`p-4 rounded-lg border ${(isLight) ? 'border-stone-200 bg-white' : 'border-white/15 bg-white/5'}`}>
+                     <div key={card.key || card.tag} className={`p-4 rounded-lg border ${(isLight) ? 'border-stone-200 bg-white' : 'border-white/15 bg-white/5'}`}>
                        <div className="flex items-center justify-between gap-2 mb-2">
                          <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${(isLight) ? 'bg-stone-200 text-stone-800' : 'bg-white/15'}`}>{card.tag}</span>
                          <span className="text-[11px] opacity-60">{card.status}</span>
@@ -1121,7 +1121,8 @@ export default function App() {
                 </div>
             </div>
 
-            {/* Citation Graph - Kept as is */}
+            {/* Citation growth chart hidden: no real citations yet. Restore: set SHOW_CITATION_GRAPH true. */}
+            {false && (
             <div className="mb-8 h-64 w-full">
                 <h3 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-6">Citation Growth</h3>
                 <ResponsiveContainer width="100%" height="100%">
@@ -1146,6 +1147,7 @@ export default function App() {
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
+            )}
 
             {PORTFOLIO_DATA.under_review && PORTFOLIO_DATA.under_review.length > 0 && (
               <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
