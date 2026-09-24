@@ -1122,7 +1122,7 @@ export default function App() {
             </div>
 
             {/* Citation growth chart hidden: no real citations yet. Restore: set SHOW_CITATION_GRAPH true. */}
-            {false && (
+            {SHOW_CITATION_GRAPH && (
             <div className="mb-8 h-64 w-full">
                 <h3 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-6">Citation Growth</h3>
                 <ResponsiveContainer width="100%" height="100%">
