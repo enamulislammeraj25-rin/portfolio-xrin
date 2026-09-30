@@ -3,7 +3,7 @@ import {
   Sun, Moon, CloudLightning, Leaf, Gem, Flower2,
   Briefcase, GraduationCap, 
   Award, Mail, Download, Search, 
-  Menu, X, ChevronRight, FileText,
+  Menu, X, ChevronRight, ChevronLeft, FileText,
   // Globe, Users, // contact-card socials — uncomment with that block
   MapPin, Anchor, ArrowDown, ArrowUp,
   Twitter,
@@ -53,6 +53,21 @@ export default function App() {
 
   // --- PROJECT MODAL STATE ---
   const [selectedProject, setSelectedProject] = useState(null);
+  const [lightboxPhotos, setLightboxPhotos] = useState([]);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  const openLightbox = (photos, index) => {
+    if (!photos || !photos.length) return;
+    setLightboxPhotos(photos);
+    setLightboxIndex(index);
+  };
+  const closeLightbox = () => setLightboxIndex(null);
+  const lightboxPrev = () => {
+    setLightboxIndex((i) => (i === null || !lightboxPhotos.length ? i : (i - 1 + lightboxPhotos.length) % lightboxPhotos.length));
+  };
+  const lightboxNext = () => {
+    setLightboxIndex((i) => (i === null || !lightboxPhotos.length ? i : (i + 1) % lightboxPhotos.length));
+  };
   const [copiedCiteId, setCopiedCiteId] = useState(null);
   const [selectedInterest, setSelectedInterest] = useState(null);
   const [listFocusId, setListFocusId] = useState(null);
@@ -62,6 +77,23 @@ export default function App() {
   useEffect(() => {
     if (researchListRef.current) researchListRef.current.scrollTop = 0;
   }, [listFocusId]);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        lightboxPrev();
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        lightboxNext();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightboxIndex, lightboxPhotos]);
 
   const isLight = theme === 'light' || theme === 'spring' || theme === 'warm' || theme === 'atelier' || theme === 'folio';
 
@@ -525,43 +557,53 @@ export default function App() {
       {/* --- PROJECT MODAL --- */}
       {selectedProject && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedProject(null)}>
-            <div className={`w-full max-w-4xl h-[80vh] rounded-lg overflow-hidden shadow-2xl flex flex-col animate-in fade-in zoom-in-95
+            <div className={`w-full max-w-5xl max-h-[90vh] rounded-lg overflow-hidden shadow-2xl flex flex-col
                 ${(isLight) ? 'bg-white text-stone-900' : 'bg-neutral-900 text-white border border-white/10'}`}
                 onClick={e => e.stopPropagation()}
             >
-                {/* Header */}
-                <div className={`p-6 border-b flex justify-between items-center ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
+                <div className={`p-6 border-b flex justify-between items-center shrink-0 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
                     <div>
                         <h2 className="text-2xl font-bold font-serif">{selectedProject.title}</h2>
                         <p className="text-sm opacity-60 mt-1">
                           {[selectedProject.group, selectedProject.period].filter(Boolean).join(' · ') || 'Selected work'}
                         </p>
                     </div>
-                    <button onClick={() => setSelectedProject(null)} className="p-2 rounded-full hover:bg-black/10 transition-colors">
+                    <button type="button" onClick={() => setSelectedProject(null)} className="p-2 rounded-full hover:bg-black/10 transition-colors">
                         <X className="w-6 h-6" />
                     </button>
                 </div>
                 
-                {/* Content */}
-                <div className="flex-1 overflow-y-auto p-8">
-                    <p className="text-lg opacity-80 mb-8 leading-relaxed max-w-2xl">{selectedProject.description}</p>
-
-                    {selectedProject.photos && selectedProject.photos.length > 0 ? (
-                      <>
-                        <h3 className="text-sm font-bold uppercase opacity-60 mb-4 tracking-wider">Field photographs</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="flex-1 overflow-y-auto p-6 md:p-8">
+                    {selectedProject.photos && selectedProject.photos.length > 0 && (
+                      <div className="mb-8">
+                        <h3 className="text-sm font-bold uppercase opacity-60 mb-4 tracking-wider">Photographs</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           {selectedProject.photos.map((photo, i) => (
-                            <figure key={i} className={`rounded-lg overflow-hidden border ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
-                              <img src={photo.src} alt={photo.caption || selectedProject.title} className="w-full h-56 object-cover" />
+                            <button
+                              key={i}
+                              type="button"
+                              onClick={() => openLightbox(selectedProject.photos, i)}
+                              className={`text-left rounded-lg overflow-hidden border block ${(isLight) ? 'border-stone-200 hover:border-stone-400' : 'border-white/10 hover:border-white/30'}`}
+                            >
+                              <img
+                                src={photo.src}
+                                alt={photo.caption || selectedProject.title}
+                                className="w-full h-52 md:h-64 object-cover bg-neutral-200"
+                              />
                               {photo.caption && (
-                                <figcaption className="px-3 py-2 text-xs opacity-70 leading-relaxed">{photo.caption}</figcaption>
+                                <span className="block px-3 py-2 text-xs opacity-70 leading-relaxed text-justify">{photo.caption}</span>
                               )}
-                            </figure>
+                            </button>
                           ))}
                         </div>
-                      </>
-                    ) : selectedProject.files && selectedProject.files.length > 0 ? (
-                      <>
+                        <p className="mt-2 text-[11px] opacity-50">Click a photograph to open it full screen. Use ← → to move between photos.</p>
+                      </div>
+                    )}
+
+                    <p className="text-base md:text-lg opacity-80 leading-relaxed text-justify">{selectedProject.description}</p>
+
+                    {!(selectedProject.photos && selectedProject.photos.length) && selectedProject.files && selectedProject.files.length > 0 && (
+                      <div className="mt-8">
                         <h3 className="text-sm font-bold uppercase opacity-60 mb-4 tracking-wider">Project files</h3>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                           {selectedProject.files.map((file, i) => (
@@ -574,15 +616,12 @@ export default function App() {
                             </div>
                           ))}
                         </div>
-                      </>
-                    ) : (
-                      <p className="text-sm opacity-50">No public drawings or model files posted for this item.</p>
+                      </div>
                     )}
                 </div>
 
-                {/* Footer Actions */}
-                <div className={`p-6 border-t flex justify-end gap-4 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
-                    <button onClick={() => setSelectedProject(null)} className="px-6 py-2 rounded-lg font-medium hover:opacity-80">Close</button>
+                <div className={`p-4 border-t flex justify-end gap-4 shrink-0 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
+                    <button type="button" onClick={() => setSelectedProject(null)} className="px-6 py-2 rounded-lg font-medium hover:opacity-80">Close</button>
                     {selectedProject.link && selectedProject.link !== '#' && (
                       <a href={selectedProject.link} target="_blank" rel="noreferrer" className={`px-6 py-2 rounded-lg font-medium text-white shadow-lg
                           ${theme === 'light' ? 'bg-stone-800 hover:bg-stone-900' : 'bg-white/10 hover:bg-white/20 border border-white/20'}`}>
@@ -591,6 +630,66 @@ export default function App() {
                     )}
                 </div>
             </div>
+        </div>
+      )}
+
+      {lightboxIndex !== null && lightboxPhotos[lightboxIndex] && (
+        <div
+          className="fixed inset-0 z-[300] bg-black/90 flex items-center justify-center"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Photograph viewer"
+        >
+          <button
+            type="button"
+            onClick={closeLightbox}
+            className="absolute top-3 right-3 md:top-4 md:right-4 z-[310] p-2 rounded-full bg-white/10 hover:bg-white/20 text-white"
+            aria-label="Close photograph"
+          >
+            <X className="w-7 h-7" />
+          </button>
+
+          {lightboxPhotos.length > 1 && (
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); lightboxPrev(); }}
+              className="absolute left-2 md:left-6 z-[310] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white"
+              aria-label="Previous photograph"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+          )}
+
+          <figure
+            className="max-w-[92vw] max-h-[88vh] flex flex-col items-center px-14"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={lightboxPhotos[lightboxIndex].src}
+              alt={lightboxPhotos[lightboxIndex].caption || ''}
+              className="max-w-full max-h-[78vh] object-contain"
+            />
+            {lightboxPhotos[lightboxIndex].caption && (
+              <figcaption className="mt-3 text-sm text-white/80 text-center max-w-3xl text-justify">
+                {lightboxPhotos[lightboxIndex].caption}
+              </figcaption>
+            )}
+            <p className="mt-2 text-xs text-white/50">
+              {lightboxIndex + 1} / {lightboxPhotos.length}
+            </p>
+          </figure>
+
+          {lightboxPhotos.length > 1 && (
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); lightboxNext(); }}
+              className="absolute right-2 md:right-6 z-[310] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white"
+              aria-label="Next photograph"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+          )}
         </div>
       )}
 
@@ -1401,7 +1500,7 @@ export default function App() {
                                 </h3>
                                 {proj.period && <span className="text-sm opacity-50">{proj.period}</span>}
                             </div>
-                            <p className="opacity-70 mb-4 max-w-3xl">
+                            <p className="opacity-70 mb-4 max-w-3xl text-justify leading-relaxed">
                                 {proj.description}
                             </p>
                             {proj.photos && proj.photos.length > 0 && (
@@ -1410,10 +1509,10 @@ export default function App() {
                                   <button
                                     key={pi}
                                     type="button"
-                                    onClick={() => setSelectedProject(proj)}
-                                    className={`overflow-hidden rounded-md border h-20 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}
+                                    onClick={() => { setSelectedProject(proj); openLightbox(proj.photos, pi); }}
+                                    className={`overflow-hidden rounded-md border h-24 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}
                                   >
-                                    <img src={photo.src} alt="" className="w-full h-full object-cover" />
+                                    <img src={photo.src} alt={photo.caption || proj.title} className="w-full h-full object-cover" />
                                   </button>
                                 ))}
                               </div>
