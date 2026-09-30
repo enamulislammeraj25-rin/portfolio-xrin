@@ -278,6 +278,8 @@ export const PORTFOLIO_DATA = {
       stack: ["ATC-20", "Reconnaissance", "Earthquake engineering"],
       link: "",
       photos: [
+        { src: "/projects/eq_madhabdi/01_team_palash_residential_model_college.jpg", caption: "Reconnaissance team at Palash Residential Model College, Palash, Narsingdi." },
+        { src: "/projects/eq_madhabdi/03_team_collapsed_masonry.jpg", caption: "With the reconnaissance team at a collapsed masonry building." },
         { src: "/projects/eq_madhabdi/05_classroom_horizontal_crack_delamination.jpg", caption: "Classroom: horizontal crack and plaster delamination, Palash / Narsingdi area." },
         { src: "/projects/eq_madhabdi/04_interior_diagonal_wall_cracks.jpg", caption: "Interior wall: diagonal and stepped cracking." },
         { src: "/projects/eq_madhabdi/02_retaining_wall_hex_panels_vegetation.jpg", caption: "Hexagonal facing / abutment wall with staining and vegetation." }
@@ -292,8 +294,12 @@ export const PORTFOLIO_DATA = {
       stack: ["ERT", "Field survey", "Site characterization"],
       link: "",
       photos: [
-        { src: "/projects/ert_buet/04_electrode_line_close.jpg", caption: "Electrode line and take-out cables, BUET campus." },
-        { src: "/projects/ert_buet/07_console_p300tn_link_boxes.jpg", caption: "PASI acquisition console, link boxes, and power supply." }
+        { src: "/projects/ert_buet/02_operator_at_console.jpg", caption: "At the PASI acquisition console during the ERT survey, BUET campus." },
+        { src: "/projects/ert_buet/01_setup_pasi_cases_operator.jpg", caption: "Field setup: PASI cases, batteries, and cabling." },
+        { src: "/projects/ert_buet/05_electrode_line_wide.jpg", caption: "Electrode line on the BUET campus lawn." },
+        { src: "/projects/ert_buet/04_electrode_line_close.jpg", caption: "Electrode stakes and take-out cables." },
+        { src: "/projects/ert_buet/06_instrument_spread_overhead.jpg", caption: "Instrument spread: console, link boxes, and electrode cables." },
+        { src: "/projects/ert_buet/07_console_p300tn_link_boxes.jpg", caption: "PASI acquisition console and link boxes." }
       ]
     },
     {
