@@ -1473,70 +1473,46 @@ export default function App() {
       <Section id="projects">
         <div className="flex flex-col gap-5">
             <h2 className="text-3xl font-serif font-bold">Selected work</h2>
-            <p className="opacity-60 text-sm text-justify leading-relaxed">
-              Field observations and undergraduate design practice. The M.Sc. thesis and Vs-based liquefaction study are under Research, not here.
+            <p className="opacity-60 text-sm leading-relaxed">
+              Field observations and undergraduate design practice. Open an item for photographs and the full note. The M.Sc. thesis stays under Research.
             </p>
-            <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
+            <div className={`border-l-2 py-1 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 {PORTFOLIO_DATA.projects.map((proj, i) => (
                   <React.Fragment key={i}>
                     {(i === 0 || proj.group !== PORTFOLIO_DATA.projects[i - 1].group) && (
-                      <div className="pl-8 pt-6 pb-1">
+                      <div className="pl-8 pt-5 pb-1">
                         <p className="text-[11px] font-bold uppercase tracking-[0.18em] opacity-50">{proj.group}</p>
                       </div>
                     )}
-                    <div className={`relative group pl-8 py-8 rounded-r-lg transition-all duration-300 border-transparent
-                        ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
-                        
-                        <div className={`absolute -left-[9px] top-10 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
+                    <button
+                      type="button"
+                      onClick={() => setSelectedProject(proj)}
+                      className={`relative w-full text-left group pl-8 pr-4 py-4 rounded-r-lg transition-all duration-300 border-transparent
+                        ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}
+                    >
+                        <div className={`absolute -left-[9px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
                             ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
-                            <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
+                            <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
                         </div>
 
-                        <div>
-                            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-4">
-                                <Anchor className={`w-5 h-5 shrink-0 ${getAccentColor()}`} />
-                                <h3 className={`text-2xl font-bold transition-colors ${getHoverTextColor()}`}>
-                                    {proj.title}
-                                </h3>
-                                {proj.period && <span className="text-sm opacity-50">{proj.period}</span>}
-                            </div>
-                            <div className={proj.photos && proj.photos.length > 0 ? 'grid lg:grid-cols-2 gap-8 items-start' : ''}>
-                              <div>
-                                <p className="opacity-70 mb-4 text-justify leading-relaxed">
-                                    {proj.description}
-                                </p>
-                                <div className="flex gap-2 flex-wrap mb-4">
-                                    {proj.stack.map(tech => (
-                                        <span key={tech} className={`px-2 py-1 text-[10px] font-mono rounded opacity-70
-                                            ${(isLight) ? 'bg-stone-200' : 'bg-white/10'}`}>
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </div>
-                                <button 
-                                    onClick={(e) => { e.preventDefault(); setSelectedProject(proj); }}
-                                    className={`inline-flex items-center text-sm font-bold hover:underline ${getAccentColor()}`}
-                                >
-                                    View details <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                                </button>
-                              </div>
-                              {proj.photos && proj.photos.length > 0 && (
-                                <div className="grid grid-cols-3 gap-2">
-                                  {proj.photos.slice(0, 3).map((photo, pi) => (
-                                    <button
-                                      key={pi}
-                                      type="button"
-                                      onClick={() => { setSelectedProject(proj); openLightbox(proj.photos, pi); }}
-                                      className={`overflow-hidden rounded-md border h-28 lg:h-36 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}
-                                    >
-                                      <img src={photo.src} alt={photo.caption || proj.title} className="w-full h-full object-cover" />
-                                    </button>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
+                        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 min-w-0">
+                            <Anchor className={`w-4 h-4 shrink-0 ${getAccentColor()}`} />
+                            <h3 className={`text-xl font-bold transition-colors ${getHoverTextColor()}`}>
+                                {proj.title}
+                            </h3>
+                            {proj.period && <span className="text-sm opacity-50">{proj.period}</span>}
+                          </div>
+                          <span className={`inline-flex items-center text-sm font-bold shrink-0 ${getAccentColor()}`}>
+                            View details <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                          </span>
                         </div>
-                    </div>
+                        {(proj.summary || proj.description) && (
+                          <p className="opacity-60 mt-1.5 text-sm leading-relaxed max-w-4xl">
+                            {proj.summary || proj.description}
+                          </p>
+                        )}
+                    </button>
                   </React.Fragment>
                 ))}
             </div>
