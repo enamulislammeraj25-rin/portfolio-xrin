@@ -1473,7 +1473,7 @@ export default function App() {
       <Section id="projects">
         <div className="flex flex-col gap-5">
             <h2 className="text-3xl font-serif font-bold">Selected work</h2>
-            <p className="opacity-60 max-w-3xl text-sm">
+            <p className="opacity-60 text-sm text-justify leading-relaxed">
               Field observations and undergraduate design practice. The M.Sc. thesis and Vs-based liquefaction study are under Research, not here.
             </p>
             <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
@@ -1493,44 +1493,48 @@ export default function App() {
                         </div>
 
                         <div>
-                            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-3">
+                            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-4">
                                 <Anchor className={`w-5 h-5 shrink-0 ${getAccentColor()}`} />
                                 <h3 className={`text-2xl font-bold transition-colors ${getHoverTextColor()}`}>
                                     {proj.title}
                                 </h3>
                                 {proj.period && <span className="text-sm opacity-50">{proj.period}</span>}
                             </div>
-                            <p className="opacity-70 mb-4 max-w-3xl text-justify leading-relaxed">
-                                {proj.description}
-                            </p>
-                            {proj.photos && proj.photos.length > 0 && (
-                              <div className="grid grid-cols-3 gap-2 max-w-xl mb-4">
-                                {proj.photos.slice(0, 3).map((photo, pi) => (
-                                  <button
-                                    key={pi}
-                                    type="button"
-                                    onClick={() => { setSelectedProject(proj); openLightbox(proj.photos, pi); }}
-                                    className={`overflow-hidden rounded-md border h-24 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}
-                                  >
-                                    <img src={photo.src} alt={photo.caption || proj.title} className="w-full h-full object-cover" />
-                                  </button>
-                                ))}
+                            <div className={proj.photos && proj.photos.length > 0 ? 'grid lg:grid-cols-2 gap-8 items-start' : ''}>
+                              <div>
+                                <p className="opacity-70 mb-4 text-justify leading-relaxed">
+                                    {proj.description}
+                                </p>
+                                <div className="flex gap-2 flex-wrap mb-4">
+                                    {proj.stack.map(tech => (
+                                        <span key={tech} className={`px-2 py-1 text-[10px] font-mono rounded opacity-70
+                                            ${(isLight) ? 'bg-stone-200' : 'bg-white/10'}`}>
+                                            {tech}
+                                        </span>
+                                    ))}
+                                </div>
+                                <button 
+                                    onClick={(e) => { e.preventDefault(); setSelectedProject(proj); }}
+                                    className={`inline-flex items-center text-sm font-bold hover:underline ${getAccentColor()}`}
+                                >
+                                    View details <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                                </button>
                               </div>
-                            )}
-                            <div className="flex gap-2 flex-wrap mb-4">
-                                {proj.stack.map(tech => (
-                                    <span key={tech} className={`px-2 py-1 text-[10px] font-mono rounded opacity-70
-                                        ${(isLight) ? 'bg-stone-200' : 'bg-white/10'}`}>
-                                        {tech}
-                                    </span>
-                                ))}
+                              {proj.photos && proj.photos.length > 0 && (
+                                <div className="grid grid-cols-3 gap-2">
+                                  {proj.photos.slice(0, 3).map((photo, pi) => (
+                                    <button
+                                      key={pi}
+                                      type="button"
+                                      onClick={() => { setSelectedProject(proj); openLightbox(proj.photos, pi); }}
+                                      className={`overflow-hidden rounded-md border h-28 lg:h-36 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}
+                                    >
+                                      <img src={photo.src} alt={photo.caption || proj.title} className="w-full h-full object-cover" />
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
                             </div>
-                            <button 
-                                onClick={(e) => { e.preventDefault(); setSelectedProject(proj); }}
-                                className={`inline-flex items-center text-sm font-bold hover:underline ${getAccentColor()}`}
-                            >
-                                View details <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                            </button>
                         </div>
                     </div>
                   </React.Fragment>
