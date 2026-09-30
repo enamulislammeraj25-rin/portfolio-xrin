@@ -298,7 +298,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       title: "15-storied residential building design",
-      group: "Undergraduate practice",
+      group: "Undergraduate projects",
       period: "B.Sc., RUET",
       summary: "ETABS and SAFE design studio for a 15-storied residential building.",
       description: "Undergraduate structural design studio at RUET: complete analysis and design of a 15-storied residential building for code-compliant gravity and lateral loads using CSI ETABS and CSI SAFE. Coursework / design practice, not a research project.",
@@ -308,7 +308,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       title: "Water-supply system investigation, Rajshahi City Corporation",
-      group: "Undergraduate practice",
+      group: "Undergraduate projects",
       period: "B.Sc., RUET",
       summary: "Investigation of RCC water-supply plants and network utilization.",
       description: "Undergraduate investigation of the existing water-supply system of Rajshahi City Corporation (RCC): plant utilization, network efficiency, and proposed use of existing production facilities. Coursework / practice investigation, not a research project.",

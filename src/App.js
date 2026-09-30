@@ -1480,14 +1480,14 @@ export default function App() {
                 {PORTFOLIO_DATA.projects.map((proj, i) => (
                   <React.Fragment key={i}>
                     {(i === 0 || proj.group !== PORTFOLIO_DATA.projects[i - 1].group) && (
-                      <div className="pl-8 pt-5 pb-1">
-                        <p className="text-[11px] font-bold uppercase tracking-[0.18em] opacity-50">{proj.group}</p>
+                      <div className={`pl-8 ${i === 0 ? 'pt-4' : 'pt-8'} pb-1`}>
+                        <p className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${isLight ? "text-teal-800" : getAccentColor()} opacity-80`}>{proj.group}</p>
                       </div>
                     )}
                     <button
                       type="button"
                       onClick={() => setSelectedProject(proj)}
-                      className={`relative w-full text-left group pl-8 pr-4 py-4 rounded-r-lg transition-all duration-300 border-transparent
+                      className={`relative w-full text-left group pl-8 pr-4 py-6 rounded-r-lg transition-all duration-300 border-transparent
                         ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}
                     >
                         <div className={`absolute -left-[9px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
