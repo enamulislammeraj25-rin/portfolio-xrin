@@ -9,7 +9,7 @@ import {
   Twitter,
   // Send, // Telegram hero icon — uncomment with the Telegram row
   // Facebook, Instagram, MessageCircle, // uncomment with the hero personal-social rows
-  FileImage, FileCode, FolderOpen,
+  FileImage, FileCode,
   CheckCircle2, Linkedin, ExternalLink,
   Camera, Video, Settings, Eye, EyeOff,
   BookOpen, Fingerprint, Compass
