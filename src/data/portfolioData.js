@@ -266,35 +266,51 @@ export const PORTFOLIO_DATA = {
     }
   ],
 
-  // --- EDITABLE: Projects & Tools ---
+  // --- EDITABLE: Selected work (field + undergraduate practice) ---
+  // Thesis / Vs–LPI work stays in Research, not here.
   projects: [
     {
-      title: "Water Supply System Investigation (RCC)",
-      description: "Carried out an investigation on the existing water supply system of Rajshahi City Corporation (RCC), analysing efficiency and proposing utilization strategies for existing water plants.",
-      stack: ["Efficiency Analysis", "Urban Planning", "Water Supply"],
-      link: "#",
-      stars: "N/A",
-      files: []
-    },
-    {
-      title: "15 Storied Building Design",
-      description: "Complete structural design and analysis of a 15-storied residential building ensuring safety and code compliance using CSI ETABS & CSI SAFE.",
-      stack: ["CSI ETABS", "CSI SAFE", "Structural Design"],
-      link: "#",
-      stars: "Design",
-      files: [
-        { name: "Building_Layout.pdf", type: "pdf" },
-        { name: "Structural_Analysis.xlsx", type: "code" },
-        { name: "Render_Front.jpg", type: "image" }
+      title: "Post-earthquake reconnaissance, Madhabdi earthquake",
+      group: "Field work",
+      period: "November–December 2025",
+      description: "Rapid visual screening after the 21 November 2025 Madhabdi earthquake in Narsingdi and Narayanganj (Ghorashal, Palash, Madhabdi, Narsingdi, Rupganj). ATC-20-style damage observations with the BUET team supervised by Prof. Dr. Mehedi Ahmed Ansary: damage classification, safety placards, and a georeferenced record of building performance. Photographs below are field observations (classroom plaster delamination, interior wall cracking, and earth-retaining / abutment facing). This is reconnaissance, not the M.Sc. thesis.",
+      stack: ["ATC-20", "Reconnaissance", "Earthquake engineering"],
+      link: "",
+      photos: [
+        { src: "/projects/eq_madhabdi/05_classroom_horizontal_crack_delamination.jpg", caption: "Classroom: horizontal crack and plaster delamination, Palash / Narsingdi area." },
+        { src: "/projects/eq_madhabdi/04_interior_diagonal_wall_cracks.jpg", caption: "Interior wall: diagonal and stepped cracking." },
+        { src: "/projects/eq_madhabdi/02_retaining_wall_hex_panels_vegetation.jpg", caption: "Hexagonal facing / abutment wall with staining and vegetation." }
       ]
     },
     {
-      title: "Group Pile Response Analysis (Ongoing)",
-      description: "Conducting Finite Element Analysis (FEA) to assess settlement patterns and reinforcement efficacy in uniform/non-uniform pile group layouts.",
-      stack: ["FEA", "PLAXIS 2D/3D", "Research"],
-      link: "#",
-      stars: "Research",
-      files: []
+      title: "ERT field survey, BUET campus",
+      group: "Field work",
+      period: "BUET campus",
+      description: "Assisted an electrical resistivity tomography (ERT) field survey on the BUET campus using a PASI resistivity / tomography system. Work on the day: electrode layout, cabling, and data collection. Did not invert or interpret the sections. ERT is not listed as a technical skill.",
+      stack: ["ERT", "Field survey", "Site characterization"],
+      link: "",
+      photos: [
+        { src: "/projects/ert_buet/04_electrode_line_close.jpg", caption: "Electrode line and take-out cables, BUET campus." },
+        { src: "/projects/ert_buet/07_console_p300tn_link_boxes.jpg", caption: "PASI acquisition console, link boxes, and power supply." }
+      ]
+    },
+    {
+      title: "15-storied residential building design",
+      group: "Undergraduate practice",
+      period: "B.Sc., RUET",
+      description: "Undergraduate structural design studio at RUET: complete analysis and design of a 15-storied residential building for code-compliant gravity and lateral loads using CSI ETABS and CSI SAFE. Coursework / design practice, not a research project.",
+      stack: ["CSI ETABS", "CSI SAFE", "Structural design"],
+      link: "",
+      photos: []
+    },
+    {
+      title: "Water-supply system investigation, Rajshahi City Corporation",
+      group: "Undergraduate practice",
+      period: "B.Sc., RUET",
+      description: "Undergraduate investigation of the existing water-supply system of Rajshahi City Corporation (RCC): plant utilization, network efficiency, and proposed use of existing production facilities. Coursework / practice investigation, not a research project.",
+      stack: ["Water supply", "Urban infrastructure", "Field investigation"],
+      link: "",
+      photos: []
     }
   ],
 
