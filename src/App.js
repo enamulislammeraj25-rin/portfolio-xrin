@@ -1491,7 +1491,7 @@ export default function App() {
         <div className="flex flex-col gap-5">
             <h2 className="text-3xl font-serif font-bold">Selected work</h2>
             <p className="opacity-60 text-sm leading-relaxed">
-              Field observations and undergraduate design practice. Open an item for photographs and the full note. The M.Sc. thesis stays under Research.
+              Numerical modelling, field observations, and selected undergraduate design practice. Open an item for supporting outputs, photographs, and the full note. The M.Sc. thesis stays under Research.
             </p>
             <div className={`border-l-2 py-1 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
                 {PORTFOLIO_DATA.projects.map((proj, i) => (
