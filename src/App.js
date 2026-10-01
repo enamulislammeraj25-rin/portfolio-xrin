@@ -1132,7 +1132,7 @@ export default function App() {
                    <div className="text-xs font-bold uppercase tracking-widest opacity-50">At a glance</div>
                    {[
                      { tag: "Thesis · paper", status: "In preparation", key: "vs-dmdp", line: <>V<sub>s</sub>-based liquefaction assessment of the DMDP area</>, sub: "Deterministic Andrus–Stokoe and probabilistic Monte Carlo procedures. Intended for journal submission under supervisory guidance." },
-                     { tag: "Journal manuscript", status: "Under review", line: "Vacuum-based soft-soil improvement, with emphasis on HVDM", sub: "PRISMA-guided systematic review." },
+                     { tag: "Journal manuscript", status: "Under review", line: "Vacuum-based soft-soil improvement, with emphasis on HVDM", sub: "Mottaqi, Meraj & Ansary. Geotechnical and Geological Engineering (Springer Nature). Submitted 25 July 2026; under peer review." },
                      { tag: "Project · paper", status: "In preparation", line: "Life-cycle assessment of a wrapped-face wall and a conventional 1:1 slope rural road", sub: "Jamalpur–Gaibandha rural road. Comparative LCA/LCCA; manuscript planned from the same study." },
                    ].map((card) => (
                      <div key={card.key || card.tag} className={`p-4 rounded-lg border ${(isLight) ? 'border-stone-200 bg-white' : 'border-white/15 bg-white/5'}`}>
@@ -1278,10 +1278,18 @@ export default function App() {
                           ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
                           <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
                       </div>
-                      <div className="text-sm opacity-60 mb-2">{wp.year}</div>
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        {wp.status && (
+                          <span className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded
+                            ${(isLight) ? 'bg-teal-50 text-teal-800' : 'bg-white/15 text-white'}`}>{wp.status}</span>
+                        )}
+                        <span className="text-sm opacity-60">{wp.year}</span>
+                      </div>
                       <h3 className={`text-base md:text-lg font-bold mb-1 transition-colors ${getHoverTextColor()}`}>{wp.title}</h3>
-                      <p className="opacity-70 mb-2 italic">{wp.venue}</p>
-                      {wp.note && <p className="text-sm opacity-60">{wp.note}</p>}
+                      {wp.authors && <p className="opacity-70 mb-1 italic">{wp.authors}</p>}
+                      <p className="opacity-70 mb-1">{wp.venue}</p>
+                      {wp.submitted && <p className="text-sm opacity-60">Submitted {wp.submitted}</p>}
+                      {wp.note && !wp.submitted && <p className="text-sm opacity-60">{wp.note}</p>}
                   </div>
                 ))}
               </div>
