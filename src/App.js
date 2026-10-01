@@ -6,7 +6,7 @@ import {
   Menu, X, ChevronRight, ChevronLeft, FileText,
   // Globe, Users, // contact-card socials — uncomment with that block
   MapPin, Anchor, ArrowDown, ArrowUp,
-  Twitter,
+  // Twitter, // OMITTED with hero X icon; still referenced in commented contact-card block
   // Send, // Telegram hero icon — uncomment with the Telegram row
   // Facebook, Instagram, MessageCircle, // uncomment with the hero personal-social rows
   FileImage, FileCode,
