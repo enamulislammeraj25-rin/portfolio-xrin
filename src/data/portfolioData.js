@@ -12,10 +12,10 @@ export const PORTFOLIO_DATA = {
   // --- EDITABLE: Personal Profile Info ---
   profile: {
     name: "Md Enamul Islam Bhuiyan Meraj",
-    title: "Post Graduate Student of Civil & Geotechnical Engineering",
+    title: "M.Sc. researcher, Civil & Geotechnical Engineering",
     institution: "Bangladesh University of Engineering & Technology (BUET)",
     tagline: "Civil Engineer | Graduate Civil & Geotechnical Engineering Researcher",
-    bio: "I am a Civil Engineer and M.Sc. researcher in Civil and Geotechnical Engineering at the Bangladesh University of Engineering and Technology (BUET), with a B.Sc. in Civil Engineering from RUET. My current research focuses on geotechnical earthquake engineering, particularly soil liquefaction and seismic site characterization.\n\nBeyond my current work, I am interested in expanding my research toward computational geomechanics, soil–structure interaction, foundation and offshore geotechnics, ground improvement, geohazards, and resilient and sustainable infrastructure. I am particularly interested in research that combines numerical modelling, field-based investigation, and engineering analysis to address complex infrastructure challenges.\n\nAlongside research, I have a strong interest in teaching and academic mentorship. My long-term goal is to pursue doctoral research and build an academic career that integrates research, teaching, and practical engineering problem-solving.",
+    bio: "I am a Civil Engineer and M.Sc. researcher in Civil and Geotechnical Engineering at BUET (B.Sc., RUET). My research centres on geotechnical earthquake engineering: shear-wave-velocity-based liquefaction assessment, regional hazard mapping, and probabilistic treatment of parameter uncertainty.\n\nI also work on ground improvement of soft soils (including vacuum consolidation and HVDM) and embankment and slope stability. I aim to combine field and measured-data analysis with numerical modelling in doctoral research.",
     email: "enamulislammeraj.25@gmail.com",
     location: "Dhaka, Bangladesh",
     cvLink: "/Enamul_Islam_Meraj_WebsiteCV.pdf",
@@ -38,10 +38,9 @@ export const PORTFOLIO_DATA = {
   
   // --- EDITABLE: Key Performance Metrics ---
   metrics: [
-    { label: "Citations", value: "—" },
-    { label: "h-index", value: "—" },
-    // Hidden on the academic About strip until the numbers mean something.
-    // Uncomment to show again.
+    // OMITTED on academic site until citation counts exist (restore when non-zero).
+    // { label: "Citations", value: "—" },
+    // { label: "h-index", value: "—" },
     // { label: "Projects", value: "3" },
     // { label: "Years Active", value: "5" }
   ],
@@ -49,12 +48,12 @@ export const PORTFOLIO_DATA = {
   // --- EDITABLE: Education History ---
   education: [
     {
-      degree: "M. Sc. in Civil & Geotechnical Engineering",
+      degree: "M.Sc. Engg. (Civil & Geotechnical)",
       institution: "Bangladesh University of Engineering & Technology (BUET)",
-      year: "May, 2025 - Present",
+      year: "May 2025 – Jan 2027 (expected)",
       advisor: "Prof. Dr. Mehedi Ahmed Ansary",
-      thesis: "Thesis: Shear Wave Velocity-Based Deterministic and Probabilistic Liquefaction Assessment of DMDP Area in Bangladesh.",
-      achievement: "Post Graduate Fellowship (December, 2025–present)"
+      thesis: "Thesis: Assessing Regional Liquefaction Susceptibility Using Shear Wave Velocity Profiling and the Liquefaction Potential Index.",
+      achievement: "Postgraduate Fellowship (December 2025–present)"
     },
     {
       degree: "B.Sc. in Civil Engineering",
@@ -92,51 +91,29 @@ export const PORTFOLIO_DATA = {
 
   // --- EDITABLE: Certifications ---
   certifications: [
-    {
-      title: "Microsoft 365 Fundamentals",
-      issuer: "Microsoft",
-      date: "April, 2025",
-      link: "https://www.microsoft.com"
-    },
-    {
-      title: "Construction Management",
-      issuer: "Columbia University (Coursera)",
-      date: "April 2025",
-      link: "https://www.coursera.org"
-    },
-    {
-      title: "Concrete Multi Storey Building - System Design",
-      issuer: "L&T EduTech",
-      date: "March, 2025",
-      link: "https://lntedutech.com"
-    },
-    /*
-     * HIDDEN from the Certifications block for the academic site.
-     * Yale "Financial Markets" (Coursera) does not support the geotech/PhD story.
-     * Microsoft 365, Construction Management, and L&T remain visible.
-     * To show this card again, uncomment the object below.
-     *
-    {
-      title: "Financial Markets",
-      issuer: "Yale University (Coursera)",
-      date: "February, 2025",
-      link: "https://www.coursera.org"
-    }
-    */
-    
+    // OMITTED for PhD academic site (padding for research audience). Uncomment to restore.
+    // { title: "Microsoft 365 Fundamentals", issuer: "Microsoft", date: "April, 2025", link: "https://www.microsoft.com" },
+    // { title: "Construction Management", issuer: "Columbia University (Coursera)", date: "April 2025", link: "https://www.coursera.org" },
+    // { title: "Concrete Multi Storey Building - System Design", issuer: "L&T EduTech", date: "March, 2025", link: "https://lntedutech.com" },
+    // { title: "Financial Markets", issuer: "Yale University (Coursera)", date: "February, 2025", link: "https://www.coursera.org" },
   ],
 
   // --- EDITABLE: Skills & Expertise ---
   skills: [
-    { name: "AutoCAD", level: 45 },
-    { name: "PLAXIS 2D/3D", level: 40 },
+    // Plain names for academic site (percentage bars omitted in App.js; level kept for restore).
+    { name: "PLAXIS 2D and PLAXIS 3D", level: 40 },
+    { name: "GeoStudio (seepage analysis)", level: 30 },
     { name: "ArcGIS Pro", level: 30 },
-    { name: "Microsoft Office Suite", level: 75 },
-    { name: "Python", level: 25 },
-    { name: "CSI ETABS & SAFE", level: 40 },
-    { name: "GeoStudio (GeoSlope)", level: 30 },
-    { name: "C/C++", level: 25 },
-    { name: "SketchUP", level: 30 }
+    { name: "AutoCAD", level: 45 },
+    { name: "ATC-20 rapid evaluation", level: 50 },
+    { name: "ERT — electrode layout & data acquisition (assisted)", level: 25 },
+    { name: "Direct shear testing", level: 40 },
+    { name: "Python (basic, in active development)", level: 25 },
+    // OMITTED from academic list (restore if needed):
+    // { name: "Microsoft Office Suite", level: 75 },
+    // { name: "CSI ETABS & SAFE", level: 40 },
+    // { name: "C/C++", level: 25 },
+    // { name: "SketchUP", level: 30 },
   ],
   
   // --- EDITABLE: Standardized Tests ---
@@ -162,33 +139,32 @@ export const PORTFOLIO_DATA = {
       description: "Rapid visual reconnaissance in Narsingdi and Narayanganj after the 21 November 2025 Madhabdi earthquake."
     },
     {
-      role: "Tutor",
-      institution: "Caretutors",
+      role: "Private Tutor — Mathematics, Physics, Chemistry, Information Technology",
+      institution: "Caretutors and independent engagements",
       department: "Education",
-      period: "May 2024 – Present",
-      description: "Structured tutoring for Classes VI–XII in mathematics, physics, chemistry, and ICT."
-    },
-    {
-      role: "Private Tutor",
-      institution: "Independent",
-      department: "Education",
-      period: "2019 – Present",
-      description: "One-to-one coaching for Classes VI–XII in mathematics, physics, chemistry, and ICT; more than 20 students."
+      period: "2019 – present",
+      description: "Individual and small-group instruction for more than twenty secondary and higher-secondary students; syllabus content, problem-solving, and examination preparation."
     }
+    // OMITTED duplicate tutoring entries (merged above). Uncomment to restore separate rows.
+    // { role: "Tutor", institution: "Caretutors", department: "Education", period: "May 2024 – Present", description: "Structured tutoring for Classes VI–XII in mathematics, physics, chemistry, and ICT." },
+    // { role: "Private Tutor", institution: "Independent", department: "Education", period: "2019 – Present", description: "One-to-one coaching for Classes VI–XII; more than 20 students." },
   ],
 
   // --- EDITABLE: Research Topic Keywords ---
   research_interests: [
     { id: "eq", topic: "Geotechnical earthquake engineering", short: "Geotechnical earthquake engineering", size: 22, note: "Seismic soil response, ground failure, and earthquake-resistant geo-design." },
     { id: "liq", topic: "Soil liquefaction", short: "Soil liquefaction", size: 20, note: "M.Sc. work: Vs-based deterministic and probabilistic liquefaction assessment." },
-    { id: "site", topic: "Seismic site characterization", short: "Seismic site characterization", size: 18, note: "Shear-wave velocity profiling and site response." },
-    { id: "found", topic: "Foundation engineering", short: "Foundation engineering", size: 19, note: "Shallow and deep foundations under static and seismic load." },
-    { id: "ssi", topic: "Soil–structure interaction", short: "Soil–structure interaction", size: 18, note: "Coupled foundation–structure response under cyclic loading." },
-    { id: "gi", topic: "Ground improvement", short: "Ground improvement", size: 17, note: "Vacuum consolidation and HVDM; manuscript under review." },
-    { id: "comp", topic: "Computational geomechanics", short: "Computational geomechanics", size: 16, note: "Finite-element and constitutive modelling of soils." },
-    { id: "off", topic: "Offshore geotechnics", short: "Offshore geotechnics", size: 18, note: "Marine foundations for energy and coastal structures." },
-    { id: "slope", topic: "Slope stability", short: "Slope stability", size: 15, note: "Static and seismic stability of slopes and earthworks." },
-    { id: "deep", topic: "Deep foundations", short: "Deep foundations", size: 17, note: "Piles and pile groups under axial and lateral load." }
+    { id: "site", topic: "Shear-wave-velocity site characterization", short: "Vs site characterization", size: 18, note: "Measured Vs profiling and site response for liquefaction screening." },
+    { id: "haz", topic: "Regional hazard mapping", short: "Regional hazard mapping", size: 17, note: "Spatial interpolation of Vs and liquefaction indices in ArcGIS Pro." },
+    { id: "prob", topic: "Probabilistic methods", short: "Probabilistic methods", size: 16, note: "Monte Carlo propagation of Vs and CSR uncertainty." },
+    { id: "gi", topic: "Ground improvement", short: "Ground improvement", size: 17, note: "Vacuum consolidation and HVDM; manuscript under peer review." },
+    { id: "slope", topic: "Embankment and slope stability", short: "Embankment and slope stability", size: 15, note: "Static and seismic stability of slopes and earthworks." },
+    // OMITTED unworked future directions (restore if needed):
+    // { id: "found", topic: "Foundation engineering", short: "Foundation engineering", size: 19, note: "Shallow and deep foundations under static and seismic load." },
+    // { id: "ssi", topic: "Soil–structure interaction", short: "Soil–structure interaction", size: 18, note: "Coupled foundation–structure response under cyclic loading." },
+    // { id: "comp", topic: "Computational geomechanics", short: "Computational geomechanics", size: 16, note: "Finite-element and constitutive modelling of soils." },
+    // { id: "off", topic: "Offshore geotechnics", short: "Offshore geotechnics", size: 18, note: "Marine foundations for energy and coastal structures." },
+    // { id: "deep", topic: "Deep foundations", short: "Deep foundations", size: 17, note: "Piles and pile groups under axial and lateral load." },
   ],
 
   research_links: [
@@ -254,10 +230,10 @@ export const PORTFOLIO_DATA = {
   current_research: [
     {
       id: "wp-liq",
-      title: "Shear Wave Velocity-Based Deterministic and Probabilistic Liquefaction Assessment of DMDP Area in Bangladesh",
+      title: "Assessing Regional Liquefaction Susceptibility Using Shear Wave Velocity Profiling and the Liquefaction Potential Index",
       venue: "M.Sc. thesis, BUET",
       year: "2025–",
-      note: "Supervisor: Prof. Dr. Mehedi Ahmed Ansary."
+      note: "Supervisor: Prof. Dr. Mehedi Ahmed Ansary. Defence expected January 2027."
     },
     {
       id: "wp-lca",
@@ -289,7 +265,7 @@ export const PORTFOLIO_DATA = {
       group: "Field work",
       period: "November–December 2025",
       summary: "ATC-20 rapid screening after the 21 November 2025 Madhabdi earthquake, Narsingdi and Narayanganj.",
-      description: "Rapid visual screening after the 21 November 2025 Madhabdi earthquake in Narsingdi and Narayanganj (Ghorashal, Palash, Madhabdi, Narsingdi, Rupganj). ATC-20-style damage observations with the BUET team supervised by Prof. Dr. Mehedi Ahmed Ansary: damage classification, safety placards, and a georeferenced record of building performance. Photographs are field observations (classroom plaster delamination, interior wall cracking, and earth-retaining / abutment facing). This is reconnaissance, not the M.Sc. thesis.",
+      description: "Rapid visual screening after the 21 November 2025 Madhabdi earthquake across Ghorashal, Palash, Madhabdi, Narsingdi and Rupganj, as part of the BUET team supervised by Prof. Dr. Mehedi Ahmed Ansary. ATC-20 damage classification, safety postings, and a georeferenced record of building performance.",
       stack: ["ATC-20", "Reconnaissance", "Earthquake engineering"],
       link: "",
       photos: [
@@ -297,15 +273,16 @@ export const PORTFOLIO_DATA = {
         { src: "/projects/eq_madhabdi/03_team_collapsed_masonry.jpg", caption: "With the reconnaissance team at a collapsed masonry building." },
         { src: "/projects/eq_madhabdi/05_classroom_horizontal_crack_delamination.jpg", caption: "Classroom: horizontal crack and plaster delamination, Palash / Narsingdi area." },
         { src: "/projects/eq_madhabdi/04_interior_diagonal_wall_cracks.jpg", caption: "Interior wall: diagonal and stepped cracking." },
-        { src: "/projects/eq_madhabdi/02_retaining_wall_hex_panels_vegetation.jpg", caption: "Hexagonal facing / abutment wall with staining and vegetation." }
+        // OMITTED: abutment/vegetation photo (long-term wear, not clear EQ damage). File remains in public/projects/eq_madhabdi/.
+        // { src: "/projects/eq_madhabdi/02_retaining_wall_hex_panels_vegetation.jpg", caption: "Hexagonal facing / abutment wall with staining and vegetation." }
       ]
     },
     {
       title: "ERT field survey, BUET campus",
       group: "Field work",
       period: "BUET campus",
-      summary: "Assisted electrode layout and data collection on a PASI ERT survey. Did not invert the sections.",
-      description: "Assisted an electrical resistivity tomography (ERT) field survey on the BUET campus using a PASI resistivity / tomography system. Work on the day: electrode layout, cabling, and data collection. Did not invert or interpret the sections. ERT is not listed as a technical skill.",
+      summary: "Assisted electrode layout, cabling, and data acquisition on a PASI ERT survey, BUET campus.",
+      description: "Assisted an electrical resistivity tomography (ERT) field survey on the BUET campus using a PASI resistivity/tomography system: electrode layout, cabling, and data acquisition.",
       stack: ["ERT", "Field survey", "Site characterization"],
       link: "",
       photos: [
@@ -327,16 +304,18 @@ export const PORTFOLIO_DATA = {
       link: "",
       photos: []
     },
+    /* OMITTED undergraduate water-supply investigation (not geotech/research). Uncomment to restore.
     {
       title: "Water-supply system investigation, Rajshahi City Corporation",
       group: "Undergraduate projects",
       period: "B.Sc., RUET",
       summary: "Investigation of RCC water-supply plants and network utilization.",
-      description: "Undergraduate investigation of the existing water-supply system of Rajshahi City Corporation (RCC): plant utilization, network efficiency, and proposed use of existing production facilities. Coursework / practice investigation, not a research project.",
+      description: "Undergraduate investigation of the existing water-supply system of Rajshahi City Corporation (RCC).",
       stack: ["Water supply", "Urban infrastructure", "Field investigation"],
       link: "",
       photos: []
     }
+    */
   ],
 
   // --- EDITABLE: Hobbies (Photos & Videos) ---

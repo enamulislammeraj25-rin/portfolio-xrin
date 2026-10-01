@@ -178,7 +178,8 @@ export default function App() {
     { name: "Career", id: "career" },
     { name: "Projects", id: "projects" },
     { name: "Skills", id: "skills" },
-    { name: "Certifications", id: "certifications" },
+    // OMITTED Certifications from nav for academic PhD site. Uncomment to restore.
+    // { name: "Certifications", id: "certifications" },
     // Hobbies removed from the top bar and hamburger for the academic site.
     // The section is already off the page (showHobbies = false).
     // Menu -> Hobbies used to open the modal via scrollToSection('hobbies').
@@ -1131,7 +1132,7 @@ export default function App() {
                  <div className="flex flex-col gap-3">
                    <div className="text-xs font-bold uppercase tracking-widest opacity-50">At a glance</div>
                    {[
-                     { tag: "Thesis · paper", status: "In preparation", key: "vs-dmdp", line: <>V<sub>s</sub>-based liquefaction assessment of the DMDP area</>, sub: "Deterministic Andrus–Stokoe and probabilistic Monte Carlo procedures. Intended for journal submission under supervisory guidance." },
+                     { tag: "Thesis · paper", status: "In preparation", key: "vs-dmdp", line: <>Regional liquefaction susceptibility using V<sub>s</sub> profiling and LPI</>, sub: "Registered M.Sc. thesis title. Deterministic Andrus–Stokoe and probabilistic Monte Carlo procedures under Prof. Dr. Mehedi Ahmed Ansary." },
                      { tag: "Journal manuscript", status: "Under review", line: "Vacuum-based soft-soil improvement, with emphasis on HVDM", sub: "Mottaqi, Meraj & Ansary. Geotechnical and Geological Engineering (Springer Nature). Submitted 25 July 2026; under peer review." },
                      { tag: "Project · paper", status: "In preparation", line: "Life-cycle assessment of a wrapped-face wall and a conventional 1:1 slope rural road", sub: "Jamalpur–Gaibandha rural road. Comparative LCA/LCCA; manuscript planned from the same study." },
                    ].map((card) => (
@@ -1325,8 +1326,12 @@ export default function App() {
                                 </p>
                                 <div className="flex items-center gap-4 text-sm opacity-60">
                                     <span className="font-semibold">{pub.journal}</span>
-                                    <span>•</span>
-                                    <span>{pub.citations} Citations</span>
+                                    {pub.citations && pub.citations !== "—" && (
+                                      <>
+                                        <span>•</span>
+                                        <span>{pub.citations} Citations</span>
+                                      </>
+                                    )}
                                 </div>
                             </div>
                             <div className="flex gap-2 self-start md:self-center">
@@ -1402,7 +1407,7 @@ export default function App() {
                                 )}
                                 {edu.advisor && (
                                      <p className="text-sm opacity-70">
-                                        <span className="font-semibold">Advisor/Board:</span> {edu.advisor}
+                                        <span className="font-semibold">Supervisor:</span> {edu.advisor}
                                     </p>
                                 )}
                                 {edu.thesis && (
@@ -1531,7 +1536,7 @@ export default function App() {
       <Section id="skills">
         <div className="flex flex-col gap-5">
             <h2 className="text-3xl font-serif font-bold">Technical Expertise</h2>
-            <h3 className="text-xl font-bold opacity-80">Software & Tools</h3>
+            <h3 className="text-xl font-bold opacity-80">Software, field, and laboratory</h3>
             
             <div className="grid md:grid-cols-2 gap-12">
                 {/* Column 1 */}
@@ -1547,15 +1552,9 @@ export default function App() {
                             </div>
 
                             <div>
-                                <div className="flex justify-between mb-2">
+                                {/* Percentage bars omitted for academic site — levels remain in portfolioData.skills */}
+                                <div className="flex justify-between mb-1">
                                     <span className={`font-bold text-lg transition-colors ${getHoverTextColor()}`}>{skill.name}</span>
-                                    <span className="opacity-60 font-mono text-sm">{skill.level}%</span>
-                                </div>
-                                <div className={`w-full h-2 rounded-full overflow-hidden ${(isLight) ? 'bg-stone-200' : 'bg-white/10'}`}>
-                                    <div 
-                                        className={`h-full rounded-full transition-all duration-1000 ease-out ${getProgressBarColor()}`} 
-                                        style={{ width: `${skill.level}%` }}
-                                    />
                                 </div>
                             </div>
                         </div>
@@ -1575,15 +1574,9 @@ export default function App() {
                             </div>
 
                             <div>
-                                <div className="flex justify-between mb-2">
+                                {/* Percentage bars omitted for academic site — levels remain in portfolioData.skills */}
+                                <div className="flex justify-between mb-1">
                                     <span className={`font-bold text-lg transition-colors ${getHoverTextColor()}`}>{skill.name}</span>
-                                    <span className="opacity-60 font-mono text-sm">{skill.level}%</span>
-                                </div>
-                                <div className={`w-full h-2 rounded-full overflow-hidden ${(isLight) ? 'bg-stone-200' : 'bg-white/10'}`}>
-                                    <div 
-                                        className={`h-full rounded-full transition-all duration-1000 ease-out ${getProgressBarColor()}`} 
-                                        style={{ width: `${skill.level}%` }}
-                                    />
                                 </div>
                             </div>
                         </div>
@@ -1620,7 +1613,8 @@ export default function App() {
         </div>
       </Section>
 
-      {/* --- CERTIFICATIONS SECTION (CHANGED TO TIMELINE) --- */}
+      {/* --- CERTIFICATIONS SECTION (OMITTED for academic PhD site; set SHOW_CERTIFICATIONS true to restore) --- */}
+      {false && (
       <Section id="certifications">
         <div className="flex flex-col gap-5">
             <h2 className="text-3xl font-serif font-bold">Certifications</h2>
@@ -1654,6 +1648,7 @@ export default function App() {
             </div>
         </div>
       </Section>
+      )}
 
       {/* --- HOBBIES SECTION (MOVED BEFORE CONTACT) --- */}
       {showHobbies && (
