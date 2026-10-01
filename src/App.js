@@ -164,8 +164,9 @@ export default function App() {
     const add = (section, title, id) => results.push({ section, title, id });
 
     if (PORTFOLIO_DATA.profile.bio.toLowerCase().includes(q) || 
-        PORTFOLIO_DATA.profile.tagline.toLowerCase().includes(q)) {
-        add('Profile', 'Bio & Tagline', 'about');
+        PORTFOLIO_DATA.profile.tagline.toLowerCase().includes(q) ||
+        PORTFOLIO_DATA.profile.researchFocus.toLowerCase().includes(q)) {
+        add('Profile', 'Bio & Research Focus', 'about');
     }
     // ... (Search logic remains the same)
 
@@ -895,8 +896,11 @@ export default function App() {
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.12] tracking-tight mb-12">
             Analyzing ground behavior to build safer, resilient infrastructure.
           </h1>
-          <p className="text-base md:text-lg text-black/60 max-w-xl leading-relaxed mb-14">
+          <p className="text-base md:text-lg text-black/70 max-w-xl leading-relaxed mb-2">
             {PORTFOLIO_DATA.profile.tagline}
+          </p>
+          <p className="text-sm md:text-base text-black/45 max-w-xl leading-relaxed mb-14">
+            {PORTFOLIO_DATA.profile.researchFocus}
           </p>
           <div className="flex flex-wrap gap-x-10 gap-y-3 text-sm">
             <button onClick={() => scrollToSection('research')} className="border-b border-black pb-0.5">Research</button>
@@ -922,8 +926,11 @@ export default function App() {
               <span className="block text-5xl sm:text-6xl md:text-7xl text-[#C24A2A]">Islam Meraj</span>
             </h1>
             <div className="border-l-4 border-[#2C4A3E] pl-5 max-w-xl mb-10">
-              <p className="text-base md:text-lg leading-relaxed text-[#1C1914]/80">
+              <p className="text-base md:text-lg leading-relaxed text-[#1C1914]/85 mb-2">
                 {PORTFOLIO_DATA.profile.tagline}
+              </p>
+              <p className="text-sm md:text-base leading-relaxed text-[#1C1914]/55">
+                {PORTFOLIO_DATA.profile.researchFocus}
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm tracking-wide uppercase">
@@ -983,8 +990,11 @@ export default function App() {
           </h1>
           {theme === 'blueprint' && <div className="w-24 h-[2px] bg-[#F2C14E] mb-6" />}
           
-          <p className="text-sm sm:text-base md:text-lg font-light mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-80">
+          <p className="text-sm sm:text-base md:text-lg font-medium mb-2 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-90">
             {PORTFOLIO_DATA.profile.tagline}
+          </p>
+          <p className="text-xs sm:text-sm md:text-base font-light mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-60">
+            {PORTFOLIO_DATA.profile.researchFocus}
           </p>
           
           <div className="flex flex-col sm:flex-row items-start gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
