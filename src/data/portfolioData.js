@@ -16,7 +16,7 @@ export const PORTFOLIO_DATA = {
     institution: "Bangladesh University of Engineering & Technology (BUET)",
     tagline: "Geotechnical Earthquake Engineering Researcher | M.Sc., BUET",
     researchFocus: "Soil Liquefaction · Vs-Based Site Characterization · Probabilistic Geo-Hazard Assessment",
-    bio: "I am an M.Sc. researcher in Civil and Geotechnical Engineering at Bangladesh University of Engineering & Technology (BUET), with a primary research focus on geotechnical earthquake engineering. My work centers on shear-wave-velocity-based liquefaction assessment, seismic site characterization, regional geo-hazard mapping, and probabilistic treatment of geotechnical uncertainty.\n\nI also work on ground improvement of soft soils, embankment and slope stability, and numerical geotechnical modelling. I have developed and benchmarked embankment models in PLAXIS 2D and PLAXIS 3D by reproducing published studies and comparing the numerical outputs with reported results. My long-term research goal is to integrate field measurements, geotechnical data analysis, probabilistic methods, and numerical modelling to improve the assessment and mitigation of earthquake-related ground hazards.",
+    bio: "I am an M.Sc. researcher in Civil and Geotechnical Engineering at Bangladesh University of Engineering & Technology (BUET), with a primary research focus on geotechnical earthquake engineering. My work centers on shear-wave-velocity-based liquefaction assessment, seismic site characterization, regional geo-hazard mapping, and probabilistic treatment of geotechnical uncertainty.\n\nI also work on ground improvement of soft soils, embankment and slope stability, and numerical geotechnical modelling. I have developed and benchmarked embankment models in PLAXIS 2D and PLAXIS 3D by reproducing reference and published models and comparing numerical outputs with reported results. My long-term research goal is to integrate field measurements, geotechnical data analysis, probabilistic methods, and numerical modelling to improve the assessment and mitigation of earthquake-related ground hazards.",
     email: "enamulislammeraj.25@gmail.com",
     location: "Dhaka, Bangladesh",
     cvLink: "/Enamul_Islam_Meraj_WebsiteCV.pdf",
@@ -249,6 +249,24 @@ export const PORTFOLIO_DATA = {
   // --- EDITABLE: Selected work (field + undergraduate practice) ---
   // Thesis / Vs–LPI work stays in Research, not here.
   projects: [
+    {
+      title: "PLAXIS 3D road embankment benchmark replication",
+      group: "Numerical modelling",
+      period: "2026",
+      summary: "Reproduced Bentley PLAXIS 3D Tutorial 6 to benchmark staged embankment construction, consolidation, drainage effects, and safety response.",
+      description: "Reproduced the Bentley PLAXIS 3D Tutorial 6 road-embankment benchmark on soft soil as a numerical modelling exercise. The model included staged embankment construction, consolidation, drainage effects, excess pore-pressure development and dissipation, and strength-reduction safety analysis. Key outputs were checked against the tutorial reference behaviour, including the generated mesh, excess pore-pressure contours and time histories, the effect of drains, and ΣMsf–displacement response. This is a benchmark/tutorial replication used to demonstrate model setup, staged construction, interpretation of coupled consolidation behaviour, and verification against known reference results; it is not presented as original research.",
+      stack: ["PLAXIS 3D", "Finite-element modelling", "Consolidation", "Drainage", "Strength reduction", "Benchmarking"],
+      link: "",
+      photos: [],
+      files: [
+        { type: "pdf", name: "PLAXIS3D_Road_Embankment_Generated_Mesh.pdf" },
+        { type: "pdf", name: "PLAXIS3D_Excess_Pore_Pressure_Contour.pdf" },
+        { type: "pdf", name: "PLAXIS3D_Excess_Pore_Pressure_Time_History.pdf" },
+        { type: "pdf", name: "PLAXIS3D_Drainage_Effect_Comparison.pdf" },
+        { type: "pdf", name: "PLAXIS3D_Safety_Factor_Msf_vs_Displacement.pdf" },
+        { type: "pdf", name: "PLAXIS3D_Pore_Pressure_Time_History_Data.pdf" }
+      ]
+    },
     {
       title: "Post-earthquake reconnaissance, Madhabdi earthquake",
       group: "Field work",
