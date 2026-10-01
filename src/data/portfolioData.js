@@ -213,18 +213,6 @@ export const PORTFOLIO_DATA = {
       certificate: "/papers/ICACE2024_participation_certificate.pdf",
       citation: "Meraj, M. E. I. B., Hridoy, K. H., & Alim, M. A. (2024). Behavior of single pile in cohesionless soil on horizontal & sloping ground surface under lateral loading. Proceedings of the 7th International Conference on Advances in Civil Engineering (ICACE 2024), CUET, Bangladesh (Paper ID: 194)."
     },
-    {
-      id: 2,
-      title: "Vacuum-Based Soft Soil Improvement: A PRISMA-Guided Systematic Review with Special Emphasis on the High Vacuum Densification Method (HVDM)",
-      authors: "A. Mottaqi, M. E. I. B. Meraj, M. A. Ansary",
-      journal: "Geotechnical and Geological Engineering (Springer Nature)",
-      year: "2026",
-      citations: "—",
-      type: "Journal · under review",
-      tags: ["HVDM", "Vacuum consolidation", "Soft soil", "PRISMA"],
-      url: "",
-      citation: "Mottaqi, A., Meraj, M. E. I. B., & Ansary, M. A. (2026). Vacuum-based soft soil improvement: a PRISMA-guided systematic review with special emphasis on the High Vacuum Densification Method (HVDM). Geotechnical and Geological Engineering. Submitted 25 July 2026; under peer review."
-    },
   ],
 
   current_research: [
