@@ -45,6 +45,8 @@ export default function App() {
   // Set true to restore the old Research Interests graph + side list.
   const SHOW_LEGACY_RESEARCH_GRAPH = false;
   const SHOW_CITATION_GRAPH = false;
+  // Keep IELTS/GRE data and UI code available; show once real scores are ready.
+  const SHOW_STANDARDIZED_TESTS = false;
   const [hobbiesModalOpen, setHobbiesModalOpen] = useState(false);
 
   // --- SEARCH STATE ---
@@ -1127,7 +1129,7 @@ export default function App() {
                     My primary work is in geotechnical earthquake engineering. The M.Sc. thesis develops a shear-wave-velocity framework for liquefaction assessment of the DMDP area in Bangladesh, combining a deterministic Andrus–Stokoe path with a probabilistic Monte Carlo path so site-level uncertainty is explicit rather than hidden in a single factor of safety. The aim is mapped seismic geo-risk that can support planning and foundation decisions in a dense urban corridor.
                  </p>
                  <p className="text-base leading-relaxed opacity-80 text-justify mt-3">
-                    Two parallel lines sit under the same geotechnics roof and do not replace that thesis: a PRISMA-guided review of vacuum-based soft-soil improvement with emphasis on HVDM, now under review; and a cradle-to-grave LCA/LCCA of a real rural road protection job in Jamalpur–Gaibandha, comparing a geotextile wrapped-face wall with a conventional 1:1 earthen slope that is rebuilt after monsoon failure. I am seeking doctoral work in earthquake geotechnics and seismic site characterization.
+                    Alongside the thesis, I am developing two complementary lines of research within geotechnical engineering: a PRISMA-guided review of vacuum-based soft-soil improvement with emphasis on HVDM, now under review; and a cradle-to-grave LCA/LCCA of a real rural road protection project in Jamalpur–Gaibandha, comparing a geotextile wrapped-face wall with a conventional 1:1 earthen slope reconstructed after monsoon failure. These studies broaden my work in ground improvement and sustainable geotechnical infrastructure, while my doctoral focus remains earthquake geotechnics and seismic site characterization.
                  </p>
                  </div>
                  <div className="flex flex-col gap-3">
@@ -1586,7 +1588,7 @@ export default function App() {
             </div>
 
             {/* Nested Timeline for Tests - CHANGED TO VERTICAL LIST */}
-            {PORTFOLIO_DATA.tests && (
+            {SHOW_STANDARDIZED_TESTS && PORTFOLIO_DATA.tests && (
                 <div>
                         <h3 className="text-xl font-bold mb-6 opacity-80">Standardized Tests & Languages</h3>
                         <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
