@@ -1022,7 +1022,8 @@ export default function App() {
               // { icon: MessageCircle, link: PORTFOLIO_DATA.profile.social.whatsapp, label: "WhatsApp" },
               // { icon: Facebook, link: PORTFOLIO_DATA.profile.social.facebook, label: "Facebook" },
               // { icon: Instagram, link: PORTFOLIO_DATA.profile.social.instagram, label: "Instagram" },
-              { icon: Twitter, link: PORTFOLIO_DATA.profile.social.twitter, label: "X" },
+              // OMITTED Twitter/X from academic hero. URL remains in portfolioData.js.
+              // { icon: Twitter, link: PORTFOLIO_DATA.profile.social.twitter, label: "X" },
               // Telegram hidden on the academic hero. URL remains in portfolioData.js.
               // { icon: Send, link: PORTFOLIO_DATA.profile.social.telegram, label: "Telegram" },
             ].filter(Boolean).map((social, idx) => (
