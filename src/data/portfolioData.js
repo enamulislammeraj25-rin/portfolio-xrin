@@ -109,7 +109,7 @@ export const PORTFOLIO_DATA = {
     { name: "ATC-20 rapid evaluation", level: 50 },
     { name: "ERT — electrode layout & data acquisition (assisted)", level: 25 },
     { name: "Direct shear testing", level: 40 },
-    { name: "Python (basic, in active development)", level: 25 },
+    { name: "Python-assisted research workflows (Monte Carlo analysis)", level: 25 },
     // OMITTED from academic list (restore if needed):
     // { name: "Microsoft Office Suite", level: 75 },
     // { name: "CSI ETABS & SAFE", level: 40 },
