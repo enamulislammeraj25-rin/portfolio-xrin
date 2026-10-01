@@ -259,12 +259,12 @@ export const PORTFOLIO_DATA = {
       link: "",
       photos: [],
       files: [
-        { type: "pdf", name: "PLAXIS3D_Road_Embankment_Generated_Mesh.pdf" },
-        { type: "pdf", name: "PLAXIS3D_Excess_Pore_Pressure_Contour.pdf" },
-        { type: "pdf", name: "PLAXIS3D_Excess_Pore_Pressure_Time_History.pdf" },
-        { type: "pdf", name: "PLAXIS3D_Drainage_Effect_Comparison.pdf" },
-        { type: "pdf", name: "PLAXIS3D_Safety_Factor_Msf_vs_Displacement.pdf" },
-        { type: "pdf", name: "PLAXIS3D_Pore_Pressure_Time_History_Data.pdf" }
+        { type: "pdf", name: "Comparison of Excess Pore Pressure Dissipation with and Without Drainage.pdf", href: "/projects/plaxis3d/Comparison of Excess Pore Pressure Dissipation with and Without Drainage.pdf", preview: "/projects/plaxis3d/previews/Comparison of Excess Pore Pressure Dissipation with and Without Drainage.jpg" },
+        { type: "pdf", name: "Contour Plot of Excess Pore Pressure (Pexcess) During Construction of a Road Embankment.pdf", href: "/projects/plaxis3d/Contour Plot of Excess Pore Pressure (Pexcess) During Construction of a Road Embankment.pdf", preview: "/projects/plaxis3d/previews/Contour Plot of Excess Pore Pressure (Pexcess) During Construction of a Road Embankment.jpg" },
+        { type: "pdf", name: "Excess Pore Pressure (Pexcess) Analysis During Road Embankment Construction (Case 2).pdf", href: "/projects/plaxis3d/Excess Pore Pressure (Pexcess) Analysis During Road Embankment Construction (Case 2).pdf", preview: "/projects/plaxis3d/previews/Excess Pore Pressure (Pexcess) Analysis During Road Embankment Construction (Case 2).jpg" },
+        { type: "pdf", name: "Excess Pore Pressure (Pexcess) Distribution During Road Embankment Construction.pdf", href: "/projects/plaxis3d/Excess Pore Pressure (Pexcess) Distribution During Road Embankment Construction.pdf", preview: "/projects/plaxis3d/previews/Excess Pore Pressure (Pexcess) Distribution During Road Embankment Construction.jpg" },
+        { type: "pdf", name: "Excess Pore Pressure (Pexcess) Variation with Time During Road Embankment Construction.pdf", href: "/projects/plaxis3d/Excess Pore Pressure (Pexcess) Variation with Time During Road Embankment Construction.pdf", preview: "/projects/plaxis3d/previews/Excess Pore Pressure (Pexcess) Variation with Time During Road Embankment Construction.jpg" },
+        { type: "pdf", name: "Safety Factor (MSF) Variation with Displacement Analysis.pdf", href: "/projects/plaxis3d/Safety Factor (MSF) Variation with Displacement Analysis.pdf", preview: "/projects/plaxis3d/previews/Safety Factor (MSF) Variation with Displacement Analysis.jpg" }
       ]
     },
     {

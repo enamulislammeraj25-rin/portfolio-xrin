@@ -3,7 +3,7 @@ import {
   Sun, Moon, CloudLightning, Leaf, Gem, Flower2,
   Briefcase, GraduationCap, 
   Award, Mail, Download, Search, 
-  Menu, X, ChevronRight, ChevronLeft, FileText,
+  Menu, X, ChevronRight, ChevronLeft, FileText, Maximize, Minimize,
   // Globe, Users, // contact-card socials — uncomment with that block
   MapPin, Anchor, ArrowDown, ArrowUp,
   // Twitter, // OMITTED with hero X icon; still referenced in commented contact-card block
@@ -55,6 +55,11 @@ export default function App() {
 
   // --- PROJECT MODAL STATE ---
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedPdf, setSelectedPdf] = useState(null);
+  const [pdfViewerUrl, setPdfViewerUrl] = useState(null);
+  const [pdfViewerError, setPdfViewerError] = useState('');
+  const [pdfFullscreen, setPdfFullscreen] = useState(false);
+  const pdfViewerRef = useRef(null);
   const [lightboxPhotos, setLightboxPhotos] = useState([]);
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
@@ -96,6 +101,52 @@ export default function App() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [lightboxIndex, lightboxPhotos]);
+
+  useEffect(() => {
+    const updatePdfFullscreen = () => {
+      setPdfFullscreen(document.fullscreenElement === pdfViewerRef.current);
+    };
+    document.addEventListener('fullscreenchange', updatePdfFullscreen);
+    return () => document.removeEventListener('fullscreenchange', updatePdfFullscreen);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedPdf) return undefined;
+
+    const controller = new AbortController();
+    let objectUrl;
+    setPdfViewerUrl(null);
+    setPdfViewerError('');
+
+    fetch(selectedPdf.href, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Request failed (${response.status})`);
+        return response.blob();
+      })
+      .then((blob) => {
+        objectUrl = URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+        setPdfViewerUrl(objectUrl);
+      })
+      .catch((error) => {
+        if (error.name !== 'AbortError') {
+          setPdfViewerError(`PDF request failed: ${error.message}. IDM may be blocking this request; try disabling its browser integration for this site and reload.`);
+        }
+      });
+
+    return () => {
+      controller.abort();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [selectedPdf]);
+
+  const togglePdfFullscreen = () => {
+    if (!pdfViewerRef.current) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      pdfViewerRef.current.requestFullscreen();
+    }
+  };
 
   const isLight = theme === 'light' || theme === 'spring' || theme === 'warm' || theme === 'atelier' || theme === 'folio';
 
@@ -610,15 +661,35 @@ export default function App() {
                       <div className="mt-8">
                         <h3 className="text-sm font-bold uppercase opacity-60 mb-4 tracking-wider">Project files</h3>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                          {selectedProject.files.map((file, i) => (
-                            <div key={i} className={`p-4 rounded-lg border flex flex-col items-center justify-center gap-3
-                                ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
-                                {file.type === 'image' && <FileImage className={`w-8 h-8 ${getAccentColor()}`} />}
-                                {file.type === 'code' && <FileCode className={`w-8 h-8 ${getAccentColor()}`} />}
-                                {file.type === 'pdf' && <FileText className={`w-8 h-8 ${getAccentColor()}`} />}
-                                <span className="text-xs font-medium text-center truncate w-full">{file.name}</span>
-                            </div>
-                          ))}
+                          {selectedProject.files.map((file, i) => {
+                            const cardContent = (
+                              <>
+                                {file.preview && <img src={file.preview} alt={`Preview: ${file.name}`} className="w-full aspect-video object-cover bg-neutral-200" />}
+                                <div className="w-full p-3 flex flex-col items-center justify-center gap-3">
+                                  {!file.preview && file.type === 'image' && <FileImage className={`w-8 h-8 ${getAccentColor()}`} />}
+                                  {!file.preview && file.type === 'code' && <FileCode className={`w-8 h-8 ${getAccentColor()}`} />}
+                                  {!file.preview && file.type === 'pdf' && <FileText className={`w-8 h-8 ${getAccentColor()}`} />}
+                                  <span className="text-xs font-medium text-center break-words w-full">{file.name}</span>
+                                </div>
+                              </>
+                            );
+                            const cardClass = `rounded-lg border flex flex-col items-center justify-start overflow-hidden
+                              ${(isLight) ? 'border-stone-200' : 'border-white/10'}`;
+
+                            return file.type === 'pdf' ? (
+                              <button
+                                key={i}
+                                type="button"
+                                onClick={() => setSelectedPdf(file)}
+                                aria-label={`Open ${file.name}`}
+                                className={`${cardClass} text-left transition-colors hover:border-stone-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2`}
+                              >
+                                {cardContent}
+                              </button>
+                            ) : (
+                              <div key={i} className={cardClass}>{cardContent}</div>
+                            );
+                          })}
                         </div>
                       </div>
                     )}
@@ -634,6 +705,50 @@ export default function App() {
                     )}
                 </div>
             </div>
+        </div>
+      )}
+
+      {selectedPdf && (
+        <div
+          className="fixed inset-0 z-[400] flex items-center justify-center bg-black/80 p-0 md:p-4"
+          onClick={() => setSelectedPdf(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`PDF viewer: ${selectedPdf.name}`}
+        >
+          <div
+            ref={pdfViewerRef}
+            className={`flex flex-col overflow-hidden bg-neutral-950 text-white shadow-2xl ${pdfFullscreen ? 'h-screen w-screen max-h-none max-w-none rounded-none' : 'h-[92vh] w-full max-w-6xl rounded-lg'}`}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex shrink-0 items-center justify-between gap-4 border-b border-white/10 px-4 py-3">
+              <h2 className="min-w-0 truncate text-sm font-semibold">{selectedPdf.name}</h2>
+              <div className="flex shrink-0 items-center gap-2">
+                <a href={pdfViewerUrl || undefined} target="_blank" rel="noreferrer" aria-disabled={!pdfViewerUrl} onClick={(event) => { if (!pdfViewerUrl) event.preventDefault(); }} className={`rounded border border-white/20 px-3 py-2 text-xs ${pdfViewerUrl ? 'hover:bg-white/10' : 'cursor-not-allowed opacity-50'}`}>
+                  Open in new tab
+                </a>
+                <button
+                  type="button"
+                  onClick={togglePdfFullscreen}
+                  aria-label={pdfFullscreen ? 'Exit full screen' : 'Enter full screen'}
+                  title={pdfFullscreen ? 'Exit full screen' : 'Full screen'}
+                  className="rounded border border-white/20 p-2 hover:bg-white/10"
+                >
+                  {pdfFullscreen ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
+                </button>
+                <button type="button" onClick={() => setSelectedPdf(null)} aria-label="Close PDF" className="rounded border border-white/20 px-3 py-2 text-xs hover:bg-white/10">
+                  Close
+                </button>
+              </div>
+            </div>
+            {pdfViewerUrl ? (
+              <iframe src={pdfViewerUrl} title={selectedPdf.name} className="min-h-0 flex-1 border-0 bg-white" />
+            ) : (
+              <div role="status" className="flex min-h-0 flex-1 items-center justify-center bg-white px-6 text-center text-sm text-stone-700">
+                {pdfViewerError || 'Loading PDF...'}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
