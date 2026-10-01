@@ -12,9 +12,9 @@ export const PORTFOLIO_DATA = {
   // --- EDITABLE: Personal Profile Info ---
   profile: {
     name: "Md Enamul Islam Bhuiyan Meraj",
-    title: "M.Sc. researcher, Civil & Geotechnical Engineering",
+    title: "Geotechnical Earthquake Engineering Researcher | M.Sc., BUET",
     institution: "Bangladesh University of Engineering & Technology (BUET)",
-    tagline: "Civil Engineer | Graduate Civil & Geotechnical Engineering Researcher",
+    tagline: "Geotechnical Earthquake Engineering Researcher | M.Sc., BUET · Soil Liquefaction · Vs-Based Site Characterization · Probabilistic Geo-Hazard Assessment",
     bio: "I am a Civil Engineer and M.Sc. researcher in Civil and Geotechnical Engineering at BUET (B.Sc., RUET). My research centres on geotechnical earthquake engineering: shear-wave-velocity-based liquefaction assessment, regional hazard mapping, and probabilistic treatment of parameter uncertainty.\n\nI also work on ground improvement of soft soils (including vacuum consolidation and HVDM) and embankment and slope stability. I aim to combine field and measured-data analysis with numerical modelling in doctoral research.",
     email: "enamulislammeraj.25@gmail.com",
     location: "Dhaka, Bangladesh",
