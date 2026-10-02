@@ -5,7 +5,7 @@ import {
   Award, Mail, Download, Search, 
   Menu, X, ChevronRight, ChevronLeft, FileText, Maximize, Minimize,
   // Globe, Users, // contact-card socials — uncomment with that block
-  MapPin, Anchor, ArrowDown, ArrowUp,
+  MapPin, ArrowDown, ArrowUp,
   // Twitter, // OMITTED with hero X icon; still referenced in commented contact-card block
   // Send, // Telegram hero icon — uncomment with the Telegram row
   // Facebook, Instagram, MessageCircle, // uncomment with the hero personal-social rows
@@ -55,6 +55,9 @@ export default function App() {
 
   // --- PROJECT MODAL STATE ---
   const [selectedProject, setSelectedProject] = useState(null);
+  const [projectDetailsFromPlaxis, setProjectDetailsFromPlaxis] = useState(false);
+  const [projectPage, setProjectPage] = useState('list');
+  const [selectedPlaxisPlatform, setSelectedPlaxisPlatform] = useState(null);
   const [selectedPdf, setSelectedPdf] = useState(null);
   const [pdfViewerUrl, setPdfViewerUrl] = useState(null);
   const [pdfViewerError, setPdfViewerError] = useState('');
@@ -196,12 +199,17 @@ export default function App() {
       if (e.key === 'Escape') {
           setSearchOpen(false);
           setSelectedProject(null);
+          if (!projectDetailsFromPlaxis) {
+            setProjectPage('list');
+            setSelectedPlaxisPlatform(null);
+          }
+          setProjectDetailsFromPlaxis(false);
           setHobbiesModalOpen(false); // Close hobbies modal on ESC
       }
     };
     window.addEventListener('keydown', handleKeydown);
     return () => window.removeEventListener('keydown', handleKeydown);
-  }, []);
+  }, [projectDetailsFromPlaxis]);
 
   // --- LIVE SEARCH LOGIC ---
   useEffect(() => {
@@ -229,7 +237,7 @@ export default function App() {
     { name: "Research", id: "research" },
     { name: "Publications", id: "publications" },
     { name: "Education", id: "education" },
-    { name: "Career", id: "career" },
+    { name: "Experience", id: "career" },
     { name: "Projects", id: "projects" },
     { name: "Skills", id: "skills" },
     // OMITTED Certifications from nav for academic PhD site. Uncomment to restore.
@@ -582,6 +590,68 @@ export default function App() {
       </div>
   );
 
+  const projectRootItems = [];
+  const seenCollections = new Set();
+  let plaxisPlatformsAdded = false;
+  PORTFOLIO_DATA.projects.forEach((project) => {
+    if (project.platform) {
+      if (!plaxisPlatformsAdded) {
+        ['PLAXIS 3D', 'PLAXIS 2D'].forEach((platform) => {
+          projectRootItems.push({
+            type: 'platform',
+            group: project.group,
+            title: platform,
+            platform,
+            summary: `Browse ${platform} models.`
+          });
+        });
+        plaxisPlatformsAdded = true;
+      }
+      return;
+    }
+    if (!project.collection) {
+      projectRootItems.push({ type: 'project', group: project.group, project });
+      return;
+    }
+    if (seenCollections.has(project.collection)) return;
+    seenCollections.add(project.collection);
+    projectRootItems.push({
+      type: 'collection',
+      group: project.group,
+      title: project.collection,
+      summary: 'Browse PLAXIS 2D and PLAXIS 3D models.'
+    });
+  });
+  const projectGroupOrder = { Fieldwork: 0, 'Numerical Modelling': 1 };
+  projectRootItems.sort((left, right) => (
+    (projectGroupOrder[left.group] ?? 2) - (projectGroupOrder[right.group] ?? 2)
+  ));
+
+  const selectedPlatformProjects = PORTFOLIO_DATA.projects.filter(
+    (project) => project.platform === selectedPlaxisPlatform
+  );
+
+  const publicationItems = [
+    ...(PORTFOLIO_DATA.publications || []),
+    ...(PORTFOLIO_DATA.under_review || []),
+    ...(PORTFOLIO_DATA.in_preparation || []),
+  ];
+
+  const getPublicationStatusClass = (status) => {
+    if (status === 'Conference Proceedings') return isLight ? 'bg-[#DCEFEA] text-[#215B55]' : 'bg-teal-900/50 text-teal-200';
+    if (status === 'Under Peer Review') return isLight ? 'bg-[#E8E4D4] text-[#665B2E]' : 'bg-amber-900/40 text-amber-200';
+    return isLight ? 'bg-[#E3E7ED] text-[#465467]' : 'bg-slate-700/60 text-slate-200';
+  };
+
+  const closeProjectDetails = () => {
+    setSelectedProject(null);
+    if (projectDetailsFromPlaxis) {
+      setProjectDetailsFromPlaxis(false);
+    } else {
+      setProjectPage('list');
+    }
+  };
+
   return (
     <div className={`min-h-screen transition-colors duration-[2000ms] ease-in-out font-sans theme-${theme} ${getAppBg()} ${theme === 'dark' ? 'dark' : ''}`}>
       
@@ -611,24 +681,36 @@ export default function App() {
 
       {/* --- PROJECT MODAL --- */}
       {selectedProject && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedProject(null)}>
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={() => {
+            if (!projectDetailsFromPlaxis) closeProjectDetails();
+          }}
+        >
             <div className={`w-full max-w-5xl max-h-[90vh] rounded-lg overflow-hidden shadow-2xl flex flex-col
                 ${(isLight) ? 'bg-white text-stone-900' : 'bg-neutral-900 text-white border border-white/10'}`}
                 onClick={e => e.stopPropagation()}
             >
-                <div className={`p-6 border-b flex justify-between items-center shrink-0 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
-                    <div>
-                        <h2 className="text-2xl font-bold font-serif">{selectedProject.title}</h2>
+                <div className={`p-6 border-b flex justify-between items-center gap-4 shrink-0 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
+                    <div className="min-w-0">
+                        <h2 className="truncate text-2xl font-bold font-serif">{selectedProject.title}</h2>
                         <p className="text-sm opacity-60 mt-1">
                           {[selectedProject.group, selectedProject.period].filter(Boolean).join(' · ') || 'Selected work'}
                         </p>
                     </div>
-                    <button type="button" onClick={() => setSelectedProject(null)} className="p-2 rounded-full hover:bg-black/10 transition-colors">
-                        <X className="w-6 h-6" />
+                    <button
+                      type="button"
+                      onClick={closeProjectDetails}
+                      aria-label={projectDetailsFromPlaxis ? 'Back to PLAXIS 3D' : 'Close project details'}
+                      className="inline-flex shrink-0 items-center gap-1 rounded-full p-2 text-sm font-medium hover:bg-black/10 transition-colors"
+                    >
+                        {projectDetailsFromPlaxis ? <><ChevronLeft className="h-5 w-5" /><span>Back</span></> : <X className="w-6 h-6" />}
                     </button>
                 </div>
                 
                 <div className="flex-1 overflow-y-auto p-6 md:p-8">
+                    <p className="text-base md:text-lg opacity-80 leading-relaxed text-justify">{selectedProject.description}</p>
+
                     {selectedProject.photos && selectedProject.photos.length > 0 && (
                       <div className="mb-8">
                         <h3 className="text-sm font-bold uppercase opacity-60 mb-4 tracking-wider">Photographs</h3>
@@ -654,8 +736,6 @@ export default function App() {
                         <p className="mt-2 text-[11px] opacity-50">Click a photograph to open it full screen. Use ← → to move between photos.</p>
                       </div>
                     )}
-
-                    <p className="text-base md:text-lg opacity-80 leading-relaxed text-justify">{selectedProject.description}</p>
 
                     {!(selectedProject.photos && selectedProject.photos.length) && selectedProject.files && selectedProject.files.length > 0 && (
                       <div className="mt-8">
@@ -696,7 +776,7 @@ export default function App() {
                 </div>
 
                 <div className={`p-4 border-t flex justify-end gap-4 shrink-0 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
-                    <button type="button" onClick={() => setSelectedProject(null)} className="px-6 py-2 rounded-lg font-medium hover:opacity-80">Close</button>
+                  <button type="button" onClick={closeProjectDetails} className="px-6 py-2 rounded-lg font-medium hover:opacity-80">{projectDetailsFromPlaxis ? 'Back to PLAXIS 3D' : 'Close'}</button>
                     {selectedProject.link && selectedProject.link !== '#' && (
                       <a href={selectedProject.link} target="_blank" rel="noreferrer" className={`px-6 py-2 rounded-lg font-medium text-white shadow-lg
                           ${theme === 'light' ? 'bg-stone-800 hover:bg-stone-900' : 'bg-white/10 hover:bg-white/20 border border-white/20'}`}>
@@ -1005,14 +1085,16 @@ export default function App() {
 
       {/* --- HERO SECTION --- */}
       {theme === 'folio' ? (
-      <section className="relative min-h-screen bg-[#FAFAF8] text-[#111] lg:pl-52">
+      <section className="relative min-h-[80vh] bg-[#FAFAF8] text-[#111] lg:pl-52">
         <div className="max-w-3xl px-6 md:px-10 pt-32 pb-24">
-          <p className="text-sm text-black/45 mb-10">{PORTFOLIO_DATA.profile.name}</p>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.12] tracking-tight mb-12">
-            Analyzing ground behavior to build safer, resilient infrastructure.
-          </h1>
-          <p className="text-base md:text-lg text-black/70 max-w-xl leading-relaxed mb-14">
-            {PORTFOLIO_DATA.profile.tagline}
+          <p className="text-sm text-black/45 mb-6">{PORTFOLIO_DATA.profile.name}</p>
+          <p className="text-base md:text-lg font-medium text-black/80">{PORTFOLIO_DATA.profile.tagline}</p>
+          <p className="text-sm text-black/50 mb-6">{PORTFOLIO_DATA.profile.institution}</p>
+          <p className="max-w-[65ch] text-base leading-[1.75] text-black/70 text-justify mb-4">
+            {PORTFOLIO_DATA.profile.heroSummary}
+          </p>
+          <p className="text-sm font-medium text-black/65 mb-10">
+            {PORTFOLIO_DATA.profile.availability}
           </p>
           <div className="flex flex-wrap gap-x-10 gap-y-3 text-sm">
             <button onClick={() => scrollToSection('research')} className="border-b border-black pb-0.5">Research</button>
@@ -1023,24 +1105,25 @@ export default function App() {
         </div>
       </section>
       ) : theme === 'atelier' ? (
-      <section className="relative min-h-screen overflow-hidden bg-[#EFE6D6] text-[#1C1914]">
+      <section className="relative min-h-[80vh] overflow-hidden bg-[#EFE6D6] text-[#1C1914]">
         <div className="absolute left-0 top-0 bottom-0 w-2 bg-[#C24A2A]" />
         <div className="absolute left-2 top-0 bottom-0 w-10 bg-[#2C4A3E] hidden md:flex items-center justify-center">
           <span className="text-[#EFE6D6] text-[10px] tracking-[0.45em] uppercase" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
             Geotechnical research · BUET
           </span>
         </div>
-        <div className="relative z-10 min-h-screen max-w-[90rem] mx-auto pl-6 md:pl-20 pr-5 md:pr-8 grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-stretch py-28">
+        <div className="relative z-10 min-h-[80vh] max-w-[90rem] mx-auto pl-6 md:pl-20 pr-5 md:pr-8 grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-stretch py-28">
           <div className="flex flex-col justify-center">
             <div className="text-[11px] tracking-[0.42em] uppercase text-[#C24A2A] mb-6">01 — Portfolio</div>
             <h1 className="font-serif leading-[0.9] mb-8">
               <span className="block text-5xl sm:text-6xl md:text-7xl text-[#1C1914]">Enamul</span>
               <span className="block text-5xl sm:text-6xl md:text-7xl text-[#C24A2A]">Islam Meraj</span>
             </h1>
-            <div className="border-l-4 border-[#2C4A3E] pl-5 max-w-xl mb-10">
-              <p className="text-base md:text-lg leading-relaxed text-[#1C1914]/85">
-                {PORTFOLIO_DATA.profile.tagline}
-              </p>
+            <div className="border-l-4 border-[#2C4A3E] pl-5 max-w-[65ch] mb-10">
+              <p className="text-base md:text-lg font-medium leading-[1.75] text-[#1C1914]/85">{PORTFOLIO_DATA.profile.tagline}</p>
+              <p className="text-sm text-[#1C1914]/60 mb-4">{PORTFOLIO_DATA.profile.institution}</p>
+              <p className="text-base leading-[1.75] text-[#1C1914]/75 text-justify mb-3">{PORTFOLIO_DATA.profile.heroSummary}</p>
+              <p className="text-sm font-medium text-[#1C1914]/65">{PORTFOLIO_DATA.profile.availability}</p>
             </div>
             <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm tracking-wide uppercase">
               <button onClick={() => scrollToSection('research')} className="text-[#C24A2A] border-b border-[#C24A2A] pb-0.5 hover:text-[#2C4A3E] hover:border-[#2C4A3E]">
@@ -1078,7 +1161,7 @@ export default function App() {
       </section>
       ) : (
       <>
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0 transition-colors duration-500">
            {theme !== 'light' && theme !== 'dark' && theme !== 'atelier' && theme !== 'blueprint' && <ParticleCanvas theme={theme} />}
         </div>
@@ -1099,9 +1182,14 @@ export default function App() {
           </h1>
           {theme === 'blueprint' && <div className="w-24 h-[2px] bg-[#F2C14E] mb-6" />}
           
-          <p className="text-sm sm:text-base md:text-lg font-medium mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-90">
+          <p className="text-base sm:text-lg font-medium mb-1 leading-[1.75] animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 opacity-90">
             {PORTFOLIO_DATA.profile.tagline}
           </p>
+          <p className="text-sm opacity-60 mb-5">{PORTFOLIO_DATA.profile.institution}</p>
+          <p className="max-w-[65ch] text-sm sm:text-base leading-[1.75] text-justify mb-4">
+            {PORTFOLIO_DATA.profile.heroSummary}
+          </p>
+          <p className="text-sm font-medium opacity-80 mb-7">{PORTFOLIO_DATA.profile.availability}</p>
           
           <div className="flex flex-col sm:flex-row items-start gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
             <button 
@@ -1219,7 +1307,7 @@ export default function App() {
                 */}
                   </>
                 )}
-                <p className="text-base leading-relaxed mb-5 whitespace-pre-line text-justify opacity-80">
+                <p className="text-base leading-[1.75] mb-5 whitespace-pre-line text-justify opacity-80">
                     {PORTFOLIO_DATA.profile.bio}
                 </p>
                 <div className="grid grid-cols-2 gap-4 mt-8">
@@ -1241,10 +1329,10 @@ export default function App() {
             <div className="w-full grid md:grid-cols-[minmax(0,1.2fr)_minmax(16rem,0.8fr)] gap-6 items-start">
                  <div>
                  <h2 className="text-3xl font-serif font-bold mb-4">Research</h2>
-                 <p className="text-base leading-relaxed opacity-80 text-justify">
+                 <p className="text-base leading-[1.75] opacity-80 text-justify">
                     My research focuses on geotechnical earthquake engineering, particularly the assessment of soil liquefaction and spatial seismic risk in urban areas. In my M.Sc. thesis at BUET, I am developing a shear-wave-velocity-based framework to assess regional liquefaction susceptibility across the DMDP area of Bangladesh. The study combines deterministic Andrus–Stokoe procedures with probabilistic Monte Carlo analysis to quantify uncertainty in key geotechnical and seismic parameters rather than relying solely on a single deterministic factor of safety. By integrating site characterization, liquefaction indices, uncertainty analysis, and spatial mapping, the work aims to identify areas of elevated seismic ground-failure potential and provide information relevant to regional planning, site screening, and foundation engineering.
                  </p>
-                 <p className="text-base leading-relaxed opacity-80 text-justify mt-3">
+                 <p className="text-base leading-[1.75] opacity-80 text-justify mt-3">
                     Alongside the thesis, I am developing two complementary lines of research within geotechnical engineering: a PRISMA-guided review of vacuum-based soft-soil improvement with emphasis on HVDM, currently under peer review, and a cradle-to-grave LCA/LCCA of a rural road protection project in Jamalpur–Gaibandha comparing a geotextile wrapped-face wall with a conventional 1:1 earthen slope reconstructed after monsoon failure. These studies broaden my experience in ground improvement and sustainable geotechnical infrastructure, while my primary doctoral interests remain geotechnical earthquake engineering, soil liquefaction, seismic site characterization, and probabilistic geo-hazard assessment.
                  </p>
                  </div>
@@ -1258,10 +1346,14 @@ export default function App() {
                      <div key={card.key || card.tag} className={`p-4 rounded-lg border ${(isLight) ? 'border-stone-200 bg-white' : 'border-white/15 bg-white/5'}`}>
                        <div className="flex items-center justify-between gap-2 mb-2">
                          <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${(isLight) ? 'bg-stone-200 text-stone-800' : 'bg-white/15'}`}>{card.tag}</span>
-                         <span className="text-[11px] opacity-60">{card.status}</span>
+                         <span className={`text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded ${
+                           card.status === 'In preparation'
+                             ? (isLight ? 'bg-[#E3E7ED] text-[#465467]' : 'bg-slate-700/60 text-slate-200')
+                             : (isLight ? 'bg-[#E8E4D4] text-[#665B2E]' : 'bg-amber-900/40 text-amber-200')
+                         }`}>{card.status}</span>
                        </div>
                        <div className={`font-semibold leading-snug ${getHoverTextColor()}`}>{card.line}</div>
-                       <div className="text-xs opacity-60 mt-1">{card.sub}</div>
+                       <div className="text-xs leading-[1.75] opacity-60 mt-1">{card.sub}</div>
                      </div>
                    ))}
                  </div>
@@ -1354,7 +1446,7 @@ export default function App() {
                     <h2 className="text-3xl font-serif font-bold mb-4">Selected Publications</h2>
                 </div>
                 <div className="flex gap-2 mt-4 md:mt-0">
-                    <button className={`px-4 py-2 text-sm font-medium rounded-lg ${(isLight) ? 'bg-stone-200 text-stone-800' : 'bg-white/10 text-white'}`}>
+                    <button className={`hidden px-4 py-2 text-sm font-medium rounded-lg ${(isLight) ? 'bg-stone-200 text-stone-800' : 'bg-white/10 text-white'}`}>
                         All Years
                     </button>
                 </div>
@@ -1388,37 +1480,9 @@ export default function App() {
             </div>
             )}
 
-            {PORTFOLIO_DATA.under_review && PORTFOLIO_DATA.under_review.length > 0 && (
-              <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Under review</h3>
-                {PORTFOLIO_DATA.under_review.map((wp) => (
-                  <div key={wp.id} className={`relative group pl-8 py-3 rounded-r-lg transition-all duration-300
-                      ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
-                      <div className={`absolute -left-[9px] top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
-                          ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
-                          <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
-                      </div>
-                      <div className="flex flex-wrap items-center gap-2 mb-2">
-                        {wp.status && (
-                          <span className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded
-                            ${(isLight) ? 'bg-teal-50 text-teal-800' : 'bg-white/15 text-white'}`}>{wp.status}</span>
-                        )}
-                        <span className="text-sm opacity-60">{wp.year}</span>
-                      </div>
-                      <h3 className={`text-base md:text-lg font-bold mb-1 transition-colors ${getHoverTextColor()}`}>{wp.title}</h3>
-                      {wp.authors && <p className="opacity-70 mb-1 italic">{wp.authors}</p>}
-                      <p className="opacity-70 mb-1">{wp.venue}</p>
-                      {wp.submitted && <p className="text-sm opacity-60">Submitted {wp.submitted}</p>}
-                      {wp.note && !wp.submitted && <p className="text-sm opacity-60">{wp.note}</p>}
-                  </div>
-                ))}
-              </div>
-            )}
-
             {/* Publication List - Converted to Timeline */}
             <div className={`border-l-2 py-2 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
-                <h3 className={`text-sm font-bold uppercase tracking-widest mb-4 ml-8 ${isLight ? 'text-[#0A5C57]' : 'text-[#FFF6D4]'}`} style={isLight ? undefined : { filter: headingSunGlow }}>Published</h3>
-                {PORTFOLIO_DATA.publications.map((pub) => (
+                {publicationItems.map((pub) => (
                     <div key={pub.id} className={`relative group pl-8 py-3 rounded-r-lg transition-all duration-300 border-transparent
                         ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}>
                         
@@ -1431,11 +1495,9 @@ export default function App() {
                         <div className="flex flex-col md:flex-row justify-between items-start gap-4">
                             <div className="flex-1">
                                 <div className="flex gap-2 items-center mb-2">
-                                    <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded
-                                        ${(isLight) ? 'bg-stone-200 text-stone-800' : 'bg-white/20 text-white'}`}>
-                                        {pub.type}
+                                    <span className={`px-1.5 py-0.5 text-[8px] md:text-[9px] font-bold uppercase tracking-wider rounded ${getPublicationStatusClass(pub.status || pub.type)}`}>
+                                    {pub.status || pub.type} | {pub.year}
                                     </span>
-                                    <span className="text-sm opacity-60">{pub.year}</span>
                                 </div>
                                 <h3 className={`text-base md:text-lg font-bold mb-1 transition-colors ${getHoverTextColor()}`}>
                                     {pub.title}
@@ -1444,7 +1506,7 @@ export default function App() {
                                     {pub.authors}
                                 </p>
                                 <div className="flex items-center gap-4 text-sm opacity-60">
-                                    <span className="font-semibold">{pub.journal}</span>
+                                    <span className="font-semibold">{pub.journal || pub.venue}</span>
                                     {pub.citations && pub.citations !== "—" && (
                                       <>
                                         <span>•</span>
@@ -1452,6 +1514,8 @@ export default function App() {
                                       </>
                                     )}
                                 </div>
+                                {pub.submitted && <p className="text-sm opacity-60 mt-1">Submitted {pub.submitted}</p>}
+                                {pub.note && <p className="text-sm leading-[1.75] opacity-60 mt-1">{pub.note}</p>}
                             </div>
                             <div className="flex gap-2 self-start md:self-center">
                                 {pub.url && (
@@ -1472,14 +1536,16 @@ export default function App() {
                                     <Award className="w-5 h-5" />
                                   </a>
                                 )}
-                                <button
-                                  type="button"
-                                  onClick={() => handleCite(pub)}
-                                  className={`p-2 rounded-full hover:bg-black/5 ${getAccentColor()}`}
-                                  title="Copy citation"
-                                >
-                                    {copiedCiteId === pub.id ? <CheckCircle2 className="w-5 h-5" /> : <BookOpen className="w-5 h-5" />}
-                                </button>
+                                {pub.status === 'Conference Proceedings' && (
+                                  <button
+                                    type="button"
+                                    onClick={() => handleCite(pub)}
+                                    className={`p-2 rounded-full hover:bg-black/5 ${getAccentColor()}`}
+                                    title="Copy citation"
+                                  >
+                                      {copiedCiteId === pub.id ? <CheckCircle2 className="w-5 h-5" /> : <BookOpen className="w-5 h-5" />}
+                                  </button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -1514,7 +1580,7 @@ export default function App() {
                                 <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${getHoverBgColor()}`} />
                             </div>
                             <div> 
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border ${isLight ? 'border-[#0A5C57] bg-[#0A5C57] text-white' : 'border-white/25 bg-white/15 text-white'}`}>
+                                <span className={`inline-block px-1.5 py-0.5 mb-2 text-[8px] md:text-[9px] font-semibold tracking-wider uppercase rounded-full border ${isLight ? 'border-[#0A5C57] bg-[#D8EEEB] text-[#0A5C57]' : 'border-white/25 bg-white/15 text-white'}`}>
                                     {edu.year}
                                 </span>
                                 <h3 className={`text-xl font-bold mt-1 transition-colors ${getHoverTextColor()}`}>{edu.institution}</h3>
@@ -1583,11 +1649,11 @@ export default function App() {
                             </div>
                             
                             <div>
-                                <span className={`inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider uppercase rounded-full border ${isLight ? 'border-[#0A5C57] bg-[#0A5C57] text-white' : 'border-white/25 bg-white/15 text-white'}`}>
+                                <span className={`inline-block px-1.5 py-0.5 mb-2 text-[8px] md:text-[9px] font-semibold tracking-wider uppercase rounded-full border ${isLight ? 'border-[#0A5C57] bg-[#D8EEEB] text-[#0A5C57]' : 'border-white/25 bg-white/15 text-white'}`}>
                                     {exp.period}
                                 </span>
-                                <h3 className={`text-xl font-bold mt-1 transition-colors duration-300 ${getHoverTextColor()}`}>{exp.role}</h3>
-                                <div className="text-lg font-medium opacity-90 mb-2">
+                                <h3 className={`text-lg font-bold mt-1 transition-colors duration-300 ${getHoverTextColor()}`}>{exp.role}</h3>
+                                <div className="text-base font-medium opacity-90 mb-2">
                                     {exp.institution}
                                 </div>
                                 <p className="opacity-70 leading-relaxed">
@@ -1604,52 +1670,138 @@ export default function App() {
       {/* --- PROJECTS / SELECTED WORK --- */}
       <Section id="projects">
         <div className="flex flex-col gap-5">
-            <h2 className="text-3xl font-serif font-bold">Selected work</h2>
+            <h2 className="text-3xl font-serif font-bold">Fieldwork and Modeling</h2>
             <p className="opacity-60 text-sm leading-relaxed">
-              Numerical modelling, field observations, and selected undergraduate design practice. Open an item for supporting outputs, photographs, and the full note. The M.Sc. thesis stays under Research.
+              Post-earthquake damage surveys, geophysical fieldwork, and PLAXIS finite element models.
             </p>
             <div className={`border-l-2 py-1 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
-                {PORTFOLIO_DATA.projects.map((proj, i) => (
-                  <React.Fragment key={i}>
-                    {(i === 0 || proj.group !== PORTFOLIO_DATA.projects[i - 1].group) && (
-                      <div className={`pl-8 ${i === 0 ? 'pt-4' : 'pt-8'} pb-1`}>
-                        <p className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${isLight ? "text-teal-800" : getAccentColor()} opacity-80`}>{proj.group}</p>
-                      </div>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => setSelectedProject(proj)}
-                      className={`relative w-full text-left group pl-8 pr-4 py-6 rounded-r-lg transition-all duration-300 border-transparent
-                        ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}
-                    >
-                        <div className={`absolute -left-[9px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
-                            ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
-                            <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
-                        </div>
+                {projectRootItems.map((item, i) => {
+                  const previousItem = projectRootItems[i - 1];
+                  const title = item.type === 'project' ? item.project.title : item.title;
+                  const summary = item.type === 'project' ? (item.project.summary || item.project.description) : item.summary;
 
-                        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 min-w-0">
-                            <Anchor className={`w-4 h-4 shrink-0 ${getAccentColor()}`} />
-                            <h3 className={`text-xl font-bold transition-colors ${getHoverTextColor()}`}>
-                                {proj.title}
-                            </h3>
-                            {proj.period && <span className="text-sm opacity-50">{proj.period}</span>}
-                          </div>
-                          <span className={`inline-flex items-center text-sm font-bold shrink-0 ${getAccentColor()}`}>
-                            View details <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  return (
+                    <React.Fragment key={title}>
+                      {(!previousItem || item.group !== previousItem.group) && (
+                        <div className={`pl-8 ${i === 0 ? 'pt-4' : 'pt-8'} pb-1`}>
+                          <span className={`inline-block rounded-full border px-1.5 py-0.5 text-[8px] md:text-[9px] font-semibold uppercase tracking-wider ${isLight ? 'border-[#0A5C57] bg-[#D8EEEB] text-[#0A5C57]' : 'border-white/25 bg-white/15 text-white'}`}>
+                            {item.group}
                           </span>
                         </div>
-                        {(proj.summary || proj.description) && (
-                          <p className="opacity-60 mt-1.5 text-sm leading-relaxed max-w-4xl">
-                            {proj.summary || proj.description}
-                          </p>
-                        )}
-                    </button>
-                  </React.Fragment>
-                ))}
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (item.type === 'platform') {
+                            setProjectPage('platform');
+                            setSelectedPlaxisPlatform(item.platform);
+                            setProjectDetailsFromPlaxis(false);
+                          } else {
+                            setProjectDetailsFromPlaxis(false);
+                            setSelectedProject(item.project);
+                          }
+                        }}
+                        className={`relative w-full text-left group pl-8 pr-4 py-6 rounded-r-lg transition-all duration-300 border-transparent
+                          ${(isLight) ? 'hover:bg-white' : 'hover:bg-white/5'}`}
+                      >
+                        <div className={`absolute -left-[9px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center
+                            ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
+                          <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
+                        </div>
+                        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 min-w-0">
+                            <h3 className={`text-lg font-bold transition-colors ${getHoverTextColor()}`}>{title}</h3>
+                            {item.type === 'project' && item.project.period && <span className="text-sm opacity-50">{item.project.period}</span>}
+                          </div>
+                          <span className={`inline-flex items-center text-sm font-bold shrink-0 ${getAccentColor()}`}>
+                            {item.type === 'project' ? 'View details' : 'Browse models'} <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                          </span>
+                        </div>
+                        {summary && <p className="opacity-60 mt-1.5 text-sm leading-relaxed text-justify max-w-4xl">{summary}</p>}
+                      </button>
+                    </React.Fragment>
+                  );
+                })}
             </div>
         </div>
       </Section>
+
+      {projectPage !== 'list' && !selectedProject && (
+        <div
+          className="fixed inset-0 z-[220] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+          onClick={() => setProjectPage('list')}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${selectedPlaxisPlatform} models`}
+        >
+          <div
+            className={`flex max-h-[80vh] w-full max-w-5xl flex-col overflow-hidden rounded-lg shadow-2xl ${(isLight) ? 'bg-white text-stone-900' : 'border border-white/10 bg-neutral-900 text-white'}`}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className={`flex shrink-0 items-center justify-between gap-4 border-b p-5 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
+              <div className="flex min-w-0 items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setProjectPage('list');
+                    setSelectedPlaxisPlatform(null);
+                  }}
+                  aria-label="Back to projects"
+                  className="shrink-0 rounded-full p-2 hover:bg-black/10"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold uppercase tracking-wider opacity-50">Numerical modelling</p>
+                  <h2 className="truncate text-xl font-bold font-serif">{selectedPlaxisPlatform}</h2>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setProjectPage('list');
+                  setSelectedPlaxisPlatform(null);
+                }}
+                aria-label="Close PLAXIS models"
+                className="shrink-0 rounded-full p-2 hover:bg-black/10"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="overflow-y-auto p-5 md:p-6">
+              {selectedPlatformProjects.length > 0 ? (
+                <div className={`border-l-2 py-1 ml-3 md:ml-6 ${(isLight) ? 'border-neutral-500' : 'border-white/30'}`}>
+                  {selectedPlatformProjects.map((project) => (
+                    <button
+                      key={project.title}
+                      type="button"
+                      onClick={() => {
+                        setProjectDetailsFromPlaxis(true);
+                        setSelectedProject(project);
+                      }}
+                      className={`relative w-full text-left group pl-8 pr-4 py-6 rounded-r-lg transition-all duration-300 ${(isLight) ? 'hover:bg-stone-50' : 'hover:bg-white/5'}`}
+                    >
+                      <div className={`absolute -left-[9px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center ${(isLight) ? 'bg-white border-neutral-500' : 'bg-neutral-950 border-neutral-700'}`}>
+                        <div className={`w-2 h-2 rounded-full ${getHoverBgColor()}`} />
+                      </div>
+                      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                        <h3 className={`text-lg font-bold transition-colors ${getHoverTextColor()}`}>{project.title}</h3>
+                        <span className={`inline-flex items-center text-sm font-bold ${getAccentColor()}`}>
+                          View details <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </span>
+                      </div>
+                      <p className="mt-1.5 max-w-4xl text-sm leading-relaxed opacity-60">{project.summary}</p>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm opacity-60">No {selectedPlaxisPlatform} models are listed yet.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* --- SKILLS SECTION (2-COLUMN TIMELINE) --- */}
       <Section id="skills">

@@ -12,9 +12,11 @@ export const PORTFOLIO_DATA = {
   // --- EDITABLE: Personal Profile Info ---
   profile: {
     name: "Md Enamul Islam Bhuiyan Meraj",
-    title: "Geotechnical Earthquake Engineering Researcher | M.Sc., BUET",
-    institution: "Bangladesh University of Engineering & Technology (BUET)",
-    tagline: "Geotechnical Earthquake Engineering Researcher | M.Sc., BUET",
+    title: "Graduate Researcher in Geotechnical Engineering",
+    institution: "Bangladesh University of Engineering and Technology (BUET)",
+    tagline: "Graduate Researcher in Geotechnical Engineering",
+    heroSummary: "My research focuses on soil behaviour and ground hazards in soft deltaic deposits. My M.Sc. thesis assesses regional liquefaction susceptibility across the Dhaka metropolitan area using measured shear-wave velocity profiles, and my wider interests include site characterization, ground improvement, slope and embankment stability, and numerical modelling.",
+    availability: "Seeking a funded PhD position beginning Fall 2027.",
     researchFocus: "Soil Liquefaction · Vs-Based Site Characterization · Probabilistic Geo-Hazard Assessment",
     bio: "I am an M.Sc. researcher in Civil and Geotechnical Engineering at Bangladesh University of Engineering & Technology (BUET), with a primary research focus on geotechnical earthquake engineering. My work centers on shear-wave-velocity-based liquefaction assessment, seismic site characterization, regional geo-hazard mapping, and probabilistic treatment of geotechnical uncertainty.\n\nI also work on ground improvement of soft soils, embankment and slope stability, and numerical geotechnical modelling. I have developed and benchmarked embankment models in PLAXIS 2D and PLAXIS 3D by reproducing reference and published models and comparing numerical outputs with reported results. My long-term research goal is to integrate field measurements, geotechnical data analysis, probabilistic methods, and numerical modelling to improve the assessment and mitigation of earthquake-related ground hazards.",
     email: "enamulislammeraj.25@gmail.com",
@@ -51,9 +53,9 @@ export const PORTFOLIO_DATA = {
     {
       degree: "M.Sc. Engg. (Civil & Geotechnical)",
       institution: "Bangladesh University of Engineering & Technology (BUET)",
-      year: "May 2025 – Jan 2027 (expected)",
+      year: "May 2025 – January 2027 (expected)",
       advisor: "Prof. Dr. Mehedi Ahmed Ansary",
-      thesis: "Thesis: Assessing Regional Liquefaction Susceptibility Using Shear Wave Velocity Profiling and the Liquefaction Potential Index.",
+      thesis: "Thesis: Shear Wave Velocity Based Deterministic And Probabilistic Liquefaction Assessment of DMDP Area in Bangladesh.",
       achievement: "Postgraduate Fellowship (December 2025–present)"
     },
     {
@@ -130,21 +132,21 @@ export const PORTFOLIO_DATA = {
       institution: "Bangladesh University of Engineering & Technology (BUET)",
       department: "Civil & Geotechnical Engineering",
       period: "December, 2025 – Present",
-      description: "Fellowship researcher (40 hours/week) working on Vs-based liquefaction assessment for the DMDP area, with additional work on LCA and HVDM."
+      description: "Full-time research fellowship (40 hours/week) awarded on academic and research merit. Working on shear-wave-velocity-based liquefaction assessment of the DMDP area, with additional work on life-cycle assessment and vacuum-based soft-soil improvement."
     },
     {
-      role: "Post-Earthquake Rapid Visual Reconnaissance Survey",
+      role: "Post-Earthquake Reconnaissance Survey",
       institution: "BUET research team (Prof. Dr. Mehedi Ahmed Ansary)",
       department: "Field investigation",
       period: "29 November – 1 December 2025",
-      description: "Rapid visual reconnaissance in Narsingdi and Narayanganj after the 21 November 2025 Madhabdi earthquake."
+      description: "ATC-20 rapid evaluation of more than fifty structures in Narsingdi and Narayanganj after the 21 November 2025 Madhabdi earthquake."
     },
     {
-      role: "Private Tutor — Mathematics, Physics, Chemistry, Information Technology",
-      institution: "Caretutors and independent engagements",
+      role: "Private Tutor",
+      institution: "Caretutors (online tutoring platform) and independent",
       department: "Education",
-      period: "2019 – present",
-      description: "Individual and small-group instruction for more than twenty secondary and higher-secondary students; syllabus content, problem-solving, and examination preparation."
+      period: "2019 – PRESENT",
+      description: "Individual and small-group instruction in mathematics, physics, chemistry and ICT for more than twenty secondary and higher-secondary students."
     }
     // OMITTED duplicate tutoring entries (merged above). Uncomment to restore separate rows.
     // { role: "Tutor", institution: "Caretutors", department: "Education", period: "May 2024 – Present", description: "Structured tutoring for Classes VI–XII in mathematics, physics, chemistry, and ICT." },
@@ -207,7 +209,8 @@ export const PORTFOLIO_DATA = {
       journal: "7th International Conference on Advances in Civil Engineering (ICACE 2024), CUET, Bangladesh (Paper ID: 194)",
       year: 2024,
       citations: "—",
-      type: "Conference",
+      type: "Conference Proceedings",
+      status: "Conference Proceedings",
       tags: ["Lateral Load", "Soil - Structure Interaction", "Sloping Ground"],
       url: "https://www.researchgate.net/publication/389965030_Behavior_of_single_pile_in_cohesionless_soil_on_horizontal_and_sloping_ground_surface_under_lateral_loading",
       pdf: "/papers/ICACE2024_paper_ID194.pdf",
@@ -241,8 +244,26 @@ export const PORTFOLIO_DATA = {
       venue: "Geotechnical and Geological Engineering (Springer Nature)",
       year: "2026",
       submitted: "25 July 2026",
-      status: "Under peer review",
-      note: "Submitted 25 July 2026. Currently in peer review."
+      status: "Under Peer Review"
+    }
+  ],
+
+  in_preparation: [
+    {
+      id: "wp-liq-paper",
+      title: "Shear Wave Velocity Based Deterministic And Probabilistic Liquefaction Assessment of DMDP Area in Bangladesh",
+      authors: "M. E. I. B. Meraj, M. A. Ansary",
+      venue: "Manuscript based on M.Sc. thesis research, BUET",
+      year: "2026",
+      status: "In Preparation"
+    },
+    {
+      id: "wp-lca-paper",
+      title: "Life Cycle Analysis of a Rural Road with Wrapped-Face Wall Against Conventional Slope-Based Construction",
+      authors: "M. E. I. B. Meraj, M. A. Ansary",
+      venue: "Manuscript based on Jamalpur–Gaibandha rural road study",
+      year: "2026",
+      status: "In Preparation"
     }
   ],
 
@@ -251,7 +272,8 @@ export const PORTFOLIO_DATA = {
   projects: [
     {
       title: "PLAXIS 3D road embankment benchmark replication",
-      group: "Numerical modelling",
+      group: "Numerical Modelling",
+      platform: "PLAXIS 3D",
       period: "2026",
       summary: "Reproduced Bentley PLAXIS 3D Tutorial 6 to benchmark staged embankment construction, consolidation, drainage effects, and safety response.",
       description: "Reproduced the Bentley PLAXIS 3D Tutorial 6 road-embankment benchmark on soft soil as a numerical modelling exercise. The model included staged embankment construction, consolidation, drainage effects, excess pore-pressure development and dissipation, and strength-reduction safety analysis. Key outputs were checked against the tutorial reference behaviour, including the generated mesh, excess pore-pressure contours and time histories, the effect of drains, and ΣMsf–displacement response. This is a benchmark/tutorial replication used to demonstrate model setup, staged construction, interpretation of coupled consolidation behaviour, and verification against known reference results; it is not presented as original research.",
@@ -269,7 +291,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       title: "Post-earthquake reconnaissance, Madhabdi earthquake",
-      group: "Field work",
+      group: "Fieldwork",
       period: "November–December 2025",
       summary: "ATC-20 rapid screening after the 21 November 2025 Madhabdi earthquake, Narsingdi and Narayanganj.",
       description: "Rapid visual screening after the 21 November 2025 Madhabdi earthquake across Ghorashal, Palash, Madhabdi, Narsingdi and Rupganj, as part of the BUET team supervised by Prof. Dr. Mehedi Ahmed Ansary. ATC-20 damage classification, safety postings, and a georeferenced record of building performance.",
@@ -286,7 +308,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       title: "ERT field survey, BUET campus",
-      group: "Field work",
+      group: "Fieldwork",
       period: "BUET campus",
       summary: "Assisted electrode layout, cabling, and data acquisition on a PASI ERT survey, BUET campus.",
       description: "Assisted an electrical resistivity tomography (ERT) field survey on the BUET campus using a PASI resistivity/tomography system: electrode layout, cabling, and data acquisition.",
@@ -300,16 +322,6 @@ export const PORTFOLIO_DATA = {
         { src: "/projects/ert_buet/06_instrument_spread_overhead.jpg", caption: "Instrument spread: console, link boxes, and electrode cables." },
         { src: "/projects/ert_buet/07_console_p300tn_link_boxes.jpg", caption: "PASI acquisition console and link boxes." }
       ]
-    },
-    {
-      title: "15-storied residential building design",
-      group: "Undergraduate projects",
-      period: "B.Sc., RUET",
-      summary: "ETABS and SAFE design studio for a 15-storied residential building.",
-      description: "Undergraduate structural design studio at RUET: complete analysis and design of a 15-storied residential building for code-compliant gravity and lateral loads using CSI ETABS and CSI SAFE. Coursework / design practice, not a research project.",
-      stack: ["CSI ETABS", "CSI SAFE", "Structural design"],
-      link: "",
-      photos: []
     },
     /* OMITTED undergraduate water-supply investigation (not geotech/research). Uncomment to restore.
     {
