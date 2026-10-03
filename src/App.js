@@ -695,7 +695,7 @@ export default function App() {
                     <div className="min-w-0 flex-1">
                         <h2 className="text-xl md:text-2xl leading-tight font-bold font-serif break-words">{selectedProject.title}</h2>
                         <p className="text-sm opacity-60 mt-1">
-                          {[selectedProject.group, selectedProject.period].filter(Boolean).join(' · ') || 'Selected work'}
+                          {[selectedProject.group, !projectDetailsFromPlaxis && selectedProject.period].filter(Boolean).join(' · ') || 'Selected work'}
                         </p>
                     </div>
                     <button
