@@ -271,6 +271,27 @@ export const PORTFOLIO_DATA = {
   // Thesis / Vs–LPI work stays in Research, not here.
   projects: [
     {
+      title: "1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok",
+      group: "Numerical Modelling",
+      platform: "PLAXIS 2D",
+      period: "2026",
+      summary: "PLAXIS 2D reproduction of a published Sukhumvit MRT deep excavation case using the Mohr Coulomb soil model, examining staged excavation, diaphragm wall deflection, groundwater drawdown, and agreement with reported field measurements.",
+      description: "I reproduced the published Sukhumvit MRT Station deep excavation case in PLAXIS 2D using the Mohr Coulomb (MC) soil model. The model was developed from the case study data reported in the original paper, including the soil stratigraphy, diaphragm wall, structural support system, staged top-down excavation, and groundwater drawdown condition. I examined how the diaphragm wall responded as excavation progressed, with particular focus on horizontal wall deflection. The calculated response was then compared with the published numerical results and field inclinometer measurements to check how closely the reproduced model captured the reported behaviour.",
+      learnings: [
+        "Staged modelling of deep excavations in PLAXIS 2D",
+        "Diaphragm wall response during progressive excavation",
+        "Influence of groundwater drawdown and pore pressure on wall movement",
+        "Interpretation of wall deflection, deformation, and structural-force outputs",
+        "Importance of mesh refinement and construction sequencing",
+        "Validation of numerical results against published field measurements",
+        "Practical limitations of the Mohr Coulomb (MC) model for deep excavation analysis"
+      ],
+      stack: ["PLAXIS 2D", "Mohr Coulomb", "Deep excavation", "Diaphragm wall", "Groundwater drawdown"],
+      link: "",
+      photos: [],
+      files: []
+    },
+    {
       title: "PLAXIS 3D road embankment benchmark replication",
       group: "Numerical Modelling",
       platform: "PLAXIS 3D",

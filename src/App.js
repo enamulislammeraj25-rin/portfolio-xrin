@@ -687,13 +687,13 @@ export default function App() {
             if (!projectDetailsFromPlaxis) closeProjectDetails();
           }}
         >
-            <div className={`w-full max-w-5xl max-h-[90vh] rounded-lg overflow-hidden shadow-2xl flex flex-col
+            <div className={`w-[95vw] h-[95vh] max-w-none max-h-none rounded-lg overflow-hidden shadow-2xl flex flex-col
                 ${(isLight) ? 'bg-white text-stone-900' : 'bg-neutral-900 text-white border border-white/10'}`}
                 onClick={e => e.stopPropagation()}
             >
-                <div className={`p-6 border-b flex justify-between items-center gap-4 shrink-0 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
-                    <div className="min-w-0">
-                        <h2 className="truncate text-2xl font-bold font-serif">{selectedProject.title}</h2>
+                <div className={`p-6 border-b flex justify-between items-start gap-4 shrink-0 ${(isLight) ? 'border-stone-200' : 'border-white/10'}`}>
+                    <div className="min-w-0 flex-1">
+                        <h2 className="text-xl md:text-2xl leading-tight font-bold font-serif break-words">{selectedProject.title}</h2>
                         <p className="text-sm opacity-60 mt-1">
                           {[selectedProject.group, selectedProject.period].filter(Boolean).join(' · ') || 'Selected work'}
                         </p>
@@ -710,6 +710,19 @@ export default function App() {
                 
                 <div className="flex-1 overflow-y-auto p-6 md:p-8">
                     <p className="text-base md:text-lg opacity-80 leading-relaxed text-justify">{selectedProject.description}</p>
+
+                    {selectedProject.learnings && selectedProject.learnings.length > 0 && (
+                      <div className="mt-8">
+                        <h3 className="text-sm font-bold uppercase opacity-60 mb-3 tracking-wider">Learnings</h3>
+                        <ul className="pl-5 space-y-2 opacity-80 leading-relaxed">
+                          {selectedProject.learnings.map((learning) => (
+                            <li key={learning} className="relative pl-4 before:absolute before:left-0 before:top-[0.7em] before:h-2 before:w-2 before:-translate-y-1/2 before:bg-current">
+                              {learning}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
                     {selectedProject.photos && selectedProject.photos.length > 0 && (
                       <div className="mb-8">
