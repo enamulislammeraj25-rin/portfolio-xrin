@@ -289,7 +289,14 @@ export const PORTFOLIO_DATA = {
       stack: ["PLAXIS 2D", "Mohr Coulomb", "Deep excavation", "Diaphragm wall", "Groundwater drawdown"],
       link: "",
       photos: [],
-      files: []
+      files: [
+        { type: "pdf", name: "1. PLAXIS 2D Model Geometry and Soil Stratigraphy.pdf", href: "/projects/plaxis2d/model/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/1. PLAXIS 2D Model Geometry and Soil Stratigraphy.pdf", preview: "/projects/plaxis2d/previews/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/1. PLAXIS 2D Model Geometry and Soil Stratigraphy.jpg" },
+        { type: "pdf", name: "2. Finite-Element Mesh and Local Refinement.pdf", href: "/projects/plaxis2d/model/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/2. Finite-Element Mesh and Local Refinement.pdf", preview: "/projects/plaxis2d/previews/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/2. Finite-Element Mesh and Local Refinement.jpg" },
+        { type: "pdf", name: "3. Groundwater Drawdown and Initial Pore-Pressure Condition.pdf", href: "/projects/plaxis2d/model/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/3. Groundwater Drawdown and Initial Pore-Pressure Condition.pdf", preview: "/projects/plaxis2d/previews/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/3. Groundwater Drawdown.jpg" },
+        { type: "pdf", name: "4. Diaphragm-Wall Deflection Through Excavation Stages.pdf", href: "/projects/plaxis2d/model/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/4. Diaphragm-Wall Deflection Through Excavation Stages.pdf", preview: "/projects/plaxis2d/previews/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/4. Diaphragm-Wall Deflection Through Excavation Stages.jpg" },
+        { type: "pdf", name: "5. Deformed Mesh at Final Excavation Stage.pdf", href: "/projects/plaxis2d/model/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/5. Deformed Mesh at Final Excavation Stage.pdf", preview: "/projects/plaxis2d/previews/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/5. Deformed Mesh at Final Excavation Stage.jpg" },
+        { type: "pdf", name: "6. Structural Axial Forces on the wall at Final Excavation Stage.pdf", href: "/projects/plaxis2d/model/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/6. Structural Axial Forces on the wall at Final Excavation Stage.pdf", preview: "/projects/plaxis2d/previews/1. Diaphragm Wall Supported Deep Excavation: Sukhumvit MRT Station, Bangkok/6. Structural Axial Forces on the wall at Final Excavation Stage.jpg" }
+      ]
     },
     {
       title: "PLAXIS 3D road embankment benchmark replication",
