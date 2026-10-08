@@ -1111,7 +1111,7 @@ export default function App() {
           </p>
           <div className="flex flex-wrap gap-x-10 gap-y-3 text-sm">
             <button onClick={() => scrollToSection('research')} className="border-b border-black pb-0.5">Research</button>
-            <a href={PORTFOLIO_DATA.profile.cvLink} download="Enamul_Islam_Meraj_WebsiteCV.pdf" className="border-b border-black/25 pb-0.5 hover:border-black">CV</a>
+            <a href={PORTFOLIO_DATA.profile.cvLink} download="Md_Enamul_Islam_Bhuiyan_Meraj.pdf" className="border-b border-black/25 pb-0.5 hover:border-black">CV</a>
             <button onClick={() => scrollToSection('publications')} className="border-b border-black/25 pb-0.5 hover:border-black">Papers</button>
             <button onClick={() => scrollToSection('contact')} className="border-b border-black/25 pb-0.5 hover:border-black">Contact</button>
           </div>
@@ -1142,7 +1142,7 @@ export default function App() {
               <button onClick={() => scrollToSection('research')} className="text-[#C24A2A] border-b border-[#C24A2A] pb-0.5 hover:text-[#2C4A3E] hover:border-[#2C4A3E]">
                 Read the research
               </button>
-              <a href={PORTFOLIO_DATA.profile.cvLink} download="Enamul_Islam_Meraj_WebsiteCV.pdf" className="text-[#1C1914] border-b border-[#1C1914]/30 pb-0.5 hover:border-[#1C1914]">
+              <a href={PORTFOLIO_DATA.profile.cvLink} download="Md_Enamul_Islam_Bhuiyan_Meraj.pdf" className="text-[#1C1914] border-b border-[#1C1914]/30 pb-0.5 hover:border-[#1C1914]">
                 Download CV
               </a>
               <button onClick={() => scrollToSection('contact')} className="text-[#2C4A3E] border-b border-[#2C4A3E]/40 pb-0.5 hover:border-[#2C4A3E]">
@@ -1216,7 +1216,7 @@ export default function App() {
             </button>
             <a 
                 href={PORTFOLIO_DATA.profile.cvLink}
-                download="Enamul_Islam_Meraj_WebsiteCV.pdf"
+                download="Md_Enamul_Islam_Bhuiyan_Meraj.pdf"
                 className={`px-8 py-3.5 border rounded-lg font-medium transition-colors flex items-center gap-2 ${isLight ? 'border-[#0A5C57]' : 'border-teal-400/60'}
                     ${isLight ? 'hover:bg-white text-stone-800' : 
                       'hover:bg-white/10 text-white'}`}

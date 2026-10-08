@@ -21,7 +21,7 @@ export const PORTFOLIO_DATA = {
     bio: "I am an M.Sc. researcher in Civil and Geotechnical Engineering at Bangladesh University of Engineering & Technology (BUET), with a primary research focus on geotechnical earthquake engineering. My work centers on shear-wave-velocity-based liquefaction assessment, seismic site characterization, regional geo-hazard mapping, and probabilistic treatment of geotechnical uncertainty.\n\nI also work on ground improvement of soft soils, embankment and slope stability, and numerical geotechnical modelling. I have developed and benchmarked embankment models in PLAXIS 2D and PLAXIS 3D by reproducing reference and published models and comparing numerical outputs with reported results. My long-term research goal is to integrate field measurements, geotechnical data analysis, probabilistic methods, and numerical modelling to improve the assessment and mitigation of earthquake-related ground hazards.",
     email: "enamulislammeraj.25@gmail.com",
     location: "Dhaka, Bangladesh",
-    cvLink: "/Enamul_Islam_Meraj_WebsiteCV.pdf",
+    cvLink: "/Md_Enamul_Islam_Bhuiyan_Meraj.pdf",
     photo: "/profile.png",
     
     // --- EDITABLE: Social Links URLs ---
